@@ -1,13 +1,16 @@
-## sample request: query TAP_SCHEMA.tables using the sync resource
+#Query Testing
 
 #TAP
-curl -v --location -d 'REQUEST=doQuery&LANG=ADQL&QUERY=SELECT * FROM TAP_SCHEMA.columns' http://127.0.0.1:5000/chivo/tap
+#curl -v --location -d 'REQUEST=doQuery&LANG=ADQL&QUERY=SELECT * FROM TAP_SCHEMA.columns' http://127.0.0.1:5000/chivo/tap
 
 #SCS
-#curl --request GET 'http://127.0.0.1:5000/chivo/scs?RA=123&DEC=123&RADIUS=1'
+#curl --request GET 'http://127.0.0.1:5000/chivo/scs?ra=21&dec=15&RADIUS=1'
+#curl --request GET http://wfaudata.roe.ac.uk/twomass-dsa/DirectCone\?DSACAT\=TWOMASS\&DSATAB\=twomass_psc\&ra\=21\&dec\=15\&RADIUS\=1
 
 #SIA
-#curl --request GET 'http://127.0.0.1:5000/chivo/sia?POS=10.63,41.25&SIZE=0.15'
+#curl --request GET http://127.0.0.1:5000/chivo/sia?POS=10.63,41.25&SIZE=0.15
+#curl --request GET http://irsa.ipac.caltech.edu/ibe/sia/wise/prelim/p3am_cdd?POS=20,40&SIZE=1.5
 
 #SSA
-#curl --request GET 'http://127.0.0.1:5000/chivo/ssa?POS=22.438,-17.2&SIZE=0.02
+#curl --request GET 'http://127.0.0.1:5000/chivo/ssa?POS=22.438,-17.2&SIZE=0.02'
+#curl --request GET http://wfaudata.roe.ac.uk/6dF-ssap/\?POS\=22.438,-17.2\&SIZE\=0.02
