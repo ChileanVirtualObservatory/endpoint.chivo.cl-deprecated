@@ -14,9 +14,6 @@ SERVER_SSA = 'http://wfaudata.roe.ac.uk/6dF-ssap/?'
 def index():
     return 'Index page'
 
-#GET -> request.args.get('key', '')
-#POST -> request.form['key']
-
 @app.route('/chivo/<query>', methods=['POST', 'GET'])
 def chivo_query(query):
 	if query == 'tap':
@@ -29,13 +26,12 @@ def chivo_query(query):
 	
 			#Ejecutar consulta al servidor TAP 
 			#TODO: crear un arreglo de servidores posibles RESOURCES y hacer el request para cada RESOURCE requerido en al consulta 
-			url = SERVER_TAP
 			values = {'REQUEST' : query['REQUEST'],
 			          'LANG' : query['LANG'],
 			          'QUERY' : query['QUERY']}
 	
 			data = urllib.urlencode(values)
-			req = urllib2.Request(url, data)
+			req = urllib2.Request(SERVER_TAP, data)
 			response = urllib2.urlopen(req)
 			the_page = response.read()
 	
@@ -48,13 +44,7 @@ def chivo_query(query):
 			RA = request.args.get('ra')
 			DEC = request.args.get('dec')
 			RADIUS = request.args.get('RADIUS')
-	        
-			print RA
-			print DEC
-			print RADIUS
 
-			#ejemplo
-			#get = http://wfaudata.roe.ac.uk/twomass-dsa/DirectCone\?DSACAT\=TWOMASS\&DSATAB\=twomass_psc\&ra\=21\&dec\=15\&RADIUS\=1
 			values = {'ra' : RA, 'dec' : DEC, 'RADIUS' : RADIUS}
 
 			r = requests.get(SERVER_SCS, params=values)
@@ -66,9 +56,7 @@ def chivo_query(query):
 			#TODO: buscar un servicio que soporte SCS para probar mientras y ejecutar el request
 	
 			#Retornar respuesta servidor TAP %TODO
-			
 			return r.content
-			#return 'SCSP Under construction'
 		
 		return 'Bad Request'
 
@@ -91,8 +79,10 @@ def chivo_query(query):
 
 	if query == 'ssa':
 		if request.method == 'GET':
-			values = {'POS' : '22.438,-17.2',
-			          'SIZE' : '0.02'}
+			POS = request.args.get('POS')
+			SIZE = request.args.get('SIZE')
+
+			values = {'POS' : POS, 'SIZE' : SIZE}
 
 			r = requests.get(SERVER_SSA, params=values)
 
