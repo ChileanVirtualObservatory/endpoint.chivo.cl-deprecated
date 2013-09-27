@@ -8,7 +8,7 @@
 #curl --request GET http://wfaudata.roe.ac.uk/twomass-dsa/DirectCone\?DSACAT\=TWOMASS\&DSATAB\=twomass_psc\&ra\=21\&dec\=15\&RADIUS\=1
 
 #SIA
-#curl --request GET http://127.0.0.1:5000/chivo/sia?POS=10.63,41.25&SIZE=0.15
+#curl --request GET 'http://127.0.0.1:5000/chivo/sia?POS=10.63,41.25&SIZE=0.15'
 #curl --request GET http://irsa.ipac.caltech.edu/ibe/sia/wise/prelim/p3am_cdd?POS=20,40&SIZE=1.5
 
 #SSA

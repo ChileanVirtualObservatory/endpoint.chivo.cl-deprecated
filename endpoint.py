@@ -9,6 +9,7 @@ app = Flask(__name__)
 SERVER_TAP = 'http://localhost:8080/cadcSampleTAP/sync'
 SERVER_SCS = 'http://wfaudata.roe.ac.uk/twomass-dsa/DirectCone?DSACAT=TWOMASS&DSATAB=twomass_psc'
 SERVER_SSA = 'http://wfaudata.roe.ac.uk/6dF-ssap/?'
+SERVER_SIA = 'http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=2mass&'
 
 @app.route('/')
 def index():
@@ -19,16 +20,16 @@ def chivo_query(query):
 	if query == 'tap':
 		if request.method == 'POST':
 			#Consulta hecha al servidor TAP
-			query = request.form
+			query = request.formi
+			values = {'REQUEST' : query['REQUEST'],
+			          'LANG' : query['LANG'],
+			          'QUERY' : query['QUERY']}
 	 
 			#Validar Consulta 
 			#TODO: checkear parametros posibles de TAP y validarlos
 	
 			#Ejecutar consulta al servidor TAP 
 			#TODO: crear un arreglo de servidores posibles RESOURCES y hacer el request para cada RESOURCE requerido en al consulta 
-			values = {'REQUEST' : query['REQUEST'],
-			          'LANG' : query['LANG'],
-			          'QUERY' : query['QUERY']}
 	
 			data = urllib.urlencode(values)
 			req = urllib2.Request(SERVER_TAP, data)
@@ -36,6 +37,7 @@ def chivo_query(query):
 			the_page = response.read()
 	
 			return the_page
+		return 'Bad Request'
 
 	if query == 'scs':
 		if request.method == 'GET':
@@ -62,6 +64,13 @@ def chivo_query(query):
 
 	if query == 'sia':
 		if request.method == 'GET':
+			POS = request.args.get('POS')
+			SIZE = request.args.get('SIZE')
+			
+			values = {'POS' : POS, 'SIZE' : SIZE}
+			
+			r = requests.get(SERVER_SIA, params=values)
+
 			#Argumentos consulta metodo GET 
 			#TODO: revisar parametros de busqueda y si es que solo soporta GET
 	
@@ -72,10 +81,9 @@ def chivo_query(query):
 			#TODO: buscar un servicio que soporte SIA para probar mientras y ejecutar el request
 	
 			#Retornar respuesta servidor TAP %TODO
-			return 'SIAP Under construction'
+			return r.content
 		
 		return 'Bad Request'
-
 
 	if query == 'ssa':
 		if request.method == 'GET':
