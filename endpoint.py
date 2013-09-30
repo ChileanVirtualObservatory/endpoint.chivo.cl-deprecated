@@ -33,16 +33,12 @@ def chivo_query(query):
 			RUNID		= query['RUNID']
 			UPLOAD		= query['UPLOAD']
 
-			values = {'REQUEST' : query['REQUEST'],
-			          'LANG' : query['LANG'],
-			          'QUERY' : query['QUERY']}
+			values = {'REQUEST' : query['REQUEST'], 'LANG' : query['LANG'], 'QUERY' : query['QUERY']}
 	 
 			#Validar Consulta 
 			#TODO: checkear parametros posibles de TAP y validarlos
 	
-			#Ejecutar consulta al servidor TAP 
-			#TODO: crear un arreglo de servidores posibles RESOURCES y hacer el request para cada RESOURCE requerido en al consulta 
-	
+			#Ejecutar consulta al servidor TAP 	
 			data = urllib.urlencode(values)
 			req = urllib2.Request(SERVER_TAP, data)
 			response = urllib2.urlopen(req)
@@ -52,33 +48,28 @@ def chivo_query(query):
 
 		if request.method == 'GET':
 			#Consulta TAP GET
-
-			#Parametros Query	
 			RA      = request.args.get('ra')
 
-		
 		return 'Bad Request'
 
 	if query == 'scs':
 		if request.method == 'GET':
 			#Argumentos consulta metodo GET 
-			#TODO: nombre parametros
-			RA		= request.args.get('ra')
-			DEC		= request.args.get('dec')
-			SR		= request.args.get('SR')
-			VERB	= request.args.get('VERB')
+			#values = {}
+			#VERB	= 0
 
-			values = {'ra' : RA, 'dec' : DEC, 'SR' : SR}
+			#values['RA']	= request.args.get('RA')
+			#values['DEC']	= request.args.get('DEC')
+			#values['SR']	= request.args.get('SR')
+			#VERB			= request.args.get('VERB')
 
-			r = requests.get(SERVER_SCS, params=values)
- 
-			#Validar argumentos 
-			#TODO: revisar nombres de los parametros y si son case sensitive
-	
+			#if VERB is not None:
+			#	values['VERB'] = VERB
+
 			#Ejecutar consulta al servidor SCS 
-			#TODO: buscar un servicio que soporte SCS para probar mientras y ejecutar el request
+			r = requests.get(SERVER_SCS, params=request.args)
 	
-			#Retornar respuesta servidor TAP %TODO
+			#Respuesta content
 			return r.content
 		
 		return 'Bad Request'

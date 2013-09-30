@@ -4,7 +4,7 @@
 #curl -v --location -d 'REQUEST=doQuery&LANG=ADQL&QUERY=SELECT * FROM TAP_SCHEMA.columns' http://127.0.0.1:5000/chivo/tap
 
 #SCS
-#curl --request GET 'http://127.0.0.1:5000/chivo/scs?ra=21&dec=15&RADIUS=1'
+#curl --request GET 'http://127.0.0.1:5000/chivo/scs?RA=21&DEC=15&SR=1'
 #curl --request GET http://wfaudata.roe.ac.uk/twomass-dsa/DirectCone\?DSACAT\=TWOMASS\&DSATAB\=twomass_psc\&ra\=21\&dec\=15\&RADIUS\=1
 
 #SIA
