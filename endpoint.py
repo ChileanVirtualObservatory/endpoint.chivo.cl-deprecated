@@ -87,9 +87,13 @@ def chivo_query(query):
 		if request.method == 'GET':
 			POS = request.args.get('POS')
 			SIZE = request.args.get('SIZE')
+			FORMAT = request.args.get('FORMAT')
+			NAXIS = request.args.get('NAXIS')
+			PROJ = request.args.get('PROJ')
+			CFRAME = request.args.get('CFRAME')
+			EQUINOX = request.args.get('EQUINOX')
 			
-			values = {'POS' : POS, 'SIZE' : SIZE}
-			
+			values = {'POS' : POS, 'SIZE' : SIZE , 'FORMAT' : FORMAT , 'NAXIS' : NAXIS , 'PROJ' : PROJ , 'CFRAME' : CFRAME , 'EQUINOX' : EQUINOX}
 			r = requests.get(SERVER_SIA, params=values)
 
 			#Argumentos consulta metodo GET 
@@ -102,7 +106,11 @@ def chivo_query(query):
 			#TODO: buscar un servicio que soporte SIA para probar mientras y ejecutar el request
 	
 			#Retornar respuesta servidor TAP %TODO
+			arch = open("prueba.txt", "w")
+			arch.write(r.text)
+			arch.close()
 			return r.content
+
 		
 		return 'Bad Request'
 
