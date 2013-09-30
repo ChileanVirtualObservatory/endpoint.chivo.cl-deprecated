@@ -19,8 +19,20 @@ def index():
 def chivo_query(query):
 	if query == 'tap':
 		if request.method == 'POST':
-			#Consulta hecha al servidor TAP
-			query = request.formi
+			#Consulta TAP POST
+			query = request.form
+
+			REQUEST		= query['REQUEST']
+			LANG		= query['LANG']
+			QUERY		= query['QUERY']
+			POS			= query['POS']
+			FROM		= query['FROM']
+			SIZE		= query['SIZE']
+
+			MAXREC		= query['MAXREC']
+			RUNID		= query['RUNID']
+			UPLOAD		= query['UPLOAD']
+
 			values = {'REQUEST' : query['REQUEST'],
 			          'LANG' : query['LANG'],
 			          'QUERY' : query['QUERY']}
@@ -37,17 +49,26 @@ def chivo_query(query):
 			the_page = response.read()
 	
 			return the_page
+
+		if request.method == 'GET':
+			#Consulta TAP GET
+
+			#Parametros Query	
+			RA      = request.args.get('ra')
+
+		
 		return 'Bad Request'
 
 	if query == 'scs':
 		if request.method == 'GET':
 			#Argumentos consulta metodo GET 
 			#TODO: nombre parametros
-			RA = request.args.get('ra')
-			DEC = request.args.get('dec')
-			RADIUS = request.args.get('RADIUS')
+			RA		= request.args.get('ra')
+			DEC		= request.args.get('dec')
+			SR		= request.args.get('SR')
+			VERB	= request.args.get('VERB')
 
-			values = {'ra' : RA, 'dec' : DEC, 'RADIUS' : RADIUS}
+			values = {'ra' : RA, 'dec' : DEC, 'SR' : SR}
 
 			r = requests.get(SERVER_SCS, params=values)
  
