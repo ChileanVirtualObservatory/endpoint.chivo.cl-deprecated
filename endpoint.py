@@ -20,26 +20,23 @@ def chivo_query(query):
 	if query == 'tap':
 		if request.method == 'POST':
 			#Consulta TAP POST
-			query = request.form
+			#query = request.form
 
-			REQUEST		= query['REQUEST']
-			LANG		= query['LANG']
-			QUERY		= query['QUERY']
-			POS			= query['POS']
-			FROM		= query['FROM']
-			SIZE		= query['SIZE']
+			#REQUEST		= query['REQUEST']
+			#LANG		= query['LANG']
+			#QUERY		= query['QUERY']
+			#POS			= query['POS']
+			#FROM		= query['FROM']
+			#SIZE		= query['SIZE']
 
-			MAXREC		= query['MAXREC']
-			RUNID		= query['RUNID']
-			UPLOAD		= query['UPLOAD']
+			#MAXREC		= query['MAXREC']
+			#RUNID		= query['RUNID']
+			#UPLOAD		= query['UPLOAD']
 
-			values = {'REQUEST' : query['REQUEST'], 'LANG' : query['LANG'], 'QUERY' : query['QUERY']}
-	 
 			#Validar Consulta 
-			#TODO: checkear parametros posibles de TAP y validarlos
 	
 			#Ejecutar consulta al servidor TAP 	
-			data = urllib.urlencode(values)
+			data = urllib.urlencode(request.form)
 			req = urllib2.Request(SERVER_TAP, data)
 			response = urllib2.urlopen(req)
 			the_page = response.read()
@@ -48,13 +45,14 @@ def chivo_query(query):
 
 		if request.method == 'GET':
 			#Consulta TAP GET
-			RA      = request.args.get('ra')
+			r = requests.get(SERVER_SCS, params=request.args)
+			return r.content
 
-		return 'Bad Request'
+		return 'Bad TAP Request'
 
 	if query == 'scs':
 		if request.method == 'GET':
-			#Argumentos consulta metodo GET 
+			#Consulta SCS GET 
 			#values = {}
 			#VERB	= 0
 
@@ -72,7 +70,7 @@ def chivo_query(query):
 			#Respuesta content
 			return r.content
 		
-		return 'Bad Request'
+		return 'Bad SCS Request'
 
 	if query == 'sia':
 		if request.method == 'GET':
@@ -107,26 +105,16 @@ def chivo_query(query):
 
 	if query == 'ssa':
 		if request.method == 'GET':
-			POS = request.args.get('POS')
-			SIZE = request.args.get('SIZE')
+			#Consulta SSA GET
+			#POS = request.args.get('POS')
+			#SIZE = request.args.get('SIZE')
 
-			values = {'POS' : POS, 'SIZE' : SIZE}
-
-			r = requests.get(SERVER_SSA, params=values)
-
-			#Argumentos consulta metodo GET 
-			#TODO: revisar parametros de busqueda y si es que solo soporta GET
-	
-			#Validar argumentos 
-			#TODO: revisar nombres de los parametros y si son case sensitive
-	
 			#Ejecutar consulta al servidor SSA
-			#TODO: buscar un servicio que soporte SSA para probar mientras y ejecutar el request
+			r = requests.get(SERVER_SSA, params=request.args)
 	
-			#Retornar respuesta servidor TAP %TODO
 			return r.content
 		
-		return 'Bad Request'
+		return 'Bad SSA Request'
 
 if __name__ == '__main__':
     app.run(debug=True)
