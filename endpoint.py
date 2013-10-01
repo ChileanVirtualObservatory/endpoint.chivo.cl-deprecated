@@ -33,9 +33,9 @@ def chivo_query(query):
 			#RUNID		= query['RUNID']
 			#UPLOAD		= query['UPLOAD']
 
-			#Validar Consulta 
+			#Validar Consulta
 	
-			#Ejecutar consulta al servidor TAP 	
+			#Ejecutar consulta TAP 	
 			data = urllib.urlencode(request.form)
 			req = urllib2.Request(SERVER_TAP, data)
 			response = urllib2.urlopen(req)
@@ -45,6 +45,10 @@ def chivo_query(query):
 
 		if request.method == 'GET':
 			#Consulta TAP GET
+
+			#Validar Consulta
+	
+			#Ejecutar consulta TAP 	
 			r = requests.get(SERVER_SCS, params=request.args)
 			return r.content
 
@@ -61,13 +65,14 @@ def chivo_query(query):
 			#values['SR']	= request.args.get('SR')
 			#VERB			= request.args.get('VERB')
 
+			#Validar Consulta
+
 			#if VERB is not None:
 			#	values['VERB'] = VERB
 
-			#Ejecutar consulta al servidor SCS 
+			#Ejecutar consulta SCS 
 			r = requests.get(SERVER_SCS, params=request.args)
 	
-			#Respuesta content
 			return r.content
 		
 		return 'Bad SCS Request'
@@ -109,7 +114,9 @@ def chivo_query(query):
 			#POS = request.args.get('POS')
 			#SIZE = request.args.get('SIZE')
 
-			#Ejecutar consulta al servidor SSA
+			#Validar argumentos
+
+			#Ejecutar consulta SSA
 			r = requests.get(SERVER_SSA, params=request.args)
 	
 			return r.content
