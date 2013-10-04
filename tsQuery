@@ -1,7 +1,8 @@
 #Query Testing
 
 #TAP
-#curl -v --location -d 'REQUEST=doQuery&LANG=ADQL&QUERY=SELECT * FROM TAP_SCHEMA.columns' http://127.0.0.1:5000/chivo/tap
+#curl -v --location -d 'REQUEST=doQuery&LANG=ADQL&QUERY=SELECT TOP 1000 * FROM twomass_psc' http://127.0.0.1:5000/chivo/tap
+#curl -v --location -d 'REQUEST=doQuery&LANG=ADQL&QUERY=SELECT TOP 1000 * FROM twomass_psc' http://wfaudata.roe.ac.uk/twomass-dsa/TAP/sync
 
 #SCS
 #curl --request GET 'http://127.0.0.1:5000/chivo/scs?RA=21&DEC=15&SR=1'

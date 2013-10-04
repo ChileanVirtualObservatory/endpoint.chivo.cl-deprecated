@@ -6,10 +6,11 @@ from os import system
 from flask import Flask, render_template, request
 app = Flask(__name__)
 
-SERVER_TAP = 'http://localhost:8080/cadcSampleTAP/sync'
-SERVER_SCS = 'http://wfaudata.roe.ac.uk/twomass-dsa/DirectCone?DSACAT=TWOMASS&DSATAB=twomass_psc'
-SERVER_SSA = 'http://wfaudata.roe.ac.uk/6dF-ssap/?'
-SERVER_SIA = 'http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=2mass&'
+SERVER_TAP1	= 'http://localhost:8080/cadcSampleTAP/sync'
+SERVER_TAP	= 'http://wfaudata.roe.ac.uk/twomass-dsa/TAP/sync'
+SERVER_SCS	= 'http://wfaudata.roe.ac.uk/twomass-dsa/DirectCone?DSACAT=TWOMASS&DSATAB=twomass_psc'
+SERVER_SSA	= 'http://wfaudata.roe.ac.uk/6dF-ssap/?'
+SERVER_SIA	= 'http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=2mass&'
 
 @app.route('/')
 def index():
