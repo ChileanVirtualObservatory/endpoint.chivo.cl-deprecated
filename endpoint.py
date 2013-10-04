@@ -22,10 +22,10 @@ def chivo_query(query):
 			#Consulta TAP POST
 			#query = request.form
 
-			#REQUEST		= query['REQUEST']
+			#REQUEST	= query['REQUEST']
 			#LANG		= query['LANG']
 			#QUERY		= query['QUERY']
-			#POS			= query['POS']
+			#POS		= query['POS']
 			#FROM		= query['FROM']
 			#SIZE		= query['SIZE']
 
@@ -79,34 +79,24 @@ def chivo_query(query):
 
 	if query == 'sia':
 		if request.method == 'GET':
-			POS = request.args.get('POS')
-			SIZE = request.args.get('SIZE')
-			FORMAT = request.args.get('FORMAT')
-			NAXIS = request.args.get('NAXIS')
-			PROJ = request.args.get('PROJ')
-			CFRAME = request.args.get('CFRAME')
-			EQUINOX = request.args.get('EQUINOX')
+			#Consulta SIA GET 
+			#POS = request.args.get('POS')
+			#SIZE = request.args.get('SIZE')
+			#FORMAT = request.args.get('FORMAT')
+			#NAXIS = request.args.get('NAXIS')
+			#PROJ = request.args.get('PROJ')
+			#CFRAME = request.args.get('CFRAME')
+			#EQUINOX = request.args.get('EQUINOX')
 			
-			values = {'POS' : POS, 'SIZE' : SIZE , 'FORMAT' : FORMAT , 'NAXIS' : NAXIS , 'PROJ' : PROJ , 'CFRAME' : CFRAME , 'EQUINOX' : EQUINOX}
-			r = requests.get(SERVER_SIA, params=values)
+			#values = {'POS' : POS, 'SIZE' : SIZE , 'FORMAT' : FORMAT , 'NAXIS' : NAXIS , 'PROJ' : PROJ , 'CFRAME' : CFRAME , 'EQUINOX' : EQUINOX}
 
-			#Argumentos consulta metodo GET 
-			#TODO: revisar parametros de busqueda y si es que solo soporta GET
-	
 			#Validar argumentos 
-			#TODO: revisar nombres de los parametros y si son case sensitive
-	
+
 			#Ejecutar consulta al servidor SIA
-			#TODO: buscar un servicio que soporte SIA para probar mientras y ejecutar el request
-	
-			#Retornar respuesta servidor TAP %TODO
-			arch = open("prueba.txt", "w")
-			arch.write(r.text)
-			arch.close()
+			r = requests.get(SERVER_SIA, params=request.args)
 			return r.content
 
-		
-		return 'Bad Request'
+		return 'Bad SIA Request'
 
 	if query == 'ssa':
 		if request.method == 'GET':
