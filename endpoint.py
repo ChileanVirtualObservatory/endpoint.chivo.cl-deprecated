@@ -20,7 +20,7 @@ def index():
 def chivo_query(query):
 	if query == 'tap':
 		if request.method == 'POST':
-			#Consulta TAP POST
+			#TAP Request POST
 			#query = request.form
 
 			#REQUEST	= query['REQUEST']
@@ -34,9 +34,9 @@ def chivo_query(query):
 			#RUNID		= query['RUNID']
 			#UPLOAD		= query['UPLOAD']
 
-			#Validar Consulta
+			#Validation of request
 	
-			#Ejecutar consulta TAP 	
+			#Run TAP request
 			data = urllib.urlencode(request.form)
 			req = urllib2.Request(SERVER_TAP, data)
 			response = urllib2.urlopen(req)
@@ -45,11 +45,11 @@ def chivo_query(query):
 			return the_page
 
 		if request.method == 'GET':
-			#Consulta TAP GET
+			#TAP Request GET
 
-			#Validar Consulta
+			#Validation of request
 	
-			#Ejecutar consulta TAP 	
+			#Run TAP request  	
 			r = requests.get(SERVER_SCS, params=request.args)
 			return r.content
 
@@ -57,7 +57,7 @@ def chivo_query(query):
 
 	if query == 'scs':
 		if request.method == 'GET':
-			#Consulta SCS GET 
+			#SCS Request GET 
 			#values = {}
 			#VERB	= 0
 
@@ -66,12 +66,12 @@ def chivo_query(query):
 			#values['SR']	= request.args.get('SR')
 			#VERB			= request.args.get('VERB')
 
-			#Validar Consulta
+			#Validation of request
 
 			#if VERB is not None:
 			#	values['VERB'] = VERB
 
-			#Ejecutar consulta SCS 
+			#Run SCS request
 			r = requests.get(SERVER_SCS, params=request.args)
 	
 			return r.content
@@ -80,7 +80,7 @@ def chivo_query(query):
 
 	if query == 'sia':
 		if request.method == 'GET':
-			#Consulta SIA GET 
+			#SIA Request GET 
 			#POS = request.args.get('POS')
 			#SIZE = request.args.get('SIZE')
 			#FORMAT = request.args.get('FORMAT')
@@ -89,11 +89,9 @@ def chivo_query(query):
 			#CFRAME = request.args.get('CFRAME')
 			#EQUINOX = request.args.get('EQUINOX')
 			
-			#values = {'POS' : POS, 'SIZE' : SIZE , 'FORMAT' : FORMAT , 'NAXIS' : NAXIS , 'PROJ' : PROJ , 'CFRAME' : CFRAME , 'EQUINOX' : EQUINOX}
+			#Validation of request
 
-			#Validar argumentos 
-
-			#Ejecutar consulta al servidor SIA
+			#Run SIA request
 			r = requests.get(SERVER_SIA, params=request.args)
 			return r.content
 
@@ -101,13 +99,13 @@ def chivo_query(query):
 
 	if query == 'ssa':
 		if request.method == 'GET':
-			#Consulta SSA GET
+			#SSA Request GET
 			#POS = request.args.get('POS')
 			#SIZE = request.args.get('SIZE')
 
-			#Validar argumentos
+			#Validation of request
 
-			#Ejecutar consulta SSA
+			#Run SSA request
 			r = requests.get(SERVER_SSA, params=request.args)
 	
 			return r.content
