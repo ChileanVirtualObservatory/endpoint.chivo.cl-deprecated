@@ -111,6 +111,7 @@ def chivo_query(query):
 			return r.content
 		
 		return 'Bad SSA Request'
+	return 'Bad Request'
 
 
 @app.errorhandler(404)
