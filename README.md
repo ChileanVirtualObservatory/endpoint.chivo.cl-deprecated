@@ -68,8 +68,14 @@
 		xml,
 		metadata
 		```
-		
-
+	* *Optional*:
+		* *TESTED*  
+		* TARGETNAME `string`
+		* REDSHIFT (dλ/λ) `string`
+		* *NOT TESTED*
+		* APERTURE `degree`
+		* SPECRP `double`
+		* TIMERES `double`
 
 
 
