@@ -76,6 +76,9 @@ def chivo_query(query):
 			#	values['VERB'] = VERB
 
 			#Run SCS request
+			
+			
+			#Testing Redis in SCS
 			params=request.args
 			key = "scs;"+ str(params)
 			r = redis.get(string)
