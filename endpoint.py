@@ -2,6 +2,7 @@ import subprocess
 import urllib
 import urllib2
 import requests
+import redis
 from os import system
 from flask import Flask, render_template, request
 app = Flask(__name__)
@@ -11,6 +12,8 @@ SERVER_TAP	= 'http://wfaudata.roe.ac.uk/twomass-dsa/TAP/sync'
 SERVER_SCS	= 'http://wfaudata.roe.ac.uk/twomass-dsa/DirectCone?DSACAT=TWOMASS&DSATAB=twomass_psc'
 SERVER_SSA	= 'http://wfaudata.roe.ac.uk/6dF-ssap/?'
 SERVER_SIA	= 'http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=2mass&'
+
+redis = redis.StrictRedis(host='localhost', port=6379, db=0)
 
 @app.route('/')
 def index():
@@ -37,6 +40,7 @@ def chivo_query(query):
 			#Validation of request
 	
 			#Run TAP request
+			
 			data = urllib.urlencode(request.form)
 			req = urllib2.Request(SERVER_TAP, data)
 			response = urllib2.urlopen(req)
@@ -72,9 +76,16 @@ def chivo_query(query):
 			#	values['VERB'] = VERB
 
 			#Run SCS request
-			r = requests.get(SERVER_SCS, params=request.args)
-	
-			return r.content
+			params=request.args
+			key = "scs;"+ str(params)
+			r = redis.get(string)
+			if(r):
+				return r
+			else:
+				r = requests.get(SERVER_SCS, params)
+				redis.set(string, r.content)
+				redis.expire(string,120)
+				return r.content
 		
 		return 'Bad SCS Request'
 
@@ -92,7 +103,10 @@ def chivo_query(query):
 			#Validation of request
 
 			#Run SIA request
-			r = requests.get(SERVER_SIA, params=request.args)
+			
+			
+			r = requests.get(SERVER_SIA, params)
+
 			return r.content
 
 		return 'Bad SIA Request'
