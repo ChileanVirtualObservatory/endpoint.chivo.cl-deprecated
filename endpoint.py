@@ -1,8 +1,10 @@
+from __future__ import absolute_import
+
 import subprocess
 import urllib
 import urllib2
+import redis 
 import requests
-import redis
 from os import system
 from flask import Flask, render_template, request
 app = Flask(__name__)
@@ -13,7 +15,7 @@ SERVER_SCS	= 'http://wfaudata.roe.ac.uk/twomass-dsa/DirectCone?DSACAT=TWOMASS&DS
 SERVER_SSA	= 'http://wfaudata.roe.ac.uk/6dF-ssap/?'
 SERVER_SIA	= 'http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=2mass&'
 
-redis = redis.StrictRedis(host='localhost', port=6379, db=0)
+redisConn = redis.StrictRedis(host='localhost', port=6379, db=0)
 
 @app.route('/')
 def index():
@@ -76,16 +78,19 @@ def chivo_query(query):
 			#	values['VERB'] = VERB
 
 			#Run SCS request
-			params=request.args
-			key = "scs;"+ str(params)
-			r = redis.get(string)
+			
+			
+			#Testing Redis in SCS
+			parameters=request.args
+			key = "scs;"+str(parameters)
+			r = redisConn.get(key)
 			if(r):
 				return r
-			else:
-				r = requests.get(SERVER_SCS, params)
-				redis.set(string, r.content)
-				redis.expire(string,120)
-				return r.content
+			#else:
+			#	r = requests.get(SERVER_SCS, params= parameters)
+			#	redisConn.set(key, r.content)
+			#	#redisConn.expire(key,120)
+			#	return r.content
 		
 		return 'Bad SCS Request'
 
