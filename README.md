@@ -3,7 +3,7 @@
 ##Services
 
 ###Simple Cone Search:
-* Web: http://dachs.lirae.cl:5000/chivo/scs
+* Web: http://dachs.lirae.cl:5000/alma/scs
 
 * Method: *GET*
 
@@ -16,7 +16,7 @@
 
 
 ###Simple Image Acess:
-* Web: http://dachs.lirae.cl:5000/chivo/sia
+* Web: http://dachs.lirae.cl:5000/alma/sia
 
 * Method: *GET*
 
@@ -37,7 +37,7 @@
 	* VERB `1 , 2 , 3`
 
 ### Simple Spectral Access:
-* Web: http://dachs.lirae.cl:5000/chivo/ssa
+* Web: http://dachs.lirae.cl:5000/alma/ssa
 
 * Method: *GET*
 
