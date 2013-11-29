@@ -1,5 +1,3 @@
-from __future__ import absolute_import
-
 import subprocess
 import urllib
 import urllib2
@@ -13,7 +11,8 @@ SERVER_TAP1	= 'http://localhost:8080/cadcSampleTAP/sync'
 SERVER_TAP	= 'http://wfaudata.roe.ac.uk/twomass-dsa/TAP/sync'
 SERVER_SCS	= 'http://wfaudata.roe.ac.uk/twomass-dsa/DirectCone?DSACAT=TWOMASS&DSATAB=twomass_psc'
 SERVER_SSA	= 'http://wfaudata.roe.ac.uk/6dF-ssap/?'
-SERVER_SIA	= 'http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=2mass&'
+SERVER_SIA	= 'http://irsa.ipac.caltech.edu/ibe/sia/wise/prelim/p3am_cdd?'
+
 
 redisConn = redis.StrictRedis(host='localhost', port=6379, db=0)
 
@@ -21,7 +20,7 @@ redisConn = redis.StrictRedis(host='localhost', port=6379, db=0)
 def index():
     return 'Index page'
 
-@app.route('/chivo/<query>', methods=['POST', 'GET'])
+@app.route('/alma/<query>', methods=['POST', 'GET'])
 def chivo_query(query):
 	if query == 'tap':
 		if request.method == 'POST':
@@ -81,16 +80,18 @@ def chivo_query(query):
 			
 			
 			#Testing Redis in SCS
+			
+
 			parameters=request.args
 			key = "scs;"+str(parameters)
 			r = redisConn.get(key)
 			if(r):
 				return r
-			#else:
-			#	r = requests.get(SERVER_SCS, params= parameters)
-			#	redisConn.set(key, r.content)
-			#	#redisConn.expire(key,120)
-			#	return r.content
+			else:
+				r = requests.get(SERVER_SCS, params= parameters)
+				redisConn.set(key, r.content)
+				redisConn.expire(key,1 * 24 * 60 * 60)
+				return r.content
 		
 		return 'Bad SCS Request'
 
