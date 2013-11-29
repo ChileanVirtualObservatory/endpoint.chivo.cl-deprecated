@@ -111,7 +111,7 @@ def chivo_query(query):
 			#Run SIA request
 			
 			
-			r = requests.get(SERVER_SIA, params)
+			r = requests.get(SERVER_SIA, params= request.args)
 
 			return r.content
 
