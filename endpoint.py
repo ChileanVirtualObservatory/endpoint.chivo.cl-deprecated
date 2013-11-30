@@ -4,7 +4,7 @@ import urllib2
 import redis 
 import requests
 from os import system
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, Response
 app = Flask(__name__)
 
 SERVER_TAP1	= 'http://localhost:8080/cadcSampleTAP/sync'
@@ -21,9 +21,14 @@ def index():
     return 'Index page'
 
 @app.route('/alma/<query>', methods=['POST', 'GET'])
-def chivo_query(query):
+@app.route('/alma/<query>/<option>', methods=['POST', 'GET'])
+@app.route('/alma/<query>/<option>/<int:qid>', methods=['POST', 'GET'])
+@app.route('/alma/<query>/<option>/<int:qid>/<qidOption>', methods=['POST', 'GET'])
+def chivo_query(query,qid=None,option=None, qidOption = None):
 	if query == 'tap':
-		if request.method == 'POST':
+		if option == "capabilities":
+			return "Service Capabilities"
+		elif request.method == 'POST':
 			#TAP Request POST
 			#query = request.form
 
@@ -49,13 +54,13 @@ def chivo_query(query):
 	
 			return the_page
 
-		if request.method == 'GET':
+		elif request.method == 'GET':
 			#TAP Request GET
 
 			#Validation of request
 	
 			#Run TAP request  	
-			r = requests.get(SERVER_SCS, params=request.args)
+			r = requests.get(SERVER_SCS, params=request.args,stream=True)
 			return r.content
 
 		return 'Bad TAP Request'
@@ -88,7 +93,7 @@ def chivo_query(query):
 			if(r):
 				return r
 			else:
-				r = requests.get(SERVER_SCS, params= parameters)
+				r = requests.get(SERVER_SCS, params= parameters,stream=True)
 				redisConn.set(key, r.content)
 				redisConn.expire(key,1 * 24 * 60 * 60)
 				return r.content
@@ -110,10 +115,15 @@ def chivo_query(query):
 
 			#Run SIA request
 			
+			r = requests.get(SERVER_SIA, params= request.args,stream=True)
 			
-			r = requests.get(SERVER_SIA, params= request.args)
+			def generate():
+				for line in r.iter_lines():
+    					if line: # filter out keep-alive new lines
+        					yield line
+			
+			return Response(generate(), mimetype='text/xml')
 
-			return r.content
 
 		return 'Bad SIA Request'
 
@@ -126,7 +136,7 @@ def chivo_query(query):
 			#Validation of request
 
 			#Run SSA request
-			r = requests.get(SERVER_SSA, params=request.args)
+			r = requests.get(SERVER_SSA, params=request.args,stream=True)
 	
 			return r.content
 		
