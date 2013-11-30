@@ -46,13 +46,16 @@ def chivo_query(query,qid=None,option=None, qidOption = None):
 			#Validation of request
 	
 			#Run TAP request
-			
+			CHUNK = 16 * 1024		
+	
 			data = urllib.urlencode(request.form)
 			req = urllib2.Request(SERVER_TAP, data)
 			response = urllib2.urlopen(req)
-			the_page = response.read()
+			def generate():
+				for the_page in iter(lambda: response.read(CHUNK), ''):
+					yield the_page
 	
-			return the_page
+			return Response(generate(), mimetype='text/xml')
 
 		elif request.method == 'GET':
 			#TAP Request GET
