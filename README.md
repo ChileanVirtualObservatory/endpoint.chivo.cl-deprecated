@@ -2,6 +2,15 @@
 
 ##Services
 
+### Table Access Protocol:
+* Web: http://dachs.lirae.cl:5000/alma/tap/sync or /alma/tap/async
+
+* Method: *POST* (Sending querys)
+ 	  *GET*  (Getting results for async query)
+
+* Query: `ADQL`
+
+
 ###Simple Cone Search:
 * Web: http://dachs.lirae.cl:5000/alma/scs
 
