@@ -26,83 +26,56 @@ def index():
 @app.route('/alma/<query>/<option>/<qid>/<qidOption>', methods=['POST', 'GET'])
 @app.route('/alma/<query>/<option>/<qid>/<qidOption>/<qidOptionRequest>', methods=['POST', 'GET'])
 def chivo_query(query,qid=None,option=None, qidOption = None, qidOptionRequest = None):
-	if query == 'tap':
-		if option == "capabilities":
+	CHUNK = 1024
+	if query.lower() == 'tap':
+		if option.lower() == "capabilities":
 			return redirect(SERVER_TAP +"/" + option)
-		elif request.method == 'POST':
-			CHUNK = 1024
-
-			if (option == 'sync' or (option == 'async' and qid == None and qidOption == None)):
-				#TAP Request POST
-				#query = request.form
-
-				#REQUEST	= query['REQUEST']
-				#LANG		= query['LANG']
-				#QUERY		= query['QUERY']
-				#POS		= query['POS']
-				#FROM		= query['FROM']
-				#SIZE		= query['SIZE']
-
-				#MAXREC		= query['MAXREC']
-				#RUNID		= query['RUNID']
-				#UPLOAD		= query['UPLOAD']
-
-				#Validation of request
-			
-				#Run TAP request
+		
+		
+		if option.lower() == "sync":
+			if request.method == 'POST':
+				
 				data = urllib.urlencode(request.form)
 				req = urllib2.Request(SERVER_TAP+"/"+option, data)
 				response = urllib2.urlopen(req)
+				
 				def generate():
 					for the_page in iter(lambda: response.read(CHUNK), ''):
 						yield the_page
 	
 				return Response(generate(), mimetype='text/xml')
-			elif option == 'async' and qid:
-				params = "/" + option
+			
+			elif request.method == 'GET':
+				
+				#r = requests.get(SERVER_SCS, params=request.args,stream=True)
+				return 'Bad Tad Request'
+				
+		elif option.lower() == "async":
+			if request.method == 'POST':
+				if qid == None:				
+					data = urllib.urlencode(request.form)
+					req = urllib2.Request(SERVER_TAP+"/"+option, data)
+					response = urllib2.urlopen(req)
+					def generate():
+						for the_page in iter(lambda: response.read(CHUNK), ''):
+							yield the_page
+		
+					return Response(generate(), mimetype='text/xml')
+				else:
+					return qid
+			
+			elif request.method == 'GET':
+				params  = "/" + option
 				if qid:
-					params = "/" + qid
+					params += "/" + qid
 				if qidOption:
-					params = "/" + qidOption
+					params += "/" + qidOption	
 				if qidOptionRequest:
-					params = "/" + qidOptionRequest
-				req = urllib2.Request(SERVER_TAP + params)
-				response = urllib2.urlopen(req)
-				def generate():
-					for the_page in iter(lambda: response.read(CHUNK), ''):
-						yield the_page
-				
-				return Response(generate(), mimetype = 'text/xml')
-		elif request.method == 'GET':
-        		if option == 'async' and qid == None:
-				return redirect(SERVER_TAP + "/" + option)                
-	
-			elif option == 'async' and qid:
-                                params ="/"+ option + "/" + qid
-                                if(qidOption):
-                                        params +="/"+ qidOption
-				if(qidOptionRequest):
 					params += "/" + qidOptionRequest
-                                url = SERVER_TAP+params
-				req = urllib2.Request(url)
-				response = urllib2.urlopen(req)
-				
-                                def generate():
-	                              for the_page in iter(lambda: response.read(CHUNK), ''):
-                                	yield the_page
-				
-                                return Response(generate(), mimetype= 'text/xml')
-
-			#TAP Request GET
-
-			#Validation of request
-	
-			#Run TAP request
-			else:
-				r = requests.get(SERVER_SCS, params=request.args,stream=True)
+				r = requests.get(SERVER_TAP + params,stream=True)
 				return r.content
-
-		return 'Bad TAP Request'
+					
+		return 'Bad Tap Request'
 
 	if query == 'scs':
 		if request.method == 'GET':
