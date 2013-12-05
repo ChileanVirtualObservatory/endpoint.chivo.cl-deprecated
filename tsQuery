@@ -1,9 +1,9 @@
 #Query Testing
 
 #TAP
-curl -v --location -d 'REQUEST=doQuery&LANG=ADQL&QUERY=SELECT TOP 1000 * FROM twomass_psc' http://127.0.0.1:5000/alma/tap
-#curl -v --location -d 'REQUEST=doQuery&LANG=ADQL&QUERY=SELECT TOP 1000 * FROM twomass_psc' http://wfaudata.roe.ac.uk/twomass-dsa/TAP/sync
-
+#curl -v --location -d 'REQUEST=doQuery&LANG=ADQL&QUERY=SELECT TOP 1000 * FROM twomass_psc' http://127.0.0.1:5000/alma/tap/async/4e995eed:142be32bf37:-7fe9/results
+#curl -v --location -d 'REQUEST=doQuery&LANG=ADQL&QUERY=SELECT TOP 1000 * FROM twomass_psc' http://wfaudata.roe.ac.uk/twomass-dsa/TAP/async/
+curl -X POST  http://127.0.0.1:5000/alma/tap/async/4e995eed:142be32bf37:-7fe9
 #SCS
 #curl --request GET 'http://127.0.0.1:5000/alma/scs?RA=21&DEC=15&SR=1'
 #curl --request GET http://wfaudata.roe.ac.uk/twomass-dsa/DirectCone\?DSACAT\=TWOMASS\&DSATAB\=twomass_psc\&ra\=21\&dec\=15\&RADIUS\=1

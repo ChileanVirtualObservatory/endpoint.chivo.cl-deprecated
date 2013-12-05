@@ -4,11 +4,11 @@ import urllib2
 import redis 
 import requests
 from os import system
-from flask import Flask, render_template, request, Response
+from flask import Flask, render_template, request, Response, redirect
 app = Flask(__name__)
 
 SERVER_TAP1	= 'http://localhost:8080/cadcSampleTAP/sync'
-SERVER_TAP	= 'http://wfaudata.roe.ac.uk/twomass-dsa/TAP/sync'
+SERVER_TAP	= 'http://wfaudata.roe.ac.uk/twomass-dsa/TAP'
 SERVER_SCS	= 'http://wfaudata.roe.ac.uk/twomass-dsa/DirectCone?DSACAT=TWOMASS&DSATAB=twomass_psc'
 SERVER_SSA	= 'http://wfaudata.roe.ac.uk/6dF-ssap/?'
 SERVER_SIA	= 'http://irsa.ipac.caltech.edu/ibe/sia/wise/prelim/p3am_cdd?'
@@ -22,49 +22,85 @@ def index():
 
 @app.route('/alma/<query>', methods=['POST', 'GET'])
 @app.route('/alma/<query>/<option>', methods=['POST', 'GET'])
-@app.route('/alma/<query>/<option>/<int:qid>', methods=['POST', 'GET'])
-@app.route('/alma/<query>/<option>/<int:qid>/<qidOption>', methods=['POST', 'GET'])
-def chivo_query(query,qid=None,option=None, qidOption = None):
+@app.route('/alma/<query>/<option>/<qid>', methods=['POST', 'GET'])
+@app.route('/alma/<query>/<option>/<qid>/<qidOption>', methods=['POST', 'GET'])
+@app.route('/alma/<query>/<option>/<qid>/<qidOption>/<qidOptionRequest>', methods=['POST', 'GET'])
+def chivo_query(query,qid=None,option=None, qidOption = None, qidOptionRequest = None):
 	if query == 'tap':
 		if option == "capabilities":
-			return "Service Capabilities"
+			return redirect(SERVER_TAP +"/" + option)
 		elif request.method == 'POST':
-			#TAP Request POST
-			#query = request.form
+			CHUNK = 1024
 
-			#REQUEST	= query['REQUEST']
-			#LANG		= query['LANG']
-			#QUERY		= query['QUERY']
-			#POS		= query['POS']
-			#FROM		= query['FROM']
-			#SIZE		= query['SIZE']
+			if (option == 'sync' or (option == 'async' and qid == None and qidOption == None)):
+				#TAP Request POST
+				#query = request.form
 
-			#MAXREC		= query['MAXREC']
-			#RUNID		= query['RUNID']
-			#UPLOAD		= query['UPLOAD']
+				#REQUEST	= query['REQUEST']
+				#LANG		= query['LANG']
+				#QUERY		= query['QUERY']
+				#POS		= query['POS']
+				#FROM		= query['FROM']
+				#SIZE		= query['SIZE']
 
-			#Validation of request
+				#MAXREC		= query['MAXREC']
+				#RUNID		= query['RUNID']
+				#UPLOAD		= query['UPLOAD']
+
+				#Validation of request
+			
+				#Run TAP request
+				data = urllib.urlencode(request.form)
+				req = urllib2.Request(SERVER_TAP+"/"+option, data)
+				response = urllib2.urlopen(req)
+				def generate():
+					for the_page in iter(lambda: response.read(CHUNK), ''):
+						yield the_page
 	
-			#Run TAP request
-			CHUNK = 16 * 1024		
-	
-			data = urllib.urlencode(request.form)
-			req = urllib2.Request(SERVER_TAP, data)
-			response = urllib2.urlopen(req)
-			def generate():
-				for the_page in iter(lambda: response.read(CHUNK), ''):
-					yield the_page
-	
-			return Response(generate(), mimetype='text/xml')
-
+				return Response(generate(), mimetype='text/xml')
+			elif option == 'async' and qid:
+				params = "/" + option
+				if qid:
+					params = "/" + qid
+				if qidOption:
+					params = "/" + qidOption
+				if qidOptionRequest:
+					params = "/" + qidOptionRequest
+				req = urllib2.Request(SERVER_TAP + params)
+				response = urllib2.urlopen(req)
+				def generate():
+					for the_page in iter(lambda: response.read(CHUNK), ''):
+						yield the_page
+				
+				return Response(generate(), mimetype = 'text/xml')
 		elif request.method == 'GET':
+        		if option == 'async' and qid == None:
+				return redirect(SERVER_TAP + "/" + option)                
+	
+			elif option == 'async' and qid:
+                                params ="/"+ option + "/" + qid
+                                if(qidOption):
+                                        params +="/"+ qidOption
+				if(qidOptionRequest):
+					params += "/" + qidOptionRequest
+                                url = SERVER_TAP+params
+				req = urllib2.Request(url)
+				response = urllib2.urlopen(req)
+				
+                                def generate():
+	                              for the_page in iter(lambda: response.read(CHUNK), ''):
+                                	yield the_page
+				
+                                return Response(generate(), mimetype= 'text/xml')
+
 			#TAP Request GET
 
 			#Validation of request
 	
-			#Run TAP request  	
-			r = requests.get(SERVER_SCS, params=request.args,stream=True)
-			return r.content
+			#Run TAP request
+			else:
+				r = requests.get(SERVER_SCS, params=request.args,stream=True)
+				return r.content
 
 		return 'Bad TAP Request'
 
@@ -120,6 +156,7 @@ def chivo_query(query,qid=None,option=None, qidOption = None):
 			
 			r = requests.get(SERVER_SIA, params= request.args,stream=True)
 			
+			
 			def generate():
 				for line in r.iter_lines():
     					if line: # filter out keep-alive new lines
@@ -127,6 +164,7 @@ def chivo_query(query,qid=None,option=None, qidOption = None):
 			
 			return Response(generate(), mimetype='text/xml')
 
+			
 
 		return 'Bad SIA Request'
 
