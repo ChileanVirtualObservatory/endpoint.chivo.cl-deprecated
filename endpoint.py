@@ -29,9 +29,15 @@ def chivo_query(query,qid=None,option=None, qidOption = None, qidOptionRequest =
 	CHUNK = 1024
 	if query.lower() == 'tap':
 		if option.lower() == "capabilities":
-			return redirect(SERVER_TAP +"/" + option)
+			r = requests.get(SERVER_TAP + option,stream=True)
+			
+			def generate():
+				for line in r.iter_lines():
+						if line: # filter out keep-alive new lines
+							yield line
 		
-		
+			return Response(generate(), mimetype='text/xml')
+
 		if option.lower() == "sync":
 			if request.method == 'POST':
 				
@@ -46,23 +52,21 @@ def chivo_query(query,qid=None,option=None, qidOption = None, qidOptionRequest =
 				return Response(generate(), mimetype='text/xml')
 			
 			elif request.method == 'GET':
-				
-				#r = requests.get(SERVER_SCS, params=request.args,stream=True)
 				return 'Bad Tad Request'
 				
 		elif option.lower() == "async":
 			if request.method == 'POST':
-				if qid == None:				
+				if qid == None:
 					data = urllib.urlencode(request.form)
 					req = urllib2.Request(SERVER_TAP+"/"+option, data)
 					response = urllib2.urlopen(req)
 					def generate():
 						for the_page in iter(lambda: response.read(CHUNK), ''):
 							yield the_page
-		
+							
 					return Response(generate(), mimetype='text/xml')
 				else:
-					return qid
+					return 'Bad Tad Request'
 			
 			elif request.method == 'GET':
 				params  = "/" + option
@@ -73,7 +77,13 @@ def chivo_query(query,qid=None,option=None, qidOption = None, qidOptionRequest =
 				if qidOptionRequest:
 					params += "/" + qidOptionRequest
 				r = requests.get(SERVER_TAP + params,stream=True)
-				return r.content
+				
+				def generate():
+					for line in r.iter_lines():
+							if line: # filter out keep-alive new lines
+								yield line
+			
+				return Response(generate(), mimetype='text/xml')
 					
 		return 'Bad Tap Request'
 
@@ -108,7 +118,12 @@ def chivo_query(query,qid=None,option=None, qidOption = None, qidOptionRequest =
 				r = requests.get(SERVER_SCS, params= parameters,stream=True)
 				redisConn.set(key, r.content)
 				redisConn.expire(key,1 * 24 * 60 * 60)
-				return r.content
+				def generate():
+					for line in r.iter_lines():
+							if line: # filter out keep-alive new lines
+								yield line
+			
+				return Response(generate(), mimetype='text/xml')
 		
 		return 'Bad SCS Request'
 
@@ -152,7 +167,12 @@ def chivo_query(query,qid=None,option=None, qidOption = None, qidOptionRequest =
 			#Run SSA request
 			r = requests.get(SERVER_SSA, params=request.args,stream=True)
 	
-			return r.content
+			def generate():
+				for line in r.iter_lines():
+    					if line: # filter out keep-alive new lines
+        					yield line
+			
+			return Response(generate(), mimetype='text/xml')
 		
 		return 'Bad SSA Request'
 	return 'Bad Request'
