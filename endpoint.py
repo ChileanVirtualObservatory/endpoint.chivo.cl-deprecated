@@ -29,7 +29,7 @@ def chivo_query(query,qid=None,option=None, qidOption = None, qidOptionRequest =
 	CHUNK = 1024
 	if query.lower() == 'tap':
 		if option.lower() == "capabilities":
-			r = requests.get(SERVER_TAP + option,stream=True)
+			r = requests.get(SERVER_TAP +"/" +option,stream=True)
 			
 			def generate():
 				for line in r.iter_lines():
