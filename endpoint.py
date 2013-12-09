@@ -20,11 +20,11 @@ redisConn = redis.StrictRedis(host='localhost', port=6379, db=0)
 def index():
     return 'Index page'
 
-@app.route('/alma/<query>', methods=['POST', 'GET'])
-@app.route('/alma/<query>/<option>', methods=['POST', 'GET'])
-@app.route('/alma/<query>/<option>/<qid>', methods=['POST', 'GET'])
-@app.route('/alma/<query>/<option>/<qid>/<qidOption>', methods=['POST', 'GET'])
-@app.route('/alma/<query>/<option>/<qid>/<qidOption>/<qidOptionRequest>', methods=['POST', 'GET'])
+@app.route('/alma/<query>/', methods=['POST', 'GET'])
+@app.route('/alma/<query>/<option>/', methods=['POST', 'GET'])
+@app.route('/alma/<query>/<option>/<qid>/', methods=['GET'])
+@app.route('/alma/<query>/<option>/<qid>/<qidOption>/', methods=['GET'])
+@app.route('/alma/<query>/<option>/<qid>/<qidOption>/<qidOptionRequest>/', methods=['GET'])
 def chivo_query(query,qid=None,option=None, qidOption = None, qidOptionRequest = None):
 	CHUNK = 1024
 	if query.lower() == 'tap':
