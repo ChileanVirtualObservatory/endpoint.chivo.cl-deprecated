@@ -7,8 +7,8 @@ from os import system
 from flask import Flask, render_template, request, Response, redirect
 app = Flask(__name__)
 
-SERVER_TAP1	= 'http://localhost:8080/cadcSampleTAP/sync'
-SERVER_TAP	= 'http://wfaudata.roe.ac.uk/twomass-dsa/TAP'
+SERVER_TAP	= 'http://200.1.19.130:8080/__system__/tap/run/tap'
+SERVER_TAP1	= 'http://wfaudata.roe.ac.uk/twomass-dsa/TAP'
 SERVER_SCS	= 'http://wfaudata.roe.ac.uk/twomass-dsa/DirectCone?DSACAT=TWOMASS&DSATAB=twomass_psc'
 SERVER_SSA	= 'http://wfaudata.roe.ac.uk/6dF-ssap/?'
 SERVER_SIA	= 'http://irsa.ipac.caltech.edu/ibe/sia/wise/prelim/p3am_cdd?'
