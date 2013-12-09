@@ -36,7 +36,8 @@ def chivo_query(query,qid=None,option=None, qidOption = None, qidOptionRequest =
 						if line: # filter out keep-alive new lines
 							yield line
 		
-			return Response(generate(), mimetype='text/xml')
+			#return Response(generate(), mimetype='text/xml')
+			return Response(generate())
 
 		if option.lower() == "sync":
 			if request.method == 'POST':
@@ -49,8 +50,9 @@ def chivo_query(query,qid=None,option=None, qidOption = None, qidOptionRequest =
 					for the_page in iter(lambda: response.read(CHUNK), ''):
 						yield the_page
 	
-				return Response(generate(), mimetype='text/xml')
-			
+				#return Response(generate(), mimetype='text/xml')
+				return Response(generate())
+				
 			elif request.method == 'GET':
 				return 'Bad Tad Request'
 				
@@ -64,7 +66,8 @@ def chivo_query(query,qid=None,option=None, qidOption = None, qidOptionRequest =
 						for the_page in iter(lambda: response.read(CHUNK), ''):
 							yield the_page
 							
-					return Response(generate(), mimetype='text/xml')
+					#return Response(generate(), mimetype='text/xml')
+					return Response(generate())
 				else:
 					return 'Bad Tad Request'
 			
@@ -83,7 +86,8 @@ def chivo_query(query,qid=None,option=None, qidOption = None, qidOptionRequest =
 							if line: # filter out keep-alive new lines
 								yield line
 			
-				return Response(generate(), mimetype='text/xml')
+				#return Response(generate(), mimetype='text/xml')
+				return Response(generate())
 					
 		return 'Bad Tap Request'
 
@@ -123,8 +127,8 @@ def chivo_query(query,qid=None,option=None, qidOption = None, qidOptionRequest =
 							if line: # filter out keep-alive new lines
 								yield line
 			
-				return Response(generate(), mimetype='text/xml')
-		
+				#return Response(generate(), mimetype='text/xml')
+				return Response(generate())
 		return 'Bad SCS Request'
 
 	if query == 'sia':
@@ -147,11 +151,11 @@ def chivo_query(query,qid=None,option=None, qidOption = None, qidOptionRequest =
 			
 			def generate():
 				for line in r.iter_lines():
-    					if line: # filter out keep-alive new lines
-        					yield line
+						if line: # filter out keep-alive new lines
+							yield line
 			
-			return Response(generate(), mimetype='text/xml')
-
+			#return Response(generate(), mimetype='text/xml')
+			return Response(generate())
 			
 
 		return 'Bad SIA Request'
@@ -172,8 +176,8 @@ def chivo_query(query,qid=None,option=None, qidOption = None, qidOptionRequest =
     					if line: # filter out keep-alive new lines
         					yield line
 			
-			return Response(generate(), mimetype='text/xml')
-		
+			#return Response(generate(), mimetype='text/xml')
+			return Response(generate())
 		return 'Bad SSA Request'
 	return 'Bad Request'
 
