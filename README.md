@@ -3,14 +3,60 @@
 ##Services
 
 ### Table Access Protocol:
-* Web: http://dachs.lirae.cl:5000/alma/tap/sync or /alma/tap/async
 
-* Method: *POST* (Sending querys)
- 	  *GET*  (Getting results for async query)
+* Parameters : [DACHS](https://github.com/ChileanVirtualObservatory/dachs#parameters)
 
-* Query: `ADQL`
+#### Service Capabilities:
 
+   * WEB : http://dachs.lirae.cl:5000/alma/tap/capabilities
+   
+   * Method: *GET*
 
+#### SYNC Query:
+
+   * WEB : http://dachs.lirae.cl:5000/alma/tap/sync
+   
+   * Methond : *POST*
+   
+   * Return: *VOTABLE*
+
+#### ASYNC Query:
+
+##### New Query
+
+   * WEB : http://dachs.lirae.cl:5000/alma/tap/async
+   
+   * Method : *POST*
+   
+   * RETURN : *VOTABLE* With query id
+   
+##### List Querys
+
+   * WEB : http://dachs.lirae.cl:5000/alma/tap/async
+ 
+   * Method: *GET*
+   
+   * Parameters: *None*
+
+   * RETURN: *UWL* an xml with all querys with their status
+   
+##### Query Info
+   * WEB : http://dachs.lirae.cl:5000/alma/tap/async/<id>
+   
+   * Method: *GET*
+   
+   * Parameters: *None* 
+   
+   * RETURN :  *UWL* with query status
+   
+##### Other options
+
+   * WEB : http://dachs.lirae.cl:5000/alma/tap/async/<id>/<option>
+  
+   * Parameters: `option phase , quote , executionduration , destruction , error , parameters , results , owner`   
+
+   * Method: *GET*
+   
 ###Simple Cone Search:
 * Web: http://dachs.lirae.cl:5000/alma/scs
 
