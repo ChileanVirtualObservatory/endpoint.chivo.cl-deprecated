@@ -41,7 +41,7 @@
    * RETURN: *UWL* an xml with all querys with their status
    
 ##### Query Info
-   * WEB : http://dachs.lirae.cl:5000/alma/tap/async/<id>
+   * WEB : http://dachs.lirae.cl:5000/alma/tap/async/:id
    
    * Method: *GET*
    
@@ -51,7 +51,7 @@
    
 ##### Other options
 
-   * WEB : http://dachs.lirae.cl:5000/alma/tap/async/<id>/<option>
+   * WEB : http://dachs.lirae.cl:5000/alma/tap/async/:id/:option
   
    * Parameters: `option phase , quote , executionduration , destruction , error , parameters , results , owner`   
 
