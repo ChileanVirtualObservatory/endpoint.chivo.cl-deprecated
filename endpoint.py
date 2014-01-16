@@ -1,190 +1,194 @@
 import subprocess
 import urllib
 import urllib2
-import redis 
 import requests
 from os import system
 from flask import Flask, render_template, request, Response, redirect
+
+
+#Hash with every catalog and inside another hash with the url from the services
+catalogsIvoa = {
+"alma" : {
+	"tap" : "http://wfaudata.roe.ac.uk/twomass-dsa/TAP", 
+	"scs" : "http://wfaudata.roe.ac.uk/twomass-dsa/DirectCone?DSACAT=TWOMASS&DSATAB=twomass_psc", 
+	"ssa": "http://wfaudata.roe.ac.uk/6dF-ssap/?" , 
+	"sia" : "http://irsa.ipac.caltech.edu/ibe/sia/wise/prelim/p3am_cdd?"} ,
+"2mass": {
+	"tap" : "http://wfaudata.roe.ac.uk/twomass-dsa/TAP",
+	"sia" : "http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=2mass&"
+	}
+}
+
+
+#Catalog class, made once in the application and change the catalog in use in execution time
+class Catalog:
+	#Default came with "alma" catalog
+	def __init__(self,catalog= None):
+		try:                
+			if catalog:
+				self.dic = catalogsIvoa[catalog]
+			else:
+				self.dic = catalogsIvoa["alma"]
+		except:
+			return False
+	#Change the object to another catalog
+	def setCatalog(self,catalog):
+		self.dic = catalogsIvoa[catalog]
+		return None	
+	#Get the services from the catalog in use
+	def getServices(self):
+		serv = self.dic.keys()
+		return serv	
+	#Generic query method, it call the other query types.
+	def query(self,parameters, method, queryType, route = None):
+		#All services
+		if method == "GET":	
+			if queryType == "scs" :
+				r=self.scsQuery(parameters)
+				return r
+			elif queryType == "sia":
+				r=self.siaQuery(parameters)
+				return r
+
+			elif queryType == "ssa":
+				r=self.ssaQuery(parameters)
+				return r
+			elif queryType == "tap":
+				r = self.tapQuery(parameters, method, route)
+				return r
+			else:
+				return False
+		#Only tap 
+		elif method == "POST" and queryType == "tap":
+			r=self.tapQuery(parameters, method, route)
+			return r
+		else:
+			return False
+
+	#SCS
+	def scsQuery(self,parameters):
+		r = requests.get(self.dic["scs"] , params = parameters, stream = True)
+		return r
+	#SSA
+	def ssaQuery(self, parameters):
+		r = requests.get(self.dic["ssa"] , params = parameters, stream = True)
+		return r
+	#SIA
+	def siaQuery(self,parameters):
+		r = requests.get(self.dic["sia"] , params = parameters, stream = True)
+		return r
+	#TAP
+	def tapQuery(self, query , method , route):
+		
+		if method == "GET":
+			params  = "/" + route["option"]
+			if "qid" in route.keys():
+					params += "/" + route["qid"]
+			if "qidOption" in route.keys():
+					params += "/" + route["qidOption"]
+			if "qidOptionRequest" in route.keys():
+					params += "/" + route["qidOptionRequest"]
+			
+			r = requests.get(self.dic["tap"] + params , stream = True)
+			
+			return r
+
+		elif method == "POST":
+			if not "qid" in route.keys():
+				data = query
+				
+				print self.dic["tap"]+"/"+route["option"]
+				
+                req = urllib2.Request(self.dic["tap"]+"/"+route["option"], data)
+                response = urllib2.urlopen(req)
+                return response	
+		return False 
+
+
+#Functions for data streaming
+def streamDataGet(r):
+	for line in r.iter_lines():
+			if line: # filter out keep-alive new lines
+				yield line
+
+def streamDataPost(r):
+	CHUNK = 1024
+	for the_page in iter(lambda: r.read(CHUNK), ''):
+		yield the_page
+
+#Application Itself
 app = Flask(__name__)
-
-SERVER_TAP	= 'http://200.1.19.130:8080/__system__/tap/run/tap'
-SERVER_TAP1	= 'http://wfaudata.roe.ac.uk/twomass-dsa/TAP'
-SERVER_SCS	= 'http://wfaudata.roe.ac.uk/twomass-dsa/DirectCone?DSACAT=TWOMASS&DSATAB=twomass_psc'
-SERVER_SSA	= 'http://wfaudata.roe.ac.uk/6dF-ssap/?'
-SERVER_SIA	= 'http://irsa.ipac.caltech.edu/ibe/sia/wise/prelim/p3am_cdd?'
+catalogIvoa = Catalog()
 
 
-redisConn = redis.StrictRedis(host='localhost', port=6379, db=0)
 
 @app.route('/')
 def index():
-    return 'Index page'
+	return 'Index Page'
 
-@app.route('/alma/<query>/', methods=['POST', 'GET'])
-@app.route('/alma/<query>/<option>/', methods=['POST', 'GET'])
-@app.route('/alma/<query>/<option>/<qid>/', methods=['GET'])
-@app.route('/alma/<query>/<option>/<qid>/<qidOption>/', methods=['GET'])
-@app.route('/alma/<query>/<option>/<qid>/<qidOption>/<qidOptionRequest>/', methods=['GET'])
-def chivo_query(query,qid=None,option=None, qidOption = None, qidOptionRequest = None):
-	CHUNK = 1024
-	if query.lower() == 'tap':
-		if option.lower() == "capabilities":
-			r = requests.get(SERVER_TAP +"/" +option,stream=True)
+@app.route('/<catalog>/')
+def catalogServices(catalog):
+	if catalog in catalogsIvoa.keys():
+		catalogIvoa.setCatalog(catalog)
+		return " ".join(catalogIvoa.getServices())
+	else:
+		return 'Catalog not found'
+
+@app.route('/<catalog>/<queryType>/', methods=['POST', 'GET'])
+def query(catalog, queryType):
+	try:
+		catalogIvoa.setCatalog(catalog)
+		if queryType in catalogIvoa.getServices():
+			if request.method == "GET":
+				r = catalogIvoa.query(request.args, request.method, queryType) 
+				return Response(streamDataGet(r))
+			elif request.method == "POST" and queryType == "tap":
+				r = catalogIvoa.query(urllib.urlencode(request.form), request.method, queryType)
+				return Response(streamDataPost(r))
 			
-			def generate():
-				for line in r.iter_lines():
-						if line: # filter out keep-alive new lines
-							yield line
+		return 'Catalog without service'
+	except:
+		return 'No catalog found'
+
+@app.route('/<catalog>/tap/')
+def tap(catalog):
+	catalogIvoa.setCatalog(catalog)
+	if 'tap' in catalogIvoa.getServices():
+		return 'OK'
+
+@app.route('/<catalog>/tap/<path:route>', methods = ['GET', 'POST'])
+def queryTap(catalog,route=None):
+
+	catalogIvoa.setCatalog(catalog)
+	route = map(str,route.split("/"))
+	dictRoute = dict()
+	if len(route) > 0:
+		dictRoute["option"] = route[0]
+	if len(route) > 1:
+		dictRoute["qid"] = route[1]
+	if len(route) > 2:
+		dictRoute["qidOption"] = route[2]
+	if len(route) > 3:
+		dictRoute["qidOption"] = route[3]
+	
+	if len(route) > 4:
+		return "Bad Tap Request"
+	
+	if 'tap' in catalogIvoa.getServices():
 		
-			#return Response(generate(), mimetype='text/xml')
-			return Response(generate())
-
-		if option.lower() == "sync":
-			if request.method == 'POST':
-				
-				data = urllib.urlencode(request.form)
-				req = urllib2.Request(SERVER_TAP+"/"+option, data)
-				response = urllib2.urlopen(req)
-				
-				def generate():
-					for the_page in iter(lambda: response.read(CHUNK), ''):
-						yield the_page
-	
-				#return Response(generate(), mimetype='text/xml')
-				return Response(generate())
-				
-			elif request.method == 'GET':
-				return 'Bad Tad Request'
-				
-		elif option.lower() == "async":
-			if request.method == 'POST':
-				if qid == None:
-					data = urllib.urlencode(request.form)
-					req = urllib2.Request(SERVER_TAP+"/"+option, data)
-					response = urllib2.urlopen(req)
-					def generate():
-						for the_page in iter(lambda: response.read(CHUNK), ''):
-							yield the_page
-							
-					#return Response(generate(), mimetype='text/xml')
-					return Response(generate())
-				else:
-					return 'Bad Tad Request'
-			
-			elif request.method == 'GET':
-				params  = "/" + option
-				if qid:
-					params += "/" + qid
-				if qidOption:
-					params += "/" + qidOption	
-				if qidOptionRequest:
-					params += "/" + qidOptionRequest
-				r = requests.get(SERVER_TAP + params,stream=True)
-				
-				def generate():
-					for line in r.iter_lines():
-							if line: # filter out keep-alive new lines
-								yield line
-			
-				#return Response(generate(), mimetype='text/xml')
-				return Response(generate())
-					
-		return 'Bad Tap Request'
-
-	if query == 'scs':
-		if request.method == 'GET':
-			#SCS Request GET 
-			#values = {}
-			#VERB	= 0
-
-			#values['RA']	= request.args.get('RA')
-			#values['DEC']	= request.args.get('DEC')
-			#values['SR']	= request.args.get('SR')
-			#VERB			= request.args.get('VERB')
-
-			#Validation of request
-
-			#if VERB is not None:
-			#	values['VERB'] = VERB
-
-			#Run SCS request
-			
-			
-			#Testing Redis in SCS
-			
-
-			parameters=request.args
-			key = "scs;"+str(parameters)
-			r = redisConn.get(key)
-			if(r):
-				return r
-			else:
-				r = requests.get(SERVER_SCS, params= parameters,stream=True)
-				redisConn.set(key, r.content)
-				redisConn.expire(key,1 * 24 * 60 * 60)
-				def generate():
-					for line in r.iter_lines():
-							if line: # filter out keep-alive new lines
-								yield line
-			
-				#return Response(generate(), mimetype='text/xml')
-				return Response(generate())
-		return 'Bad SCS Request'
-
-	if query == 'sia':
-		if request.method == 'GET':
-			#SIA Request GET 
-			#POS = request.args.get('POS')
-			#SIZE = request.args.get('SIZE')
-			#FORMAT = request.args.get('FORMAT')
-			#NAXIS = request.args.get('NAXIS')
-			#PROJ = request.args.get('PROJ')
-			#CFRAME = request.args.get('CFRAME')
-			#EQUINOX = request.args.get('EQUINOX')
-			
-			#Validation of request
-
-			#Run SIA request
-			
-			r = requests.get(SERVER_SIA, params= request.args,stream=True)
-			
-			
-			def generate():
-				for line in r.iter_lines():
-						if line: # filter out keep-alive new lines
-							yield line
-			
-			#return Response(generate(), mimetype='text/xml')
-			return Response(generate())
-			
-
-		return 'Bad SIA Request'
-
-	if query == 'ssa':
-		if request.method == 'GET':
-			#SSA Request GET
-			#POS = request.args.get('POS')
-			#SIZE = request.args.get('SIZE')
-
-			#Validation of request
-
-			#Run SSA request
-			r = requests.get(SERVER_SSA, params=request.args,stream=True)
-	
-			def generate():
-				for line in r.iter_lines():
-    					if line: # filter out keep-alive new lines
-        					yield line
-			
-			#return Response(generate(), mimetype='text/xml')
-			return Response(generate())
-		return 'Bad SSA Request'
-	return 'Bad Request'
+		if request.method == "GET":
+		
+			r = catalogIvoa.query(None, request.method, "tap" , dictRoute)
+			return Response(streamDataGet(r))
+		elif request.method == "POST":
+			print urllib.urlencode(request.form)
+			print dictRoute
+			r = catalogIvoa.query(urllib.urlencode(request.form), request.method, "tap",dictRoute)
+			return Response(streamDataPost(r))
+	return 'Bad Tap Request1'
 
 
-@app.errorhandler(404)
-def page_not_found(error):
-	return 'This page does not exist', 404
+
 
 if __name__ == '__main__':
     app.run(debug=True)
