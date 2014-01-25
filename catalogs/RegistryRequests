@@ -1,0 +1,15 @@
+#TAP
+
+SELECT DISTINCT short_name,access_url FROM rr.interface,rr.capability, rr.resource WHERE standard_id = 'ivo://ivoa.net/std/tap' AND rr.interface.ivoid = rr.capability.ivoid and rr.capability.ivoid = rr.resource.ivoid AND short_name != 'N/A' AND url_use ='base'
+
+#SCS
+
+SELECT DISTINCT short_name,access_url FROM rr.interface,rr.capability, rr.resource WHERE standard_id = 'ivo://ivoa.net/std/conesearch' AND rr.interface.ivoid = rr.capability.ivoid and rr.capability.ivoid = rr.resource.ivoid AND short_name != 'N/A' AND url_use ='base'
+
+#SSA
+
+SELECT DISTINCT short_name,access_url FROM rr.interface,rr.capability, rr.resource WHERE standard_id = 'ivo://ivoa.net/std/ssa' AND rr.interface.ivoid = rr.capability.ivoid and rr.capability.ivoid = rr.resource.ivoid AND short_name != 'N/A' AND url_use ='base'
+
+#SIA
+
+SELECT DISTINCT short_name,access_url FROM rr.interface,rr.capability, rr.resource WHERE standard_id = 'ivo://ivoa.net/std/sia' AND rr.interface.ivoid = rr.capability.ivoid and rr.capability.ivoid = rr.resource.ivoid AND short_name != 'N/A' AND url_use ='base'

@@ -7,34 +7,62 @@ from flask import Flask, render_template, request, Response, redirect
 
 
 #Hash with every catalog and inside another hash with the url from the services
-catalogsIvoa = {
-"alma" : {
-	"tap" : "http://wfaudata.roe.ac.uk/twomass-dsa/TAP", 
-	"scs" : "http://wfaudata.roe.ac.uk/twomass-dsa/DirectCone?DSACAT=TWOMASS&DSATAB=twomass_psc", 
-	"ssa": "http://wfaudata.roe.ac.uk/6dF-ssap/?" , 
-	"sia" : "http://irsa.ipac.caltech.edu/ibe/sia/wise/prelim/p3am_cdd?"} ,
-"2mass": {
-	"tap" : "http://wfaudata.roe.ac.uk/twomass-dsa/TAP",
-	"sia" : "http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=2mass&"
-	}
-}
+#~ catalogsIvoa = {
+#~ "alma" : {
+	#~ "tap" : "http://wfaudata.roe.ac.uk/twomass-dsa/TAP", 
+	#~ "scs" : "http://wfaudata.roe.ac.uk/twomass-dsa/DirectCone?DSACAT=TWOMASS&DSATAB=twomass_psc", 
+	#~ "ssa": "http://wfaudata.roe.ac.uk/6dF-ssap/?" , 
+	#~ "sia" : "http://irsa.ipac.caltech.edu/ibe/sia/wise/prelim/p3am_cdd?"} ,
+#~ "2mass": {
+	#~ "tap" : "http://wfaudata.roe.ac.uk/twomass-dsa/TAP",
+	#~ "sia" : "http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=2mass&"
+	#~ }
+#~ }
 
 
 #Catalog class, made once in the application and change the catalog in use in execution time
 class Catalog:
+	catalogsIvoa = dict()
+	
+	catalogsIvoa["alma"] = {
+	"tap" : "http://wfaudata.roe.ac.uk/twomass-dsa/TAP", 
+	"scs" : "http://wfaudata.roe.ac.uk/twomass-dsa/DirectCone?DSACAT=TWOMASS&DSATAB=twomass_psc", 
+	"ssa": "http://wfaudata.roe.ac.uk/6dF-ssap/?" , 
+	"sia" : "http://irsa.ipac.caltech.edu/ibe/sia/wise/prelim/p3am_cdd?"
+	}
+	
 	#Default came with "alma" catalog
 	def __init__(self,catalog= None):
+		self.getRegistry()
 		try:                
 			if catalog:
-				self.dic = catalogsIvoa[catalog]
+				self.dic = self.catalogsIvoa[catalog]
 			else:
-				self.dic = catalogsIvoa["alma"]
+				self.dic = self.catalogsIvoa["alma"]
 		except:
 			return False
+			
+			
+	#Initate Main dicctionary with .tsv in catalogs folder	
+	def getRegistry(self):
+		types = ['tap', 'sia' , 'ssa' , 'scs']
+		for _type in types:
+			_file = open("catalogs/"+_type+".tsv", "r")
+
+			for line in _file:
+				l = line.split("\t")
+				if l[0] not in self.catalogsIvoa.keys():
+					self.catalogsIvoa[l[0]] = dict()
+				self.catalogsIvoa[l[0]][_type] = l[1]
+	
 	#Change the object to another catalog
 	def setCatalog(self,catalog):
-		self.dic = catalogsIvoa[catalog]
+		self.dic = self.catalogsIvoa[catalog]
 		return None	
+		
+		
+	def getCatalogsIvoa	(self):
+		return self.catalogsIvoa
 	#Get the services from the catalog in use
 	def getServices(self):
 		serv = self.dic.keys()
@@ -126,15 +154,15 @@ catalogIvoa = Catalog()
 def index():
 	return 'Index Page'
 
-@app.route('/<catalog>/')
+@app.route('/<catalog>')
 def catalogServices(catalog):
-	if catalog in catalogsIvoa.keys():
+	if catalog in catalogIvoa.getCatalogsIvoa().keys():
 		catalogIvoa.setCatalog(catalog)
 		return " ".join(catalogIvoa.getServices())
 	else:
 		return 'Catalog not found'
 
-@app.route('/<catalog>/<queryType>/', methods=['POST', 'GET'])
+@app.route('/<catalog>/<queryType>', methods=['POST', 'GET'])
 def query(catalog, queryType):
 	try:
 		catalogIvoa.setCatalog(catalog)
@@ -150,7 +178,7 @@ def query(catalog, queryType):
 	except:
 		return 'No catalog found'
 
-@app.route('/<catalog>/tap/')
+@app.route('/<catalog>/tap')
 def tap(catalog):
 	catalogIvoa.setCatalog(catalog)
 	if 'tap' in catalogIvoa.getServices():
@@ -187,8 +215,10 @@ def queryTap(catalog,route=None):
 			return Response(streamDataPost(r))
 	return 'Bad Tap Request1'
 
-
-
+@app.route('/registry')
+def registry():
+	cat = catalogIvoa.getCatalogsIvoa()
+	return render_template('registry.html' , cat = cat)
 
 if __name__ == '__main__':
     app.run(debug=True)

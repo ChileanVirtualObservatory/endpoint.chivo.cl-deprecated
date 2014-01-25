@@ -1,0 +1,276 @@
+ISO SIAP	http://archives.esac.esa.int/ida/aio/jsp/siap.jsp?imageType=image
+HST.M51	http://archive.stsci.edu/siap/search.php?id=m51&
+SDSSDR4-Color	http://casjobs.sdss.org/vo/DR4SIAP/SIAP.asmx/getSiapInfo?&FORMAT=image/jpeg&BANDPASS=*&
+nH	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+HST.GEMS	http://archive.stsci.edu/siap/search.php?id=gems&
+BATSIG	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=batsig&
+WMAP	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+CDFS_HST	http://obelix.lambrate.inaf.it/vodb/getSiapInfo?CAT=CDFS&
+FIRST	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=first&
+DSS2R	http://chart.stsci.edu/gscvo/DSS2R.jsp?
+HLA	http://hla.stsci.edu/cgi-bin/hlaSIAP.cgi?imagetype=best&inst=ACS,ACSGrism,WFC3,WFPC2,NICMOS,NICGRISM,COS,STIS,FOS,GHRS&proprietary=false&
+UKIDSS DR2 SIAP	http://wfaudata.roe.ac.uk/ukidssdr2-siap/?
+VCS	http://archive.nrao.edu/vo/SIA/query?archive=VCS&
+SWIRE	http://irsa.ipac.caltech.edu/cgi-bin/Atlas/nph-atlas?mission=SWIRE&hdr_location=%5CSWIREDataPath%5C&collection_desc=The+Spitzer+Wide-area+InfraRed+Extragalactic+Survey+%28SWIRE%29&SIAP_ACTIVE=1&
+SDSSDR2-Z	http://skyserver.sdss.org/vo/DR2SIAP/SIAP.aspx?bandpass=z&format=image/fits&
+HST.ACSGGCT	http://archive.stsci.edu/siap/search.php?id=acsggct&
+HST.GOODS	http://archive.stsci.edu/siap/search.php?id=GOODS&
+DSS2	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+COBE	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+HST.ANGRRR	http://archive.stsci.edu/siap/search.php?id=angrrr&
+NVAS	http://archive.nrao.edu/vo/SIA/query?archive=VLAPipeline&
+COBEALL	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+HST.UDF12	http://archive.stsci.edu/siap/search.php?id=udf12&
+HST.M82	http://archive.stsci.edu/siap/search.php?id=m82&
+SDSSDR2-Color	http://skyserver.sdss.org/vo/DR2SIAP/SIAP.aspx?BANDPASS=*&format=image/jpeg&
+DSS1B	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+EGRET3D	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+ATLAS DR1 SIAP	http://wfaudata.roe.ac.uk/atlasdr1-siap/?
+CO	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=co&
+NVSS	http://archive.nrao.edu/vo/SIA/query?archive=NVSS&
+MACHO Image SIAP	http://macho.anu.edu.au/image/siap?
+CSC	http://cda.harvard.edu/cscsiap/queryImages?
+Integral SIAP	http://isda.esac.esa.int:8080/aio/jsp/metadata.jsp?resource_class=ods
+CDA	http://cda.harvard.edu/cxcsiap/queryImages?
+MELLINGER	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=mellinger&
+SDSSDR2-U	http://skyserver.sdss.org/vo/DR2SIAP/SIAP.aspx?bandpass=u&format=image/fits&
+Aladin	http://aladin.u-strasbg.fr/cgi-bin/nph-HTTP.cgi?FORMAT=image/fits&mode=siap_atlas&out=qualifier&
+SDSSDR2-G	http://skyserver.sdss.org/vo/DR2SIAP/SIAP.aspx?bandpass=g&format=image/fits&
+ISSA	http://irsa.ipac.caltech.edu/cgi-bin/Atlas/nph-atlas?mission=ISSA&hdr_location=%5CISSADataPath%5C&SIAP_ACTIVE=1&collection_desc=The+IRAS+Sky+Survey+Atlas+%28ISSA%29&
+EGRET	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=egret&
+UKIDSS DR7 SIAP	http://wfaudata.roe.ac.uk/ukidssdr7-siap/?
+SDSSDR2-I	http://skyserver.sdss.org/vo/DR2SIAP/SIAP.aspx?bandpass=I&format=image/fits&
+COSMOS	http://irsa.ipac.caltech.edu/cgi-bin/Atlas/nph-atlas?mission=COSMOS&hdr_location=%5CCOSMOSDataPath%5C&collection_desc=Cosmic+Evolution+Survey+with+HST+%28COSMOS%29&SIAP_ACTIVE=1&
+RASSALL	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+DSS2B	http://chart.stsci.edu/gscvo/DSS2B.jsp?
+IAC80	http://vivaldi.ll.iac.es:8080/IAC80/?
+HST.heritage	http://archive.stsci.edu/siap/search.php?id=heritage&
+WFC	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=wfc&
+LGA	http://irsa.ipac.caltech.edu/cgi-bin/Atlas/nph-atlas?mission=LGA&hdr_location=%5CLGADataPath%5C&SIAP_ACTIVE=1&collection_desc=2MASS+Large+Galaxy+Atlas+%28LGA%29&
+BATFLUX	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+PSPC2cnt	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+HST PR SIA	http://hubblesite.org/cgi-bin/sia/hst_pr_sia.pl?
+PSPC1	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+INTGAL	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=intgal&
+RASSBCK	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=rassbck&
+HESIOD	http://idoc-herschel.ias.u-psud.fr/ds/pub/spirephotol2/services/sia?
+XCATDBDR3-SIA	http://xcatdb.unistra.fr/2xmmvo/siaservice?collection=[EPIC(EpicObsImage)]
+HST.udfuv	http://archive.stsci.edu/siap/search.php?id=udfuv&
+VLA.AL218	http://archive.stsci.edu/siap/search.php?id=al218&
+UKIDSS DR1 SIAP	http://wfaudata.roe.ac.uk/ukidssdr1-siap/?
+UKIDSS DR9 SIAP	http://wfaudata.roe.ac.uk/ukidssdr8-siap/?
+NEAT	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+SFDdust	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=sfddust&
+SUMSS	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+GRANAT	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=granat&
+1420MHz	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+BATFLUX	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=batflux&
+SDSSDR1-Color	http://skyserver.sdss.org/vo/DR1SIAP/SIAP.aspx?bandpass=*&format=image/jpeg&
+HST.HDF	http://archive.stsci.edu/siap/search.php?id=HDF&
+408MHz	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=408mhz&
+UKIDSS	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=ukidss&
+RASSBCK	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+BoRG	http://archive.stsci.edu/siap/search.php?id=borg&
+ROSAT SIA	http://www.g-vo.org/rosat/SIAP?action=queryImage&siap=siap.service.rosat&
+SHASSA	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+COMALS SIAP	http://vo.astro-wise.org/SIAP?FORM=VOTable&PROJECT=COMALS&
+PHAT	http://archive.stsci.edu/siap/search.php?id=phat&
+NED(images)	http://irsa.ipac.caltech.edu/cgi-bin/Atlas/nph-nedsiap?mission=NED&hdr_location=%5CNEDDataPath%5C&SIAP_ACTIVE=1&collection_desc=NASA%2FIPAC+Extragalactic+Database+Image+Data+Atlas+%28NED%29&
+HEAVENS @ ISDC	http://www.isdc.unige.ch/vo-services/img-cutout?
+HST.SGAL	http://archive.stsci.edu/siap/search.php?id=sgal&
+PSPC1	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=pspc1&
+VLA-FIRST	http://archive.stsci.edu/siap/search.php?id=vla-first&
+SDSSDR3-U	http://casjobs.sdss.org/vo/DR3SIAP/SIAP.asmx/getSiapInfo?&FORMAT=image/fits&BANDPASS=u&
+ESO_SIAP	http://archive.eso.org/apps/siaserver/EsoProxySiap?
+SDSSdr7	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+HST.TNO	http://archive.stsci.edu/siap/search.php?id=TNO&
+EGRET3D	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=egret3d&
+PSPC2	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+IGA	http://irsa.ipac.caltech.edu/cgi-bin/Atlas/nph-atlas?mission=IGA&hdr_location=%5CIGADataPath%5C&SIAP_ACTIVE=1&collection_desc=The+IRAS+Galaxy+Atlas+%28IGA%29&
+HST.APPP	http://archive.stsci.edu/siap/search.php?id=appp&
+HEAO1A	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=heao1a&
+RVO:NeutronStars	http://www.ioffe.rssi.ru/astro/NSG/obs/index.html?
+CO	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+SDSSDR3-Color	http://casjobs.sdss.org/vo/DR3SIAP/SIAP.asmx/getSiapInfo?FORMAT=image/jpeg&BANDPASS=*&
+SDSSDR3-R	http://casjobs.sdss.org/vo/DR3SIAP/SIAP.asmx/getSiapInfo?&FORMAT=image/fits&BANDPASS=r&
+BATSIG	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+PMN	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+SUMSS	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=sumss&
+FIRST	http://archive.nrao.edu/vo/SIA/query?archive=FIRST&
+MAST Scrapbook	http://archive.stsci.edu/siap/search.php?representative=y&
+DSS1R	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=dss1r&
+PMN	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=pmn&
+ST-ECF/HST/SIA	http://archives.esac.esa.int/hst/hst-vo/hst_sia?
+HST.HELIX	http://archive.stsci.edu/siap/search.php?id=HELIX&
+IRAS	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=iras&
+hdap_siap	http://dc.zah.uni-heidelberg.de/lswscans/res/positions/siap/siap.xml?
+UKIDSS DR4 SIAP	http://wfaudata.roe.ac.uk/ukidssdr4-siap/?
+NOAO	http://archive.noao.edu/nvo/sim/voquery.php?
+IRIS	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=iris&
+2MASS QL	http://irsa.ipac.caltech.edu/cgi-bin/2MASS/IM/nph-im_sia?type=ql&ds=asky
+GalexNear	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+CANDELS	http://archive.stsci.edu/siap/search.php?id=candels&
+HRI	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+Wise	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=wise&
+ST-ECF/HLA/SIA	http://archives.esac.esa.int/hst/hst-vo/hla_sia?
+MELLINGER	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+FLS_MAIN_R	http://irsa.ipac.caltech.edu/cgi-bin/Atlas/nph-atlas?mission=FLS_MAIN_R&hdr_location=%5CFLS_MAIN_RDataPath%5C&collection_desc=Spitzer+First+Look+Survey+%28FLS%29+--+NOAO+Extragalactic+--+R+%28FLS_MAIN_R%29&SIAP_ACTIVE=1&
+INTEGRALSPI_gc	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+NVSS	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+SFD	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=sfd&
+SDSS	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+lenses_web	http://dc.zah.uni-heidelberg.de/lensunion/q/im/siap.xml?
+CARS_cutout	http://dc.zah.uni-heidelberg.de/cars/q/cutout/siap.xml?
+EIGA	http://irsa.ipac.caltech.edu/cgi-bin/Atlas/nph-atlas?mission=EIGA&hdr_location=%5CEIGADataPath%5C&SIAP_ACTIVE=1&collection_desc=The+Extended+IRAS+Galaxy+Atlas+%28EIGA%29&
+SDSSDR4	http://casjobs.sdss.org/vo/DR4SIAP/SIAP.asmx/getSiapInfo?&FORMAT=image/fits&BANDPASS=ugriz&
+HRI	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=hri&
+MSX	http://irsa.ipac.caltech.edu/cgi-bin/Atlas/nph-atlas?mission=MSX&hdr_location=%5CMSXDataPath%5C&SIAP_ACTIVE=1&collection_desc=The+Midcourse+Space+Experiment+%28MSX%29&
+PSPC2	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=pspc2&
+PSPC2exp	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+voparis	http://voparis-srv.obspm.fr/sia/sia_dfbs.php?
+GALEX	http://galex.stsci.edu/gxWS/SIAP/gxSIAP.aspx?
+RASS.75keV	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+WMAPILC5YR	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+nH	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=nh&
+WENSS	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+Comptel	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+DSS2	http://chart.stsci.edu/gscvo/DSS2.jsp?
+DSS	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=dss&
+HAlpha	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=halpha&
+FLS_VLA	http://irsa.ipac.caltech.edu/cgi-bin/Atlas/nph-atlas?mission=FLS_VLA&hdr_location=%5CFLS_VLADataPath%5C&collection_desc=Spitzer+First+Look+Survey+--+Ancillary+VLA+Data+%28FLS_VLA%29&SIAP_ACTIVE=1&
+vaticandata	http://saccheri.as.arizona.edu/images/VOimg
+VLSS	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=vlss&
+euve	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=euve&
+SDSSDR1-Z	http://skyserver.sdss.org/vo/DR1SIAP/SIAP.aspx?bandpass=u&format=image/fits&
+DSS ESO	http://archive.eso.org/bin/dss_sia/dss.sia?VERSION=1.0&
+SHASSA	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=shassa&
+NEAT	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=neat&
+MITVLA	http://archive.nrao.edu/vo/SIA/query?archive=MITVLA&
+SFDdust	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+FLS_ELAISN1_R	http://irsa.ipac.caltech.edu/cgi-bin/Atlas/nph-atlas?mission=FLS_ELAISN1_R&hdr_location=%5CFLS_ELAISN1_RDataPath%5C&collection_desc=Spitzer+First+Look+Survey+%28FLS%29+--+NOAO+ELAIS+N1+--+R+%28FLS_ELAISN1_R%29&SIAP_ACTIVE=1&
+WINGSOptIma	http://palantir10.oats.inaf.it:8080/ivoa/resources/siap/70?
+PSPC6	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+SkyView	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?
+HST.HDF_SOUTH	http://archive.stsci.edu/siap/search.php?id=HDF_SOUTH&
+2MASS	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=2mass&
+DSS1B	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=dss1b&
+UKIDSS DR5 SIAP	http://wfaudata.roe.ac.uk/ukidssdr5-siap/?
+CADC/HST	http://www.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/sia/HST/query?
+HAlpha	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+SFD100m	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+RASS3	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+vopsat-srcj	http://voparis-srv.obspm.fr/sia/sia_mama.php?SURVEY=SRCJ&
+PSPC2cnt	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=pspc2cnt&
+HST.CLASH	http://archive.stsci.edu/siap/search.php?id=clash&
+WMAP	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=wmap&
+ADIL	http://adil.ncsa.uiuc.edu/cgi-bin/voimquery?survey=f&
+MAST-Scrapbook	http://irsa.ipac.caltech.edu/cgi-bin/Atlas/nph-atlas?mission=Scrapbook&hdr_location=%5CScrapbookDataPath%5C&collection_desc=The+MAST+Image%2FSpectra+Scrapbook+%28Scrapbook%29&SIAP_ACTIVE=1
+RASS1.5keV	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+LH	http://irsa.ipac.caltech.edu/cgi-bin/Atlas/nph-atlas?mission=LH&hdr_location=%5CLHDataPath%5C&collection_desc=2MASS+6X+Lockman+Hole+%28LH%29+Ancillary+Data+Atlas&SIAP_ACTIVE=1&
+PSPC2exp	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=pspc2exp&
+ESO-R	http://voparis-srv.obspm.fr/srv/sia-vopsat_esor.php?
+POSS1-E	http://voparis-srv.obspm.fr/srv/sia-vopsat_posse.php?
+UKIDSS DR3 SIAP	http://wfaudata.roe.ac.uk/ukidssdr3-siap/?
+GRANAT	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+SuperCOSMOS SIAP	http://horus.roe.ac.uk:8080/ssa/SSS_SIAP?
+HST.angst	http://archive.stsci.edu/siap/search.php?id=angst&
+SDSSDR1-G	http://skyserver.sdss.org/vo/DR1SIAP/SIAP.aspx?bandpass=g&format=image/fits&
+TGCat SIA	http://tgcat.mit.edu/tgSia.php?
+1420MHz	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=1420mhz&
+HST.STAGES	http://archive.stsci.edu/siap/search.php?id=stages&
+GTEE	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+HST.COSMOS	http://archive.stsci.edu/siap/search.php?id=cosmos&
+RASS3	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=rass3&
+WENSS	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=wenss&
+HST.maoz_atlas	http://archive.stsci.edu/siap/search.php?id=maoz_atlas&
+2MASS	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+RASS.75keV	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=rass.75kev&
+RASSBck	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=rassbck&
+HST.COMA	http://archive.stsci.edu/siap/search.php?id=coma&
+HST.UDF	http://archive.stsci.edu/siap/search.php?id=udf&
+SDSSDR2-R	http://skyserver.sdss.org/vo/DR2SIAP/SIAP.aspx?bandpass=r&format=image/fits&
+ISON-CLT	http://clt.rian.kharkov.ua:8080/search?
+PSPC6	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=pspc6&
+RASSALL	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=rassall&
+RXTE	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+SFD	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+VLBI-Lockman	http://dc.zah.uni-heidelberg.de/emi/q/s/siap.xml?
+HST.GOODS.Cutout	http://archive.stsci.edu/eidol.php?
+SDSSdr7	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=sdssdr7&
+SFD100m	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=sfd100m&
+HESIOD	http://idoc-herschel.ias.u-psud.fr/ds/pub/pacsphotol2/services/sia?
+SDSSDR3-Z	http://casjobs.sdss.org/vo/DR3SIAP/SIAP.asmx/getSiapInfo?BANDPASS=z&FORMAT=image/fits&
+XMM-OM	http://archive.stsci.edu/siap/search.php?id=XMM-OM&
+RASS1.5keV	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=rass1.5kev&
+WFC	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+UKIDSS DR6 SIAP	http://wfaudata.roe.ac.uk/ukidssdr6-siap/?
+euve	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+Fermi	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+SDSSDR5	http://casjobs.sdss.org/vo/DR5SIAP/SIAP.asmx/getSiapInfo?&FORMAT=image/fits&BANDPASS=ugriz&
+GalexFar	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=galexfar&
+RASSBck	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+WFCF1	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+VISTA SIAP	http://wfaudata.roe.ac.uk/vista-siap/?
+SAI SLCC	http://virtual.sai.msu.su/~pavlyuk/snlcurve/?
+RXTE	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=rxte&
+2cmVLBA	http://archive.nrao.edu/vo/SIA/query?archive=2cmVLBA&
+HST.HIPPIES	http://archive.stsci.edu/stpr/vo_search.php?
+DSS2	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=dss2&
+UKIDSS	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+HST PR Images 2008-2010	http://archive.stsci.edu/stpr/vo_search.php?
+GalexFar	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+VLSS	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+vopsat/POSSE/SIA	http://voparis-srv.obspm.fr/sia/sia_mama.php?SURVEY=POSSE&
+CADC/CFHT	http://www.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/sia/CFHT/query?
+HST.Andromeda	http://archive.stsci.edu/siap/search.php?id=andromeda&
+Wise	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+COBEALL	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=cobeall&
+SDSSDR3-I	http://casjobs.sdss.org/vo/DR3SIAP/SIAP.asmx/getSiapInfo?&FORMAT=image/fits&BANDPASS=i&
+HEAO1A	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+IRAS	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+CADC/JCMT	http://www.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/sia/JCMT/query?
+SDSSDR1-R	http://skyserver.sdss.org/vo/DR1SIAP/SIAP.aspx?bandpass=r&format=image/fits&
+GALEX_Atlas	http://archive.stsci.edu/siap/search.php?id=galex_atlas&
+NVSS	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=nvss&
+HIPASS	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=hipass&
+WMAPILC5YR	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=wmapilc5yr&
+DSS	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+FIRST	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+vopsat/SRCJ	http://voparis-srv.obspm.fr/sia/sia_mama.php?SURVEY=SRCJ&
+HST Previews	http://archive.stsci.edu/siap/search.php?id=HST&
+SDSS	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=sdss&
+GHOSTS	http://archive.stsci.edu/siap/search.php?id=ghosts&
+INTGAL	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+ESOLV SIAP	http://vo.astro-wise.org/SIAP?FORM=VOTable&PROJECT=ESO-LV&
+DSS2IR	http://chart.stsci.edu/gscvo/DSS2I.jsp?
+Fermi	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=fermi&
+GalexNear	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=galexnear&
+TNG_IA2	http://natzgul3.oats.inaf.it:8080/servlets/servlet/SibillaImage?
+GTEE	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=gtee&
+ALHAMBRA_F814W	http://caha.sdc.cab.inta-csic.es/calto/siap_alhambra/alhambra_siap.jsp?
+DSS1R	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+vopsat/ESOR/SIA	http://voparis-srv.obspm.fr/sia/sia_mama.php?SURVEY=ESOR&
+CAI ESO-R	http://voplus.obspm.fr/cgi-bin/sia.pl?survey=ESOR&
+SDSSDR1-I	http://skyserver.sdss.org/vo/DR1SIAP/SIAP.aspx?bandpass=I&format=image/fits&
+WFCF1	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=wfcf1&
+SDSSDR3-G	http://casjobs.sdss.org/vo/DR3SIAP/SIAP.asmx/getSiapInfo?&FORMAT=image/fits&BANDPASS=g&
+EGRET	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+SDSSDR1-U	http://skyserver.sdss.org/vo/DR1SIAP/SIAP.aspx?bandpass=u&format=image/fits&
+XMM-Newton SIAP	http://xsa.esac.esa.int:8080/aio/jsp/siap.jsp?
+HST.merggal	http://archive.stsci.edu/siap/search.php?id=merggal&
+INTEGRALSPI_gc	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=integralspi_gc&
+IRIS	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+HUDF09	http://archive.stsci.edu/siap/search.php?id=hudf09&
+Comptel	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=comptel&
+HST.3cr	http://archive.stsci.edu/siap/search.php?id=3cr&
+IRTS	http://irsa.ipac.caltech.edu/cgi-bin/Atlas/nph-atlas?mission=IRTS&hdr_location=%5CIRTSDataPath%5C&SIAP_ACTIVE=1&collection_desc=The+Infrared+Telescope+in+Space+%28IRTS%29&
+MIGA	http://irsa.ipac.caltech.edu/cgi-bin/Atlas/nph-atlas?mission=MIGA&hdr_location=%5CMIGADataPath%5C&SIAP_ACTIVE=1&collection_desc=The+Mid-Infrared+Galaxy+Atlas+%28MIGA%29&
+HIPASS	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+408MHz	http://skyview.gsfc.nasa.gov/cgi-bin/query.pl
+VHS DR1 SIAP	http://wfaudata.roe.ac.uk/vhsdr1-siap/?
+CLASS	http://archive.nrao.edu/vo/SIA/query?archive=CLASS&
+SRC-J	http://voparis-srv.obspm.fr/srv/sia-vopsat_srcj.php?
+VOPSAT	http://voparis-srv.obspm.fr/srv/sia-vopsat.php?
+UIT	http://archive.stsci.edu/siap/search.php?id=UIT&
+DFBS	http://voparis-srv.obspm.fr/srv/sia-dfbs.php?
+COBE	http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=cobe&
