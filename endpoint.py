@@ -5,35 +5,21 @@ import requests
 from os import system
 from flask import Flask, render_template, request, Response, redirect
 
-
-#Hash with every catalog and inside another hash with the url from the services
-#~ catalogsIvoa = {
-#~ "alma" : {
-	#~ "tap" : "http://wfaudata.roe.ac.uk/twomass-dsa/TAP", 
-	#~ "scs" : "http://wfaudata.roe.ac.uk/twomass-dsa/DirectCone?DSACAT=TWOMASS&DSATAB=twomass_psc", 
-	#~ "ssa": "http://wfaudata.roe.ac.uk/6dF-ssap/?" , 
-	#~ "sia" : "http://irsa.ipac.caltech.edu/ibe/sia/wise/prelim/p3am_cdd?"} ,
-#~ "2mass": {
-	#~ "tap" : "http://wfaudata.roe.ac.uk/twomass-dsa/TAP",
-	#~ "sia" : "http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=2mass&"
-	#~ }
-#~ }
-
-
 #Catalog class, made once in the application and change the catalog in use in execution time
 class Catalog:
 	catalogsIvoa = dict()
 	
-	catalogsIvoa["alma"] = {
-	"tap" : "http://wfaudata.roe.ac.uk/twomass-dsa/TAP", 
-	"scs" : "http://wfaudata.roe.ac.uk/twomass-dsa/DirectCone?DSACAT=TWOMASS&DSATAB=twomass_psc", 
-	"ssa": "http://wfaudata.roe.ac.uk/6dF-ssap/?" , 
-	"sia" : "http://irsa.ipac.caltech.edu/ibe/sia/wise/prelim/p3am_cdd?"
-	}
+	
 	
 	#Default came with "alma" catalog
 	def __init__(self,catalog= None):
 		self.getRegistry()
+		self.catalogsIvoa["alma"] = {
+		"tap" : "http://wfaudata.roe.ac.uk/twomass-dsa/TAP", 
+		"scs" : "http://wfaudata.roe.ac.uk/twomass-dsa/DirectCone?DSACAT=TWOMASS&DSATAB=twomass_psc", 
+		"ssa": "http://wfaudata.roe.ac.uk/6dF-ssap/?" , 
+		"sia" : "http://irsa.ipac.caltech.edu/ibe/sia/wise/prelim/p3am_cdd?"
+		}
 		try:                
 			if catalog:
 				self.dic = self.catalogsIvoa[catalog]
@@ -42,18 +28,23 @@ class Catalog:
 		except:
 			return False
 			
-			
+	
 	#Initate Main dicctionary with .tsv in catalogs folder	
 	def getRegistry(self):
 		types = ['tap', 'sia' , 'ssa' , 'scs']
 		for _type in types:
 			_file = open("catalogs/"+_type+".tsv", "r")
-
+			
 			for line in _file:
-				l = line.split("\t")
-				if l[0] not in self.catalogsIvoa.keys():
-					self.catalogsIvoa[l[0]] = dict()
-				self.catalogsIvoa[l[0]][_type] = l[1]
+				l = line.strip().replace("/","2F").split("\t")
+				try:
+					self.catalogsIvoa[l[0]][_type] = l[1]
+				except:
+					self.catalogsIvoa[l[0]]= dict()
+					self.catalogsIvoa[l[0]][_type] = l[1]
+				
+			_file.close()
+		return None
 	
 	#Change the object to another catalog
 	def setCatalog(self,catalog):
@@ -156,6 +147,7 @@ def index():
 
 @app.route('/<catalog>')
 def catalogServices(catalog):
+	catalog.replace("/","2F")
 	if catalog in catalogIvoa.getCatalogsIvoa().keys():
 		catalogIvoa.setCatalog(catalog)
 		return " ".join(catalogIvoa.getServices())
@@ -215,10 +207,21 @@ def queryTap(catalog,route=None):
 			return Response(streamDataPost(r))
 	return 'Bad Tap Request1'
 
-@app.route('/registry')
+@app.route('/registry', methods = ['GET'])
 def registry():
+	MAX = 100
+	if request.args:
+		page = int(request.args['page'])
+	else:
+		page = 1
 	cat = catalogIvoa.getCatalogsIvoa()
-	return render_template('registry.html' , cat = cat)
+	if len(cat.keys())%MAX != 0:
+		pages =  (len(cat.keys())/MAX) + 1
+	else:
+		pages = len(cat.keys())/MAX
+	
+	keys = sorted(cat.keys())[(page-1)*MAX:page*MAX]
+	return render_template('registry.html' , cat = cat, keys = keys, pages = pages, page = page, MAX = MAX)
 
 if __name__ == '__main__':
     app.run(debug=True)
