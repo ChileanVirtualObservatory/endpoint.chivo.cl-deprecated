@@ -2,63 +2,107 @@ import subprocess
 import urllib
 import urllib2
 import requests
+import json
+
 from os import system
 from flask import Flask, render_template, request, Response, redirect
+
+returnType = 'text/xml'
+MAX = 1000
 
 #Catalog class, made once in the application and change the catalog in use in execution time
 class Catalog:
 	catalogsIvoa = dict()
 	
-	
-	
 	#Default came with "alma" catalog
 	def __init__(self,catalog= None):
 		self.getRegistry()
 		self.catalogsIvoa["alma"] = {
-		"tap" : "http://wfaudata.roe.ac.uk/twomass-dsa/TAP", 
-		"scs" : "http://wfaudata.roe.ac.uk/twomass-dsa/DirectCone?DSACAT=TWOMASS&DSATAB=twomass_psc", 
-		"ssa": "http://wfaudata.roe.ac.uk/6dF-ssap/?" , 
-		"sia" : "http://irsa.ipac.caltech.edu/ibe/sia/wise/prelim/p3am_cdd?"
+		"capabilities":[
+						{	
+							"standardid": "ivo://ivoa.net/std/TAP",
+							"accessurl" : "http://wfaudata.roe.ac.uk/twomass-dsa/TAP"
+						}
+						, 
+						{
+							"standardid":"ivo://ivoa.net/std/SCS",
+							"accessurl" : "http://wfaudata.roe.ac.uk/twomass-dsa/DirectCone?DSACAT=TWOMASS&DSATAB=twomass_psc"
+						}
+						,
+						{
+							"standardid": "ivo://ivoa.net/std/SSA" ,
+							"accessurl" : "http://wfaudata.roe.ac.uk/6dF-ssap/?" 
+						}
+						,
+						{
+							"standardid":"ivo://ivoa.net/std/SIA" ,
+							"accessurl" :"http://irsa.ipac.caltech.edu/ibe/sia/wise/prelim/p3am_cdd?"
+						}
+					]
 		}
-		try:                
-			if catalog:
-				self.dic = self.catalogsIvoa[catalog]
-			else:
-				self.dic = self.catalogsIvoa["alma"]
-		except:
-			return False
 			
 	
-	#Initate Main dicctionary with .tsv in catalogs folder	
+	#Initate Main dicctionary with voparis registry	
 	def getRegistry(self):
-		types = ['tap', 'sia' , 'ssa' , 'scs']
-		for _type in types:
-			_file = open("catalogs/"+_type+".tsv", "r")
+		#All standardid from ivoa services
+		SERVICEPARAMS = {
+			"tap":'standardid:"ivo://ivoa.net/std/TAP"',
+			"sia": 'standardid:"ivo://ivoa.net/std/SIA"',
+			"ssa": 'standardid:"ivo://ivoa.net/std/SSA"',
+			"scs": 'standardid:"ivo://ivoa.net/std/ConeSearch"',
+			}
+		
+		catalogsList= list()
+		
+		#We get all services with tap,sia,ssa,tap from vo-paris registry 
+		for _type in SERVICEPARAMS:
+			parameters ={"keywords": SERVICEPARAMS[_type] , "max": MAX}
+			r = requests.get( "http://voparis-registry.obspm.fr/vo/ivoa/1/voresources/search", params = parameters)
+			entries = json.loads(r.content)['resources']
 			
-			for line in _file:
-				l = line.strip().replace("/","2F").split("\t")
-				try:
-					self.catalogsIvoa[l[0]][_type] = l[1]
-				except:
-					self.catalogsIvoa[l[0]]= dict()
-					self.catalogsIvoa[l[0]][_type] = l[1]
-				
-			_file.close()
-		return None
-	
+			#Merging list and removing duplicated items
+			catalogsList += entries
+			catalogsList = {v['identifier']:v for v in catalogsList}.values()
+			
+			print _type + " Ready"
+			
+		for item in catalogsList:
+			if item.has_key('shortname'):
+				self.catalogsIvoa[item['shortname']] = item
+
 	#Change the object to another catalog
 	def setCatalog(self,catalog):
 		self.dic = self.catalogsIvoa[catalog]
 		return None	
 		
-		
+	#Return main catalog	
 	def getCatalogsIvoa	(self):
 		return self.catalogsIvoa
+		
 	#Get the services from the catalog in use
 	def getServices(self):
-		serv = self.dic.keys()
+		serv = list()
+		catalogServices = self.dic['capabilities']
+		for i in catalogServices:
+			if "TAP" in i['standardid']:
+				serv.append("tap")
+			if "ConeSearch" in i['standardid']:
+				serv.append("scs")
+			if "SSA" in i['standardid']:
+				serv.append("ssa")
+			if "SIA" in i['standardid']:
+				serv.append("sia")
 		return serv	
-	#Generic query method, it call the other query types.
+		
+	#Get the acces url from the catalog in use
+	def getAcessUrl(self,service):
+		catalogServices = self.dic['capabilities']
+		for i in catalogServices:
+			if service.upper() in i['standardid']:
+				return i['accessurl']
+		return False
+		
+	#Generic query, it calls the other query types.
 	def query(self,parameters, method, queryType, route = None):
 		#All services
 		if method == "GET":	
@@ -86,15 +130,15 @@ class Catalog:
 
 	#SCS
 	def scsQuery(self,parameters):
-		r = requests.get(self.dic["scs"] , params = parameters, stream = True)
+		r = requests.get(self.getAcessUrl("scs") , params = parameters, stream = True)
 		return r
 	#SSA
 	def ssaQuery(self, parameters):
-		r = requests.get(self.dic["ssa"] , params = parameters, stream = True)
+		r = requests.get(self.getAcessUrl("ssa") , params = parameters, stream = True)
 		return r
 	#SIA
 	def siaQuery(self,parameters):
-		r = requests.get(self.dic["sia"] , params = parameters, stream = True)
+		r = requests.get(self.getAcessUrl("sia") , params = parameters, stream = True)
 		return r
 	#TAP
 	def tapQuery(self, query , method , route):
@@ -108,7 +152,7 @@ class Catalog:
 			if "qidOptionRequest" in route.keys():
 					params += "/" + route["qidOptionRequest"]
 			
-			r = requests.get(self.dic["tap"] + params , stream = True)
+			r = requests.get(self.getAcessUrl("tap") + params , stream = True)
 			
 			return r
 
@@ -116,9 +160,9 @@ class Catalog:
 			if not "qid" in route.keys():
 				data = query
 				
-				print self.dic["tap"]+"/"+route["option"]
+				print self.getAcessUrl("tap")+"/"+route["option"]
 				
-                req = urllib2.Request(self.dic["tap"]+"/"+route["option"], data)
+                req = urllib2.Request(self.getAcessUrl("tap")+"/"+route["option"], data)
                 response = urllib2.urlopen(req)
                 return response	
 		return False 
@@ -147,7 +191,6 @@ def index():
 
 @app.route('/<catalog>')
 def catalogServices(catalog):
-	catalog.replace("/","2F")
 	if catalog in catalogIvoa.getCatalogsIvoa().keys():
 		catalogIvoa.setCatalog(catalog)
 		return " ".join(catalogIvoa.getServices())
@@ -156,19 +199,22 @@ def catalogServices(catalog):
 
 @app.route('/<catalog>/<queryType>', methods=['POST', 'GET'])
 def query(catalog, queryType):
+	print catalog
+	print queryType
 	try:
 		catalogIvoa.setCatalog(catalog)
 		if queryType in catalogIvoa.getServices():
 			if request.method == "GET":
 				r = catalogIvoa.query(request.args, request.method, queryType) 
-				return Response(streamDataGet(r))
+				return Response(streamDataGet(r), mimetype= returnType)
 			elif request.method == "POST" and queryType == "tap":
 				r = catalogIvoa.query(urllib.urlencode(request.form), request.method, queryType)
-				return Response(streamDataPost(r))
+				return Response(streamDataPost(r), mimetype= returnType)
 			
 		return 'Catalog without service'
-	except:
-		return 'No catalog found'
+	except Exception as e:
+		raise
+		return 'No catalog found ' + str(e)
 
 @app.route('/<catalog>/tap')
 def tap(catalog):
@@ -178,7 +224,6 @@ def tap(catalog):
 
 @app.route('/<catalog>/tap/<path:route>', methods = ['GET', 'POST'])
 def queryTap(catalog,route=None):
-
 	catalogIvoa.setCatalog(catalog)
 	route = map(str,route.split("/"))
 	dictRoute = dict()
@@ -197,24 +242,34 @@ def queryTap(catalog,route=None):
 	if 'tap' in catalogIvoa.getServices():
 		
 		if request.method == "GET":
-		
-			r = catalogIvoa.query(None, request.method, "tap" , dictRoute)
-			return Response(streamDataGet(r))
+				r = catalogIvoa.query(None, request.method, "tap" , dictRoute)
+				return Response(streamDataGet(r), mimetype= returnType)
+				
 		elif request.method == "POST":
 			print urllib.urlencode(request.form)
 			print dictRoute
 			r = catalogIvoa.query(urllib.urlencode(request.form), request.method, "tap",dictRoute)
-			return Response(streamDataPost(r))
+			return Response(streamDataPost(r), mimetype= returnType)
 	return 'Bad Tap Request1'
 
 @app.route('/registry', methods = ['GET'])
 def registry():
+	
+	#Max entries in registry page
 	MAX = 100
+	
 	if request.args:
 		page = int(request.args['page'])
 	else:
 		page = 1
-	cat = catalogIvoa.getCatalogsIvoa()
+	
+	cat = dict()
+	catalogs = catalogIvoa.getCatalogsIvoa()
+	
+	for i in catalogs:
+		catalogIvoa.setCatalog(i)
+		cat[i] =catalogIvoa.getServices()
+	
 	if len(cat.keys())%MAX != 0:
 		pages =  (len(cat.keys())/MAX) + 1
 	else:

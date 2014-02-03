@@ -12,7 +12,7 @@
 	{%if page == pages %}
 	<a href = "/registry?page=1">></a>
 	{% else %}
-	<a href = "/registry?page={{(page+1)%pages}}">></a>
+	<a href = "/registry?page={{(page+1)}}">></a>
 	{% endif %}
 	
 	<table border = "1">
@@ -27,30 +27,30 @@
 	{% for catalog in keys %}
 		<tr>
 			<td> 
-			<a href = "/{{catalog}}">{{catalog.replace("2F","/")}}</a></td>
+			<a href = "/{{catalog.replace("/","%2F%")}}">{{catalog.replace("2F","/")}}</a></td>
 			
-			{% if "scs" in cat[catalog].keys() %}
+			{% if "scs" in cat[catalog] %}
 			<td> X </td>
 			
 			{% else %}
 			<td> </td>
 			{% endif %}
 			
-			{% if "sia" in cat[catalog].keys() %}
+			{% if "sia" in  cat[catalog]%}
 			<td> X </td>
 			
 			{% else %}
 			<td> </td>
 			{% endif %}
 			
-			{% if "ssa" in cat[catalog].keys() %}
+			{% if "ssa" in  cat[catalog] %}
 			<td> X </td>
 			
 			{% else %}
 			<td> </td>
 			{% endif %}
 			
-			{% if "tap" in cat[catalog].keys() %}
+			{% if "tap" in  cat[catalog] %}
 			<td> X </td>
 			
 			{% else %}
