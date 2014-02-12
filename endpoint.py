@@ -7,7 +7,6 @@ import json
 from os import system
 from flask import Flask, render_template, request, Response, redirect
 
-returnType = 'text/xml'
 MAX = 1000
 
 #Catalog class, made once in the application and change the catalog in use in execution time
@@ -16,7 +15,8 @@ class Catalog:
 	
 	#Default came with "alma" catalog
 	def __init__(self,catalog= None):
-		self.getRegistry()
+		
+		#self.getRegistry()
 		self.catalogsIvoa["alma"] = {
 		"capabilities":[
 						{	
@@ -25,7 +25,7 @@ class Catalog:
 						}
 						, 
 						{
-							"standardid":"ivo://ivoa.net/std/SCS",
+							"standardid":"ivo://ivoa.net/std/ConeSearch",
 							"accessurl" : "http://wfaudata.roe.ac.uk/twomass-dsa/DirectCone?DSACAT=TWOMASS&DSATAB=twomass_psc"
 						}
 						,
@@ -98,7 +98,7 @@ class Catalog:
 	def getAcessUrl(self,service):
 		catalogServices = self.dic['capabilities']
 		for i in catalogServices:
-			if service.upper() in i['standardid']:
+			if service in i['standardid']:
 				return i['accessurl']
 		return False
 		
@@ -130,15 +130,15 @@ class Catalog:
 
 	#SCS
 	def scsQuery(self,parameters):
-		r = requests.get(self.getAcessUrl("scs") , params = parameters, stream = True)
+		r = requests.get(self.getAcessUrl("ConeSearch") , params = parameters, stream = True)
 		return r
 	#SSA
 	def ssaQuery(self, parameters):
-		r = requests.get(self.getAcessUrl("ssa") , params = parameters, stream = True)
+		r = requests.get(self.getAcessUrl("SSA") , params = parameters, stream = True)
 		return r
 	#SIA
 	def siaQuery(self,parameters):
-		r = requests.get(self.getAcessUrl("sia") , params = parameters, stream = True)
+		r = requests.get(self.getAcessUrl("SIA") , params = parameters, stream = True)
 		return r
 	#TAP
 	def tapQuery(self, query , method , route):
@@ -152,17 +152,14 @@ class Catalog:
 			if "qidOptionRequest" in route.keys():
 					params += "/" + route["qidOptionRequest"]
 			
-			r = requests.get(self.getAcessUrl("tap") + params , stream = True)
+			r = requests.get(self.getAcessUrl("TAP") + params , stream = True)
 			
 			return r
 
 		elif method == "POST":
 			if not "qid" in route.keys():
 				data = query
-				
-				print self.getAcessUrl("tap")+"/"+route["option"]
-				
-                req = urllib2.Request(self.getAcessUrl("tap")+"/"+route["option"], data)
+                req = urllib2.Request(self.getAcessUrl("TAP")+"/"+route["option"], data)
                 response = urllib2.urlopen(req)
                 return response	
 		return False 
@@ -179,6 +176,14 @@ def streamDataPost(r):
 	for the_page in iter(lambda: r.read(CHUNK), ''):
 		yield the_page
 
+
+
+def getResponseType(content):
+	if "content-type" in content.keys():
+		print  content["content-type"].split(";")[0]
+		return content["content-type"].split(";")[0]
+	else:
+		return 'text/xml'
 #Application Itself
 app = Flask(__name__)
 catalogIvoa = Catalog()
@@ -191,6 +196,9 @@ def index():
 
 @app.route('/<catalog>')
 def catalogServices(catalog):
+	
+	#catalog = urllib.quote(catalog)
+	
 	if catalog in catalogIvoa.getCatalogsIvoa().keys():
 		catalogIvoa.setCatalog(catalog)
 		return " ".join(catalogIvoa.getServices())
@@ -199,31 +207,45 @@ def catalogServices(catalog):
 
 @app.route('/<catalog>/<queryType>', methods=['POST', 'GET'])
 def query(catalog, queryType):
-	print catalog
-	print queryType
+	
+	queryType = queryType.lower()
+	catalog = urllib.quote(catalog)
+
 	try:
 		catalogIvoa.setCatalog(catalog)
 		if queryType in catalogIvoa.getServices():
 			if request.method == "GET":
+				
 				r = catalogIvoa.query(request.args, request.method, queryType) 
-				return Response(streamDataGet(r), mimetype= returnType)
-			elif request.method == "POST" and queryType == "tap":
-				r = catalogIvoa.query(urllib.urlencode(request.form), request.method, queryType)
-				return Response(streamDataPost(r), mimetype= returnType)
+				if request.args:
+					return Response(streamDataGet(r), mimetype= getResponseType(r.headers))
+				
+				return Response(streamDataGet(r))
 			
 		return 'Catalog without service'
+		
+		
+	#Remove this	
 	except Exception as e:
 		raise
 		return 'No catalog found ' + str(e)
 
 @app.route('/<catalog>/tap')
+@app.route('/<catalog>/TAP')
 def tap(catalog):
+	
+	catalog = urllib.quote(catalog)
+	
 	catalogIvoa.setCatalog(catalog)
 	if 'tap' in catalogIvoa.getServices():
 		return 'OK'
-
+		
+@app.route('/<catalog>/TAP/<path:route>', methods = ['GET', 'POST'])
 @app.route('/<catalog>/tap/<path:route>', methods = ['GET', 'POST'])
 def queryTap(catalog,route=None):
+	
+	catalog = urllib.quote(catalog)
+	
 	catalogIvoa.setCatalog(catalog)
 	route = map(str,route.split("/"))
 	dictRoute = dict()
@@ -243,13 +265,14 @@ def queryTap(catalog,route=None):
 		
 		if request.method == "GET":
 				r = catalogIvoa.query(None, request.method, "tap" , dictRoute)
-				return Response(streamDataGet(r), mimetype= returnType)
+
+				return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
 				
 		elif request.method == "POST":
 			print urllib.urlencode(request.form)
 			print dictRoute
 			r = catalogIvoa.query(urllib.urlencode(request.form), request.method, "tap",dictRoute)
-			return Response(streamDataPost(r), mimetype= returnType)
+			return Response(streamDataPost(r), mimetype= getResponseType(r.headers))
 	return 'Bad Tap Request1'
 
 @app.route('/registry', methods = ['GET'])
@@ -257,6 +280,8 @@ def registry():
 	
 	#Max entries in registry page
 	MAX = 100
+	
+	keys= list()
 	
 	if request.args:
 		page = int(request.args['page'])
@@ -275,7 +300,9 @@ def registry():
 	else:
 		pages = len(cat.keys())/MAX
 	
-	keys = sorted(cat.keys())[(page-1)*MAX:page*MAX]
+	for i in sorted(cat.keys())[(page-1)*MAX:page*MAX]:
+		keys.append( (i, urllib.quote(i,'')))
+		
 	return render_template('registry.html' , cat = cat, keys = keys, pages = pages, page = page, MAX = MAX)
 
 if __name__ == '__main__':

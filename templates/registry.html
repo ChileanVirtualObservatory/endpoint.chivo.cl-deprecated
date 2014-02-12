@@ -24,10 +24,10 @@
 		<th> TAP </th>
 	</tr>
 
-	{% for catalog in keys %}
+	{% for catalog, url in keys %}
 		<tr>
 			<td> 
-			<a href = "/{{catalog.replace("/","%2F%")}}">{{catalog.replace("2F","/")}}</a></td>
+			<a href = "/{{ url }}">{{catalog}}</a></td>
 			
 			{% if "scs" in cat[catalog] %}
 			<td> X </td>
