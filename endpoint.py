@@ -1,7 +1,7 @@
 import subprocess
 import urllib
 import urllib2
-import redis 
+#import redis 
 import requests
 from os import system
 from flask import Flask, render_template, request, Response, redirect
@@ -14,7 +14,7 @@ SERVER_SSA	= 'http://wfaudata.roe.ac.uk/6dF-ssap/?'
 SERVER_SIA	= 'http://irsa.ipac.caltech.edu/ibe/sia/wise/prelim/p3am_cdd?'
 
 
-redisConn = redis.StrictRedis(host='localhost', port=6379, db=0)
+#redisConn = redis.StrictRedis(host='localhost', port=6379, db=0)
 
 @app.route('/')
 def index():
@@ -114,21 +114,22 @@ def chivo_query(query,qid=None,option=None, qidOption = None, qidOptionRequest =
 			
 
 			parameters=request.args
-			key = "scs;"+str(parameters)
-			r = redisConn.get(key)
-			if(r):
-				return r
-			else:
-				r = requests.get(SERVER_SCS, params= parameters,stream=True)
-				redisConn.set(key, r.content)
-				redisConn.expire(key,1 * 24 * 60 * 60)
-				def generate():
-					for line in r.iter_lines():
-							if line: # filter out keep-alive new lines
-								yield line
-			
+			#key = "scs;"+str(parameters)
+			#r = redisConn.get(key)
+			#if(r):
+			#	return r
+			#else:
+			#	r = requests.get(SERVER_SCS, params= parameters,stream=True)
+			#	redisConn.set(key, r.content)
+			#	redisConn.expire(key,1 * 24 * 60 * 60)
+			r = requests.get(SERVER_SCS, params= parameters,stream=True)
+			def generate():
+				for line in r.iter_lines():
+						if line: # filter out keep-alive new lines
+							yield line
+		
 				#return Response(generate(), mimetype='text/xml')
-				return Response(generate())
+			return Response(generate())
 		return 'Bad SCS Request'
 
 	if query == 'sia':
