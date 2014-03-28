@@ -16,7 +16,8 @@ class Catalog:
 	#Default came with "alma" catalog
 	def __init__(self,catalog= None):
 		
-		#self.getRegistry()
+		self.getRegistry()
+		
 		self.catalogsIvoa["alma"] = {
 		"capabilities":[
 						{	
@@ -180,10 +181,11 @@ def streamDataPost(r):
 
 def getResponseType(content):
 	if "content-type" in content.keys():
-		print  content["content-type"].split(";")[0]
 		return content["content-type"].split(";")[0]
 	else:
 		return 'text/xml'
+
+
 #Application Itself
 app = Flask(__name__)
 catalogIvoa = Catalog()
@@ -196,8 +198,6 @@ def index():
 
 @app.route('/<catalog>')
 def catalogServices(catalog):
-	
-	#catalog = urllib.quote(catalog)
 	
 	if catalog in catalogIvoa.getCatalogsIvoa().keys():
 		catalogIvoa.setCatalog(catalog)
@@ -304,6 +304,10 @@ def registry():
 		keys.append( (i, urllib.quote(i,'')))
 		
 	return render_template('registry.html' , cat = cat, keys = keys, pages = pages, page = page, MAX = MAX)
+
+@app.route('/asd/<path:a>/<hola>')
+def asd(a,hola):
+	return a + "</br>" + hola
 
 if __name__ == '__main__':
     app.run(debug=True)
