@@ -28,58 +28,9 @@ def index():
 def chivo_query(query,qid=None,option=None, qidOption = None, qidOptionRequest = None):
 	CHUNK = 1024
 	if query.lower() == 'tap':
-		if option.lower() == "capabilities":
-			r = requests.get(SERVER_TAP +"/" +option,stream=True)
-			
-			def generate():
-				for line in r.iter_lines():
-						if line: # filter out keep-alive new lines
-							yield line
-		
-			#return Response(generate(), mimetype='text/xml')
-			return Response(generate())
-
-		if option.lower() == "sync":
-			if request.method == 'POST':
-				
-				data = urllib.urlencode(request.form)
-				req = urllib2.Request(SERVER_TAP+"/"+option, data)
-				response = urllib2.urlopen(req)
-				
-				def generate():
-					for the_page in iter(lambda: response.read(CHUNK), ''):
-						yield the_page
-	
-				#return Response(generate(), mimetype='text/xml')
-				return Response(generate())
-				
-			elif request.method == 'GET':
-				return 'Bad Tad Request'
-				
-		elif option.lower() == "async":
-			if request.method == 'POST':
-				if qid == None:
-					data = urllib.urlencode(request.form)
-					req = urllib2.Request(SERVER_TAP+"/"+option, data)
-					response = urllib2.urlopen(req)
-					def generate():
-						for the_page in iter(lambda: response.read(CHUNK), ''):
-							yield the_page
-							
-					#return Response(generate(), mimetype='text/xml')
-					return Response(generate())
-				else:
-					return 'Bad Tad Request'
-			
-			elif request.method == 'GET':
-				params  = "/" + option
-				if qid:
-					params += "/" + qid
-				if qidOption:
-					params += "/" + qidOption	
-				if qidOptionRequest:
-					params += "/" + qidOptionRequest
-				r = requests.get(SERVER_TAP + params,stream=True)
+		if option:
+			if option.lower() == "capabilities":
+				r = requests.get(SERVER_TAP +"/" +option,stream=True)
 				
 				def generate():
 					for line in r.iter_lines():
@@ -88,8 +39,58 @@ def chivo_query(query,qid=None,option=None, qidOption = None, qidOptionRequest =
 			
 				#return Response(generate(), mimetype='text/xml')
 				return Response(generate())
+
+			if option.lower() == "sync":
+				if request.method == 'POST':
 					
-		return 'Bad Tap Request'
+					data = urllib.urlencode(request.form)
+					req = urllib2.Request(SERVER_TAP+"/"+option, data)
+					response = urllib2.urlopen(req)
+					
+					def generate():
+						for the_page in iter(lambda: response.read(CHUNK), ''):
+							yield the_page
+		
+					#return Response(generate(), mimetype='text/xml')
+					return Response(generate())
+					
+				elif request.method == 'GET':
+					return 'Bad Tad Request'
+					
+			elif option.lower() == "async":
+				if request.method == 'POST':
+					if qid == None:
+						data = urllib.urlencode(request.form)
+						req = urllib2.Request(SERVER_TAP+"/"+option, data)
+						response = urllib2.urlopen(req)
+						def generate():
+							for the_page in iter(lambda: response.read(CHUNK), ''):
+								yield the_page
+								
+						#return Response(generate(), mimetype='text/xml')
+						return Response(generate())
+					else:
+						return 'Bad Tad Request'
+				
+				elif request.method == 'GET':
+					params  = "/" + option
+					if qid:
+						params += "/" + qid
+					if qidOption:
+						params += "/" + qidOption	
+					if qidOptionRequest:
+						params += "/" + qidOptionRequest
+					r = requests.get(SERVER_TAP + params,stream=True)
+					
+					def generate():
+						for line in r.iter_lines():
+								if line: # filter out keep-alive new lines
+									yield line
+				
+					#return Response(generate(), mimetype='text/xml')
+					return Response(generate())
+						
+			return 'Bad Tap Request'
 
 	if query == 'scs':
 		if request.method == 'GET':
