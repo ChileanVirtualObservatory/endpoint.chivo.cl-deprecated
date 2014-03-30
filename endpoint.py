@@ -19,7 +19,7 @@ class Catalog:
 		self.getRegistry()
 		
 		self.catalogsIvoa["alma"] = {
-		"capabilities":[
+		u'capabilities':[
 						{	
 							"standardid": "ivo://ivoa.net/std/TAP",
 							"accessurl" : "http://wfaudata.roe.ac.uk/twomass-dsa/TAP"
@@ -196,7 +196,37 @@ catalogIvoa = Catalog()
 def index():
 	return 'Index Page'
 
-@app.route('/<catalog>')
+@app.route('/registry', methods = ['GET'])
+def registry():
+	
+	#Max entries in registry page
+	MAX = 100
+	
+	keys= list()
+	
+	if request.args:
+		page = int(request.args['page'])
+	else:
+		page = 1
+	
+	cat = dict()
+	catalogs = catalogIvoa.getCatalogsIvoa()
+	
+	for i in catalogs:
+		catalogIvoa.setCatalog(i)
+		cat[i] =catalogIvoa.getServices()
+	
+	if len(cat.keys())%MAX != 0:
+		pages =  (len(cat.keys())/MAX) + 1
+	else:
+		pages = len(cat.keys())/MAX
+	
+	for i in sorted(cat.keys())[(page-1)*MAX:page*MAX]:
+		keys.append( (i, urllib.quote(i,'')))
+		
+	return render_template('registry.html' , cat = cat, keys = keys, pages = pages, page = page, MAX = MAX)
+
+@app.route('/<path:catalog>')
 def catalogServices(catalog):
 	
 	if catalog in catalogIvoa.getCatalogsIvoa().keys():
@@ -205,10 +235,57 @@ def catalogServices(catalog):
 	else:
 		return 'Catalog not found'
 
-@app.route('/<catalog>/<queryType>', methods=['POST', 'GET'])
-def query(catalog, queryType):
+
+@app.route('/<path:catalog>/sia', methods=['POST', 'GET'])
+@app.route('/<path:catalog>/SIA', methods=['POST', 'GET'])
+def sia(catalog):
 	
-	queryType = queryType.lower()
+	queryType = "sia"
+	catalog = urllib.quote(catalog)
+
+	try:
+		catalogIvoa.setCatalog(catalog)
+		if queryType in catalogIvoa.getServices():
+			if request.method == "GET":
+				
+				r = catalogIvoa.query(request.args, request.method, queryType) 
+				if request.args:
+					return Response(streamDataGet(r), mimetype= getResponseType(r.headers))
+				
+				return Response(streamDataGet(r))
+	except:
+		return 'Catalog without service'
+			
+	return 'Catalog without service'
+
+@app.route('/<path:catalog>/scs', methods=['POST', 'GET'])
+@app.route('/<path:catalog>/SCS', methods=['POST', 'GET'])
+def scs(catalog):
+	
+	queryType = "scs"
+	catalog = urllib.quote(catalog)
+
+	try:
+		catalogIvoa.setCatalog(catalog)
+		if queryType in catalogIvoa.getServices():
+			if request.method == "GET":
+				
+				r = catalogIvoa.query(request.args, request.method, queryType ) 
+				if request.args:
+					return Response(streamDataGet(r), mimetype= getResponseType(r.headers))
+				
+				return Response(streamDataGet(r))
+	except:
+		return 'Catalog without service'
+			
+	return 'Catalog without service'
+
+
+@app.route('/<path:catalog>/ssa', methods=['POST', 'GET'])
+@app.route('/<path:catalog>/SSA', methods=['POST', 'GET'])
+def ssa(catalog):
+	
+	queryType = "ssa"
 	catalog = urllib.quote(catalog)
 
 	try:
@@ -222,16 +299,38 @@ def query(catalog, queryType):
 				
 				return Response(streamDataGet(r))
 			
+	except:
 		return 'Catalog without service'
-		
-		
-	#Remove this	
-	except Exception as e:
-		raise
-		return 'No catalog found ' + str(e)
+			
+	return 'Catalog without service'
 
-@app.route('/<catalog>/tap')
-@app.route('/<catalog>/TAP')
+#~ @app.route('/<catalog>/<queryType>', methods=['POST', 'GET'])
+#~ def query(catalog, queryType):
+	#~ 
+	#~ queryType = queryType.lower()
+	#~ catalog = urllib.quote(catalog)
+#~ 
+	#~ try:
+		#~ catalogIvoa.setCatalog(catalog)
+		#~ if queryType in catalogIvoa.getServices():
+			#~ if request.method == "GET":
+				#~ 
+				#~ r = catalogIvoa.query(request.args, request.method, queryType) 
+				#~ if request.args:
+					#~ return Response(streamDataGet(r), mimetype= getResponseType(r.headers))
+				#~ 
+				#~ return Response(streamDataGet(r))
+			#~ 
+		#~ return 'Catalog without service'
+		#~ 
+		#~ 
+	#~ #Remove this	
+	#~ except Exception as e:
+		#~ raise
+		#~ return 'No catalog found ' + str(e)
+
+@app.route('/<path:catalog>/tap')
+@app.route('/<path:catalog>/TAP')
 def tap(catalog):
 	
 	catalog = urllib.quote(catalog)
@@ -240,8 +339,8 @@ def tap(catalog):
 	if 'tap' in catalogIvoa.getServices():
 		return 'OK'
 		
-@app.route('/<catalog>/TAP/<path:route>', methods = ['GET', 'POST'])
-@app.route('/<catalog>/tap/<path:route>', methods = ['GET', 'POST'])
+@app.route('/<path:catalog>/TAP/<path:route>', methods = ['GET', 'POST'])
+@app.route('/<path:catalog>/tap/<path:route>', methods = ['GET', 'POST'])
 def queryTap(catalog,route=None):
 	
 	catalog = urllib.quote(catalog)
@@ -274,40 +373,6 @@ def queryTap(catalog,route=None):
 			r = catalogIvoa.query(urllib.urlencode(request.form), request.method, "tap",dictRoute)
 			return Response(streamDataPost(r), mimetype= getResponseType(r.headers))
 	return 'Bad Tap Request1'
-
-@app.route('/registry', methods = ['GET'])
-def registry():
-	
-	#Max entries in registry page
-	MAX = 100
-	
-	keys= list()
-	
-	if request.args:
-		page = int(request.args['page'])
-	else:
-		page = 1
-	
-	cat = dict()
-	catalogs = catalogIvoa.getCatalogsIvoa()
-	
-	for i in catalogs:
-		catalogIvoa.setCatalog(i)
-		cat[i] =catalogIvoa.getServices()
-	
-	if len(cat.keys())%MAX != 0:
-		pages =  (len(cat.keys())/MAX) + 1
-	else:
-		pages = len(cat.keys())/MAX
-	
-	for i in sorted(cat.keys())[(page-1)*MAX:page*MAX]:
-		keys.append( (i, urllib.quote(i,'')))
-		
-	return render_template('registry.html' , cat = cat, keys = keys, pages = pages, page = page, MAX = MAX)
-
-@app.route('/asd/<path:a>/<hola>')
-def asd(a,hola):
-	return a + "</br>" + hola
 
 if __name__ == '__main__':
     app.run(debug=True)
