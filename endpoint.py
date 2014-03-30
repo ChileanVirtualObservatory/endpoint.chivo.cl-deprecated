@@ -20,11 +20,11 @@ SERVER_SIA	= 'http://irsa.ipac.caltech.edu/ibe/sia/wise/prelim/p3am_cdd?'
 def index():
     return 'Index page'
 
-@app.route('/alma/<query>/', methods=['POST', 'GET'])
-@app.route('/alma/<query>/<option>/', methods=['POST', 'GET'])
-@app.route('/alma/<query>/<option>/<qid>/', methods=['GET'])
-@app.route('/alma/<query>/<option>/<qid>/<qidOption>/', methods=['GET'])
-@app.route('/alma/<query>/<option>/<qid>/<qidOption>/<qidOptionRequest>/', methods=['GET'])
+@app.route('/alma/<query>', methods=['POST', 'GET'])
+@app.route('/alma/<query>/<option>', methods=['POST', 'GET'])
+@app.route('/alma/<query>/<option>/<qid>', methods=['GET'])
+@app.route('/alma/<query>/<option>/<qid>/<qidOption>', methods=['GET'])
+@app.route('/alma/<query>/<option>/<qid>/<qidOption>/<qidOptionRequest>', methods=['GET'])
 def chivo_query(query,qid=None,option=None, qidOption = None, qidOptionRequest = None):
 	CHUNK = 1024
 	if query.lower() == 'tap':
