@@ -27,7 +27,7 @@
 	{% for catalog, url in keys %}
 		<tr>
 			<td> 
-			<a href = "/{{ url }}">{{catalog}}</a></td>
+			<a href = "/{{"external/"+url if external else url }}">{{catalog}}</a></td>
 			
 			{% if "scs" in cat[catalog] %}
 			<td> X </td>
