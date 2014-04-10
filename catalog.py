@@ -165,7 +165,7 @@ class Catalog:
 
 		elif method == "POST":
 			if not "qid" in route.keys():
-				data = route
+				data = None
                 req = urllib2.Request(self.getAcessUrl("TAP")+"/"+route["option"], data)
                 response = urllib2.urlopen(req)
                 return response	

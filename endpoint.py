@@ -223,7 +223,7 @@ def InternQueryTap(catalog, route):
 
 
 def queryTap(catalog,route=None):
-	catalog = urllib.quote(catalog)
+	#catalog = urllib.quote(catalog)
 	
 	catalogIvoa.setCatalog(catalog)
 	route = map(str,route.split("/"))
@@ -248,6 +248,7 @@ def queryTap(catalog,route=None):
 				return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
 				
 		elif request.method == "POST":
+			print request.form
 			print urllib.urlencode(request.form)
 			print dictRoute
 			r = catalogIvoa.query(urllib.urlencode(request.form), request.method, "tap",dictRoute)
@@ -263,5 +264,10 @@ def ExternQueryTap(catalog, route):
 	else: 
 		return 'Error'
 
+
+@app.route('/raise')
+def Praise():
+	raise
+	return
 if __name__ == '__main__':
     app.run(debug=True)
