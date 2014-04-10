@@ -16,7 +16,7 @@ class Catalog:
 	#Default came with "alma" catalog
 	def __init__(self,catalog= None):
 		
-		#self.getRegistry()
+		self.getRegistry()
 		
 		self.catalogsChivo["alma"] = {
 		u'capabilities':[
