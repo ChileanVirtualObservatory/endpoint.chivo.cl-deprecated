@@ -85,6 +85,14 @@ class Catalog():
 		r = requests.get(self.getAcessUrl("SIA") , params = parameters, stream = True)
 		return r	
 	
+	#Tap
+	
+	
+	##SyncQuery
+	def tapSyncQuery(self, params):
+		req = urllib2.Request(self.getAcessUrl("TAP")+"/sync", params)
+		response = urllib2.urlopen(req)
+		return response
 	#~ #TAP
 	#~ def tapQuery(self, query , method , route):
 		#~ 
@@ -196,10 +204,10 @@ class VOparisRegistry(Registry):
 		
 		#All standardid from ivoa services
 		SERVICEPARAMS = {
-			#"tap":'standardid:"ivo://ivoa.net/std/TAP"',
+			"tap":'standardid:"ivo://ivoa.net/std/TAP"',
 			#"sia": 'standardid:"ivo://ivoa.net/std/SIA"',
 			#"ssa": 'standardid:"ivo://ivoa.net/std/SSA"',
-			"scs": 'standardid:"ivo://ivoa.net/std/ConeSearch"',
+			#"scs": 'standardid:"ivo://ivoa.net/std/ConeSearch"',
 			}
 		
 		catalogsList= list()
