@@ -12,16 +12,20 @@ app = Flask(__name__)
 chivoReg = ChivoRegistry()
 extReg = VOparisRegistry() 
 
-
+#Remove trailing slash in POST requests
 @app.before_request
 def remove_trailing_slash():
-	if request.path != '/' and request.path.endswith('/'):
+	if request.path != '/' and request.path.endswith('/') and request.method == "POST":
 		return redirect(request.path[:-1], code=307)
 
+
+#Index Page
 @app.route('/')
 def index():
 	return 'Index Page'
 
+
+#Renders MAX catalogs from alma's registry
 @app.route('/registry/', methods = ['GET'])
 def registry(Reg = chivoReg, external = None):
 	
@@ -52,12 +56,13 @@ def registry(Reg = chivoReg, external = None):
 
 	return render_template('registry.html' , cat = cat, keys = keys, pages = pages, page = page, MAX = MAX, external = external)
 
+#External Registry
 @app.route('/external/registry/', methods = ['GET'])
 def extRegistry():
 	return registry(extReg, True)
 
 
-
+#Tap Catalog
 @app.route('/<path:catalog>/tap/')
 @app.route('/<path:catalog>/TAP/')
 def tap(catalog, Reg = chivoReg):
@@ -67,34 +72,43 @@ def tap(catalog, Reg = chivoReg):
 	if 'tap' in cat.getServices():
 		return 'OK'
 
+#Tap Sync Query, only POST method
 @app.route('/<path:catalog>/tap/sync', methods = ['POST'])
 def syncTap(catalog, Reg = chivoReg):
 	data = urllib.urlencode(request.form)
 	cat = Reg.getCatalog(catalog)
+	#If the catalog is not in our registry
 	if cat is None:
 		return 'Error'
+	#If the catalog has 'tap' service, we make the request
 	if 'tap' in cat.getServices():
 		res = cat.tapSyncQuery(data)
 		return Response(streamDataPost(res) , mimetype=getResponseType(res.headers))
+	return 'Error2'
 
+#External Tap Sync Query
 @app.route('/external/<path:catalog>/tap/sync', methods = ['POST'])
 def extSyncTap(catalog):
 	return syncTap(catalog, extReg)
-	
 
+#Show tap tables from a catalog
 @app.route('/<path:catalog>/tap/tables')
 def tapTables(catalog, Reg= chivoReg):
+	print catalog
 	cat = Reg.getCatalog(catalog)
+	#Validate catalog
 	if cat is None:
 		return 'Error'
+	#Validate service
 	if 'tap' in cat.getServices():
 		r = cat.tapTables()
-		print r.headers
 		return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
 		
+#Show external tap tables from a catalog
 @app.route('/external/<path:catalog>/tap/tables')
 def extTapTables(catalog):
 	return tapTables(catalog, Reg= extReg)
+
 
 @app.route('/external/<path:catalog>/tap/')
 @app.route('/external/<path:catalog>/TAP/')
@@ -102,16 +116,21 @@ def ExternTap(catalog):
 	return tap(catalog, extReg)
 
 
+#Make SIA Query
 @app.route('/<path:catalog>/sia/', methods=['POST', 'GET'])
 @app.route('/<path:catalog>/SIA/', methods=['POST', 'GET'])
 def sia(catalog, Reg = chivoReg):
 	
 	queryType = "sia"
 	cat = Reg.getCatalog(catalog)
+	#Validate catalog
 	if cat is None:
 		return 'Error'
+	#Validate SIA service
 	if queryType in cat.getServices():
+		#Protocol need GET
 		if request.method == "GET":
+			#Making the request			
 			r = cat.query(request.args, request.method, queryType) 
 			if request.args:
 				return Response(streamDataGet(r), mimetype= getResponseType(r.headers))
@@ -123,17 +142,20 @@ def sia(catalog, Reg = chivoReg):
 @app.route('/external/<path:catalog>/SIA', methods=['POST', 'GET'])
 def ExternSia(catalog):
 	return sia(catalog, extReg)
-
+#SCS query
 @app.route('/<path:catalog>/scs', methods=['POST', 'GET'])
 @app.route('/<path:catalog>/SCS', methods=['POST', 'GET'])
 def scs(catalog, Reg= chivoReg):
 	queryType = "scs"
 	cat = Reg.getCatalog(catalog)
+	#validating catalog
 	if cat is None:
 		return 'Error'
-	print cat.getServices()
+	#validating service
 	if queryType in cat.getServices():
+		# GET needed in protocol
 		if request.method == "GET":
+			#Making Query
 			r = cat.query(request.args, request.method, queryType ) 
 			if request.args:
 				return Response(streamDataGet(r), mimetype= getResponseType(r.headers))
@@ -146,17 +168,21 @@ def scs(catalog, Reg= chivoReg):
 def ExternScs(catalog):
 	return scs(catalog, extReg)
 
-
+#SSA Query
 @app.route('/<path:catalog>/ssa/', methods=['POST', 'GET'])
 @app.route('/<path:catalog>/SSA/', methods=['POST', 'GET'])
 def ssa(catalog, Reg = chivoReg):
 	
 	queryType = "ssa"
-	catalog = urllib.quote(catalog)
 	cat = Reg.getCatalog(catalog)
+	#validating catalog
+	if cat is None:
+		return 'Error'
+	#validating service
 	if queryType in cat.getServices():
+		#GET needed in protocol
 		if request.method == "GET":
-			
+			#Making request
 			r = cat.query(request.args, request.method, queryType) 
 			if request.args:
 				return Response(streamDataGet(r), mimetype= getResponseType(r.headers))
@@ -170,9 +196,7 @@ def ssa(catalog, Reg = chivoReg):
 def ExternSsa(catalog):
 	return ssa(catalog, extReg)
 
-
-
-
+#Showing catalog metadata
 @app.route('/<path:catalog>/')
 def catalogServices(catalog, Reg = chivoReg):
 	if catalog in Reg.catalogs.keys():

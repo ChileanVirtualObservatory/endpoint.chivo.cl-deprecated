@@ -91,6 +91,9 @@ class Catalog():
 	##SyncQuery
 	def tapSyncQuery(self, params):
 		req = urllib2.Request(self.getAcessUrl("TAP")+"/sync", params)
+		print params
+		print self.shortname
+		print self.getAcessUrl("TAP")
 		response = urllib2.urlopen(req)
 		return response
 		
