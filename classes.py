@@ -93,6 +93,10 @@ class Catalog():
 		req = urllib2.Request(self.getAcessUrl("TAP")+"/sync", params)
 		response = urllib2.urlopen(req)
 		return response
+		
+	def tapTables(self):
+		r = requests.get(self.getAcessUrl("TAP")+"/tables")
+		return r
 	#~ #TAP
 	#~ def tapQuery(self, query , method , route):
 		#~ 
@@ -129,7 +133,7 @@ class Registry():
 		self.catalogs[catalog.shortname] = catalog
 	
 	def getCatalog(self , shortname):
-		return self.catalogs[shortname]	
+		return self.catalogs[shortname]	if self.catalogs.has_key(shortname) else None
 		
 
 #Chivo Registry, now has only 1 test catalog, with testing metadata

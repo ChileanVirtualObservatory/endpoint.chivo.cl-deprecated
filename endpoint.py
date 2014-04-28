@@ -13,6 +13,11 @@ chivoReg = ChivoRegistry()
 extReg = VOparisRegistry() 
 
 
+@app.before_request
+def remove_trailing_slash():
+	if request.path != '/' and request.path.endswith('/'):
+		return redirect(request.path[:-1], code=307)
+
 @app.route('/')
 def index():
 	return 'Index Page'
@@ -56,18 +61,40 @@ def extRegistry():
 @app.route('/<path:catalog>/tap/')
 @app.route('/<path:catalog>/TAP/')
 def tap(catalog, Reg = chivoReg):
-	print catalog
 	cat = Reg.getCatalog(catalog)
+	if cat is None:
+		return 'Error'
 	if 'tap' in cat.getServices():
 		return 'OK'
 
 @app.route('/<path:catalog>/tap/sync', methods = ['POST'])
 def syncTap(catalog, Reg = chivoReg):
 	data = urllib.urlencode(request.form)
-	cat = Reg.getCatalog("alma")
+	cat = Reg.getCatalog(catalog)
+	if cat is None:
+		return 'Error'
 	if 'tap' in cat.getServices():
 		res = cat.tapSyncQuery(data)
 		return Response(streamDataPost(res) , mimetype=getResponseType(res.headers))
+
+@app.route('/external/<path:catalog>/tap/sync', methods = ['POST'])
+def extSyncTap(catalog):
+	return syncTap(catalog, extReg)
+	
+
+@app.route('/<path:catalog>/tap/tables')
+def tapTables(catalog, Reg= chivoReg):
+	cat = Reg.getCatalog(catalog)
+	if cat is None:
+		return 'Error'
+	if 'tap' in cat.getServices():
+		r = cat.tapTables()
+		print r.headers
+		return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
+		
+@app.route('/external/<path:catalog>/tap/tables')
+def extTapTables(catalog):
+	return tapTables(catalog, Reg= extReg)
 
 @app.route('/external/<path:catalog>/tap/')
 @app.route('/external/<path:catalog>/TAP/')
@@ -80,20 +107,16 @@ def ExternTap(catalog):
 def sia(catalog, Reg = chivoReg):
 	
 	queryType = "sia"
-	catalog = urllib.quote(catalog)
-
-	try:
-		cat = Reg.getCatalog(catalog)
-		if queryType in cat.getServices():
-			if request.method == "GET":
-				r = cat.query(request.args, request.method, queryType) 
-				if request.args:
-					return Response(streamDataGet(r), mimetype= getResponseType(r.headers))
-				 
-				return Response(streamDataGet(r))
-	except:
-		return 'Catalog without service'
-			
+	cat = Reg.getCatalog(catalog)
+	if cat is None:
+		return 'Error'
+	if queryType in cat.getServices():
+		if request.method == "GET":
+			r = cat.query(request.args, request.method, queryType) 
+			if request.args:
+				return Response(streamDataGet(r), mimetype= getResponseType(r.headers))
+			 
+			return Response(streamDataGet(r))		
 	return 'Catalog without service'
 	
 @app.route('/external/<path:catalog>/sia', methods=['POST', 'GET'])
@@ -105,21 +128,17 @@ def ExternSia(catalog):
 @app.route('/<path:catalog>/SCS', methods=['POST', 'GET'])
 def scs(catalog, Reg= chivoReg):
 	queryType = "scs"
-	catalog = urllib.quote(catalog)
-	
-	try:
-		cat = Reg.getCatalog(catalog)
-		print cat.getServices()
-		if queryType in cat.getServices():
-			if request.method == "GET":
-				r = cat.query(request.args, request.method, queryType ) 
-				if request.args:
-					return Response(streamDataGet(r), mimetype= getResponseType(r.headers))
-				
-				return Response(streamDataGet(r))
-	except:
-		return 'Catalog without service'
+	cat = Reg.getCatalog(catalog)
+	if cat is None:
+		return 'Error'
+	print cat.getServices()
+	if queryType in cat.getServices():
+		if request.method == "GET":
+			r = cat.query(request.args, request.method, queryType ) 
+			if request.args:
+				return Response(streamDataGet(r), mimetype= getResponseType(r.headers))
 			
+			return Response(streamDataGet(r))
 	return 'Catalog without service'
 
 @app.route('/external/<path:catalog>/scs/', methods=['POST', 'GET'])
@@ -134,20 +153,15 @@ def ssa(catalog, Reg = chivoReg):
 	
 	queryType = "ssa"
 	catalog = urllib.quote(catalog)
-
-	try:
-		cat = Reg.getCatalog(catalog)
-		if queryType in cat.getServices():
-			if request.method == "GET":
-				
-				r = cat.query(request.args, request.method, queryType) 
-				if request.args:
-					return Response(streamDataGet(r), mimetype= getResponseType(r.headers))
-				
-				return Response(streamDataGet(r))
+	cat = Reg.getCatalog(catalog)
+	if queryType in cat.getServices():
+		if request.method == "GET":
 			
-	except:
-		return 'Catalog without service'
+			r = cat.query(request.args, request.method, queryType) 
+			if request.args:
+				return Response(streamDataGet(r), mimetype= getResponseType(r.headers))
+			
+			return Response(streamDataGet(r))
 			
 	return 'Catalog without service'
 	
