@@ -100,6 +100,10 @@ class Catalog():
 	def tapTables(self):
 		r = requests.get(self.getAcessUrl("TAP")+"/tables")
 		return r
+		
+	def tapAvailability(self):
+		r = requests.get(self.getAcessUrl("TAP")+"/availability")
+		return r
 	#~ #TAP
 	#~ def tapQuery(self, query , method , route):
 		#~ 
