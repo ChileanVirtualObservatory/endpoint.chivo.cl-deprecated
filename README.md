@@ -1,8 +1,40 @@
 # Flask Endpoint
 
+##Requeriments
+
+###Python Requirements
+* Python >= 2.7 
+* [Python Flask](http://flask.pocoo.org/)
+* [Python requests](http://docs.python-requests.org/en/latest/)
+* Python urllib
+* Python urllib2
+* Python json
+
+###For deployment
+* [Apache web Server](http://httpd.apache.org/)
+* [wsgi_mod](http://flask.pocoo.org/docs/deploying/mod_wsgi/)
+
+
+
+##For Develop and testing
+* First clone the repo
+    git clone git@github.com:ChileanVirtualObservatory/flask_endpoint.git
+* Open a terminal and run *endpoint.py*
+    python endpoint.py
+* The webserver will be running in *localhost:5000/*
+
+##Deployment
+
+* First clone the repo
+    git clone git@github.com:ChileanVirtualObservatory/flask_endpoint.git
+* Edit *endpoint.wsgi* with the file's path
+    sys.path.insert(0,"/var/www/flask_endpoint")
+
+* [Configure Apache](http://flask.pocoo.org/docs/deploying/mod_wsgi/#configuring-apache)
+
 ##Services
 
-### List of all catalogs:
+### List of al catalogs:
    * WEB : http://dachs.lirae.cl:5000/registry
    
    * Method: *GET*
@@ -138,5 +170,9 @@
 		* SPECRP `double`
 		* TIMERES `double`
 
+### External Registry
+
+* Use  http://dachs.lirae.cl:5000/external/URL, i.e  http://dachs.lirae.cl:5000/external/registry , to se all catalogs
+	
 
 
