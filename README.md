@@ -18,16 +18,23 @@
 
 ##For Develop and testing
 * First clone the repo
+
     git clone git@github.com:ChileanVirtualObservatory/flask_endpoint.git
+
 * Open a terminal and run *endpoint.py*
+
     python endpoint.py
+
 * The webserver will be running in *localhost:5000/*
 
 ##Deployment
 
 * First clone the repo
+
     git clone git@github.com:ChileanVirtualObservatory/flask_endpoint.git
+
 * Edit *endpoint.wsgi* with the file's path
+
     sys.path.insert(0,"/var/www/flask_endpoint")
 
 * [Configure Apache](http://flask.pocoo.org/docs/deploying/mod_wsgi/#configuring-apache)
