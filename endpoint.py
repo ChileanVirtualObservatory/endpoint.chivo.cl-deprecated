@@ -128,6 +128,35 @@ def tapAvailability(catalog, Reg= chivoReg):
 		
 
 		
+#Show tap availability from a catalog
+@app.route('/<path:catalog>/tap/availability')
+def tapAvailability(catalog, Reg= chivoReg):
+	cat = Reg.getCatalog(catalog)
+	#Validate catalog
+	if cat is None:
+		return 'Error'
+	#Validate service
+	if 'tap' in cat.getServices():
+		r = cat.tapAvailability()
+		return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
+		
+		
+#Show tap availability from a catalog
+@app.route('/<path:catalog>/tap/async', methods=['POST', 'GET'])
+def tapAvailability(catalog, Reg= chivoReg):
+	data = urllib.urlencode(request.form)
+	cat = Reg.getCatalog(catalog)
+	#If the catalog is not in our registry
+	if cat is None:
+		return 'Error'
+	#If the catalog has 'tap' service, we make the request
+	if 'tap' in cat.getServices():
+		r = cat.tapAsyncQuery(data,request.method)
+		if request.method == "POST":
+			return Response(streamDataPost(r) , mimetype=getResponseType(r.headers))
+		else:
+			return Response(streamDataGet(r), mimetype=getResponseType(r.headers))		
+		
 #Show external tap tables from a catalog
 @app.route('/external/<path:catalog>/tap/tables')
 def extTapTables(catalog):

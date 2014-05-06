@@ -93,10 +93,25 @@ class Catalog():
 		req = urllib2.Request(self.getAcessUrl("TAP")+"/sync")
 		response = urllib2.urlopen(req)
 		return response
+	
+	def tapAsyncQuery(self, params, method):
+		if method == "POST":
+			req = urllib2.Request(self.getAcessUrl("TAP")+"/async", params)
+			print params
+			print self.shortname
+			print self.getAcessUrl("TAP")
+			response = urllib2.urlopen(req)
+			return response
+		
+		elif method == "GET":
+			r = requests.get(self.getAcessUrl("TAP")+"/async")
+			return r
+		
 		
 	def tapTables(self):
 		r = requests.get(self.getAcessUrl("TAP")+"/tables")
 		return r
+		
 	
 	def tapCapabilities(self):
 		r = requests.get(self.getAcessUrl("TAP")+"/capabilities")
