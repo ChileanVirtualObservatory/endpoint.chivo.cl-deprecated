@@ -92,9 +92,8 @@ def extSyncTap(catalog):
 	return syncTap(catalog, extReg)
 
 #Show tap tables from a catalog
-@app.route('/<path:catalog>/tap/tables')
+@app.route('/<path:catalog>/tap/tables/')
 def tapTables(catalog, Reg= chivoReg):
-	print catalog
 	cat = Reg.getCatalog(catalog)
 	#Validate catalog
 	if cat is None:
@@ -103,12 +102,36 @@ def tapTables(catalog, Reg= chivoReg):
 	if 'tap' in cat.getServices():
 		r = cat.tapTables()
 		return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
+
+#Show tap capabilities from a catalog
+@app.route('/<path:catalog>/tap/capabilities/')
+def tapCapability(catalog, Reg= chivoReg):
+	cat = Reg.getCatalog(catalog)
+	#Validate catalog
+	if cat is None:
+		return 'Error'
+	#Validate service
+	if 'tap' in cat.getServices():
+		r = cat.tapCapabilities()
+		return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
+		
+@app.route('/<path:catalog>/tap/availability/')
+def tapAvailability(catalog, Reg= chivoReg):
+	cat = Reg.getCatalog(catalog)
+	#Validate catalog
+	if cat is None:
+		return 'Error'
+	#Validate service
+	if 'tap' in cat.getServices():
+		r = cat.tapAvailability()
+		return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
+		
+
 		
 #Show external tap tables from a catalog
 @app.route('/external/<path:catalog>/tap/tables')
 def extTapTables(catalog):
 	return tapTables(catalog, Reg= extReg)
-
 
 @app.route('/external/<path:catalog>/tap/')
 @app.route('/external/<path:catalog>/TAP/')

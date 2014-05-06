@@ -90,15 +90,20 @@ class Catalog():
 	
 	##SyncQuery
 	def tapSyncQuery(self, params):
-		req = urllib2.Request(self.getAcessUrl("TAP")+"/sync", params)
-		print params
-		print self.shortname
-		print self.getAcessUrl("TAP")
+		req = urllib2.Request(self.getAcessUrl("TAP")+"/sync")
 		response = urllib2.urlopen(req)
 		return response
 		
 	def tapTables(self):
 		r = requests.get(self.getAcessUrl("TAP")+"/tables")
+		return r
+	
+	def tapCapabilities(self):
+		r = requests.get(self.getAcessUrl("TAP")+"/capabilities")
+		return r
+	
+	def tapAvailability(self):
+		r = requests.get(self.getAcessUrl("TAP")+"/availability")
 		return r
 	#~ #TAP
 	#~ def tapQuery(self, query , method , route):
