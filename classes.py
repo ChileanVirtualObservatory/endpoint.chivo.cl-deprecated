@@ -101,7 +101,7 @@ class Catalog():
 		elif method == "GET":
 			r = requests.get(self.getAcessUrl("TAP")+"/async")
 			return r
-		
+	##Show tapAsyncJob info	
 	def tapAsyncJob(self, jobId):
 		r = requests.get(self.getAcessUrl("TAP")+"/async/"+jobId)
 		return r
