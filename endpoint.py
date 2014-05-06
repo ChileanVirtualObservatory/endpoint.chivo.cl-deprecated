@@ -140,6 +140,19 @@ def tapAsync(catalog, Reg= chivoReg):
 		else:
 			return Response(streamDataGet(r), mimetype=getResponseType(r.headers))		
 		
+#Tap Async Job Info
+@app.route('/<path:catalog>/tap/async/<jobId>/', methods=['GET'])
+@app.route('/<path:catalog>/TAP/async/<jobId>/', methods=['GET'])
+def tapAsyncJob(catalog, jobId , Reg = chivoReg):
+	cat = Reg.getCatalog(catalog)
+	#Validate catalog
+	if cat is None:
+		return 'Error'
+	#Validate service
+	if 'tap' in cat.getServices():
+		r = cat.tapAsyncJob(jobId)
+		return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
+
 #Show external tap tables from a catalog
 @app.route('/external/<path:catalog>/tap/tables')
 def extTapTables(catalog):
