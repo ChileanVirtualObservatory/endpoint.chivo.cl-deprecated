@@ -18,12 +18,10 @@ def remove_trailing_slash():
 	if request.path != '/' and request.path.endswith('/') and request.method == "POST":
 		return redirect(request.path[:-1], code=307)
 
-
 #Index Page
 @app.route('/')
 def index():
 	return 'Index Page'
-
 
 #Renders MAX catalogs from alma's registry
 @app.route('/registry/', methods = ['GET'])
@@ -60,7 +58,6 @@ def registry(Reg = chivoReg, external = None):
 @app.route('/external/registry/', methods = ['GET'])
 def extRegistry():
 	return registry(extReg, True)
-
 
 #Tap Catalog
 @app.route('/<path:catalog>/tap/')
@@ -114,7 +111,8 @@ def tapCapability(catalog, Reg= chivoReg):
 	if 'tap' in cat.getServices():
 		r = cat.tapCapabilities()
 		return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
-		
+
+#Show tap availability from a catalog		
 @app.route('/<path:catalog>/tap/availability/')
 def tapAvailability(catalog, Reg= chivoReg):
 	cat = Reg.getCatalog(catalog)
@@ -126,24 +124,9 @@ def tapAvailability(catalog, Reg= chivoReg):
 		r = cat.tapAvailability()
 		return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
 		
-
-		
-#Show tap availability from a catalog
-@app.route('/<path:catalog>/tap/availability')
-def tapAvailability(catalog, Reg= chivoReg):
-	cat = Reg.getCatalog(catalog)
-	#Validate catalog
-	if cat is None:
-		return 'Error'
-	#Validate service
-	if 'tap' in cat.getServices():
-		r = cat.tapAvailability()
-		return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
-		
-		
-#Show tap availability from a catalog
+#Tap Async Query, Post method for making request, and Get for getting all requests made
 @app.route('/<path:catalog>/tap/async', methods=['POST', 'GET'])
-def tapAvailability(catalog, Reg= chivoReg):
+def tapAsync(catalog, Reg= chivoReg):
 	data = urllib.urlencode(request.form)
 	cat = Reg.getCatalog(catalog)
 	#If the catalog is not in our registry
@@ -162,11 +145,11 @@ def tapAvailability(catalog, Reg= chivoReg):
 def extTapTables(catalog):
 	return tapTables(catalog, Reg= extReg)
 
+#External TAP
 @app.route('/external/<path:catalog>/tap/')
 @app.route('/external/<path:catalog>/TAP/')
 def ExternTap(catalog):
 	return tap(catalog, extReg)
-
 
 #Make SIA Query
 @app.route('/<path:catalog>/sia/', methods=['POST', 'GET'])
@@ -194,6 +177,7 @@ def sia(catalog, Reg = chivoReg):
 @app.route('/external/<path:catalog>/SIA', methods=['POST', 'GET'])
 def ExternSia(catalog):
 	return sia(catalog, extReg)
+
 #SCS query
 @app.route('/<path:catalog>/scs', methods=['POST', 'GET'])
 @app.route('/<path:catalog>/SCS', methods=['POST', 'GET'])
@@ -260,12 +244,10 @@ def catalogServices(catalog, Reg = chivoReg):
 def exterCatalog(catalog):
 	return catalogServices(catalog, extReg)
 
-
 @app.route('/raise/')
 def Praise():
 	raise
-	return
-	
+	return	
 	
 if __name__ == '__main__':
     app.run(debug=True)

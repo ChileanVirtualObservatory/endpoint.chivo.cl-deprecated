@@ -44,7 +44,6 @@ class Catalog():
 				return i['accessurl']
 		return False
 	
-		
 	#Generic query, it calls the other query types.
 	def query(self,parameters, method, queryType, route = None):
 		#All services
@@ -59,15 +58,9 @@ class Catalog():
 			elif queryType == "ssa":
 				r=self.ssaQuery(parameters)
 				return r
-			elif queryType == "tap":
-				r = self.tapQuery(parameters, method, route)
-				return r
 			else:
 				return False
 		#Only tap 
-		elif method == "POST" and queryType == "tap":
-			r=self.tapQuery(parameters, method, route)
-			return r
 		else:
 			return False	
 		
@@ -94,56 +87,36 @@ class Catalog():
 		response = urllib2.urlopen(req)
 		return response
 	
+	##Async Simple Query
 	def tapAsyncQuery(self, params, method):
+		### If we get POST method, is a request with parameters
 		if method == "POST":
+			
+			#Making the request then sending it, and getting a response
 			req = urllib2.Request(self.getAcessUrl("TAP")+"/async", params)
-			print params
-			print self.shortname
-			print self.getAcessUrl("TAP")
 			response = urllib2.urlopen(req)
 			return response
 		
+		### If the method is get we should get all the ID's from the previous requests
 		elif method == "GET":
 			r = requests.get(self.getAcessUrl("TAP")+"/async")
 			return r
 		
-		
+	##Return Tap tables	
 	def tapTables(self):
 		r = requests.get(self.getAcessUrl("TAP")+"/tables")
 		return r
-		
 	
+	##Return Tap Capabilities
 	def tapCapabilities(self):
 		r = requests.get(self.getAcessUrl("TAP")+"/capabilities")
 		return r
 	
+	##Return if the sistem is up or not
 	def tapAvailability(self):
 		r = requests.get(self.getAcessUrl("TAP")+"/availability")
 		return r
-	#~ #TAP
-	#~ def tapQuery(self, query , method , route):
-		#~ 
-		#~ if method == "GET":
-			#~ params  = "/" + route["option"]
-			#~ if "qid" in route.keys():
-					#~ params += "/" + route["qid"]
-			#~ if "qidOption" in route.keys():
-					#~ params += "/" + route["qidOption"]
-			#~ if "qidOptionRequest" in route.keys():
-					#~ params += "/" + route["qidOptionRequest"]
-			#~ 
-			#~ r = requests.get(self.getAcessUrl("TAP") + params , stream = True)
-			#~ 
-			#~ return r
-#~ 
-		#~ elif method == "POST":
-			#~ if not "qid" in route.keys():
-				#~ data = None
-                #~ req = urllib2.Request(self.getAcessUrl("TAP")+"/"+route["option"], data)
-                #~ response = urllib2.urlopen(req)
-                #~ return response	
-		#~ return False
-		#~ 
+
 
 
 #Generic Registry, list of catalogs, we need to implement keyword search and other stuff
@@ -218,7 +191,7 @@ class ChivoRegistry(Registry):
 			)
 		self.append(alma)
 
-
+#VoParis Registry, we get the JSON for all the services, then merge them in a hash with Catalogs
 class VOparisRegistry(Registry):
 	def __init__(self):
 		self.catalogs = dict()
@@ -229,7 +202,7 @@ class VOparisRegistry(Registry):
 		#Max response items
 		MAX = 1000
 		
-		#All standardid from ivoa services
+		#All standardid from ivoa services, those are the params from the query
 		SERVICEPARAMS = {
 			"tap":'standardid:"ivo://ivoa.net/std/TAP"',
 			#"sia": 'standardid:"ivo://ivoa.net/std/SIA"',
@@ -237,6 +210,7 @@ class VOparisRegistry(Registry):
 			#"scs": 'standardid:"ivo://ivoa.net/std/ConeSearch"',
 			}
 		
+		#Empty list
 		catalogsList= list()
 		
 		#We get all services with tap,sia,ssa,tap from vo-paris registry 
