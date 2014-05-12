@@ -170,8 +170,20 @@ def tapAsyncJob(catalog, jobId , Reg = chivoReg):
 		return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
 		
 		
-@app.route('/<path:catalog>/tap/async/<jobId>/results/result', methods=['GET'])
-@app.route('/<path:catalog>/TAP/async/<jobId>/results/result', methods=['GET'])
+@app.route('/<path:catalog>/tap/async/<jobId>/results/<path:result>', methods=['GET'])
+@app.route('/<path:catalog>/TAP/async/<jobId>/results/<path:result>', methods=['GET'])
+def tapAsyncJob(catalog, jobId, result, Reg = chivoReg):
+	cat = Reg.getCatalog(catalog)
+	#Validate catalog
+	if cat is None:
+		return 'Error'
+	#Validate service
+	if 'tap' in cat.getServices():
+		r = cat.tapAsyncResult(jobId,result)
+		return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
+
+@app.route('/<path:catalog>/tap/async/<jobId>/quote', methods=['GET'])
+@app.route('/<path:catalog>/TAP/async/<jobId>/quote', methods=['GET'])
 def tapAsyncJob(catalog, jobId , Reg = chivoReg):
 	cat = Reg.getCatalog(catalog)
 	#Validate catalog
@@ -179,8 +191,9 @@ def tapAsyncJob(catalog, jobId , Reg = chivoReg):
 		return 'Error'
 	#Validate service
 	if 'tap' in cat.getServices():
-		r = cat.tapAsyncResult(jobId)
+		r = cat.tapAsyncQuote(jobId)
 		return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
+		
 
 #Show external tap tables from a catalog
 @app.route('/external/<path:catalog>/tap/tables')

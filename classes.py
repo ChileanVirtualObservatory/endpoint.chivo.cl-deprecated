@@ -106,14 +106,19 @@ class Catalog():
 	def tapAsyncJob(self, jobId):
 		r = requests.get(self.getAcessUrl("TAP")+"/async/"+jobId)
 		return r
-	
+	##Show list of results
 	def tapAsyncResult(self, jobId):
 		r = requests.get(self.getAcessUrl("TAP")+"/async/"+jobId+"/results")
 		return r
-	
-	def tapAsyncResult(self,jobID):
-		r = requests.get(self.getAcessUrl("TAP")+"/async/"+jobId+"/results/result")
+	##Show result itself
+	def tapAsyncResult(self,jobID, path):
+		r = requests.get(self.getAcessUrl("TAP")+"/async/"+jobId+"/results"+path)
 		return r
+	##Job Quote
+	def tapAsyncQuote(self,jobID):
+		r = requests.get(self.getAcessUrl("TAP")+"/async/"+jobId+"/quote")
+		return r		
+	
 	##Return Tap tables	
 	def tapTables(self):
 		r = requests.get(self.getAcessUrl("TAP")+"/tables")
