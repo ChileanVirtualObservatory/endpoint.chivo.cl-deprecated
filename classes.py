@@ -107,21 +107,26 @@ class Catalog():
 		r = requests.get(self.getAcessUrl("TAP")+"/async/"+jobId)
 		return r
 	##Show list of results
-	def tapAsyncResult(self, jobId):
+	def tapAsyncResults(self, jobId):
 		r = requests.get(self.getAcessUrl("TAP")+"/async/"+jobId+"/results")
 		return r
 	##Show result itself
-	def tapAsyncResult(self,jobID, path):
-		r = requests.get(self.getAcessUrl("TAP")+"/async/"+jobId+"/results"+path)
+	def tapAsyncResult(self,jobId, path):
+		r = requests.get(self.getAcessUrl("TAP")+"/async/"+jobId+"/results/"+path)
 		return r
 	##Job Quote
-	def tapAsyncQuote(self,jobID):
+	def tapAsyncQuote(self,jobId):
 		r = requests.get(self.getAcessUrl("TAP")+"/async/"+jobId+"/quote")
 		return r		
 	##Execution duration
-	def tapAsyncDuration(self,jobID):
+	def tapAsyncDuration(self,jobId):
 		r = requests.get(self.getAcessUrl("TAP")+"/async/"+jobId+"/quote")
 		return r		
+	
+	##Execution destruction
+	def tapAsyncDestruction(self,jobId):
+		r = requests.get(self.getAcessUrl("TAP")+"/async/"+jobId+"/destruction")
+		return r
 	##Return Tap tables	
 	def tapTables(self):
 		r = requests.get(self.getAcessUrl("TAP")+"/tables")
