@@ -159,7 +159,7 @@ def tapAsyncJob(catalog, jobId , Reg = chivoReg):
 
 @app.route('/<path:catalog>/tap/async/<jobId>/results', methods=['GET'])
 @app.route('/<path:catalog>/TAP/async/<jobId>/results', methods=['GET'])
-def tapAsyncJob(catalog, jobId , Reg = chivoReg):
+def tapAsyncResults(catalog, jobId , Reg = chivoReg):
 	cat = Reg.getCatalog(catalog)
 	#Validate catalog
 	if cat is None:
@@ -172,7 +172,7 @@ def tapAsyncJob(catalog, jobId , Reg = chivoReg):
 		
 @app.route('/<path:catalog>/tap/async/<jobId>/results/<path:result>', methods=['GET'])
 @app.route('/<path:catalog>/TAP/async/<jobId>/results/<path:result>', methods=['GET'])
-def tapAsyncJob(catalog, jobId, result, Reg = chivoReg):
+def tapAsyncResult(catalog, jobId, result, Reg = chivoReg):
 	cat = Reg.getCatalog(catalog)
 	#Validate catalog
 	if cat is None:
@@ -184,7 +184,7 @@ def tapAsyncJob(catalog, jobId, result, Reg = chivoReg):
 
 @app.route('/<path:catalog>/tap/async/<jobId>/quote', methods=['GET'])
 @app.route('/<path:catalog>/TAP/async/<jobId>/quote', methods=['GET'])
-def tapAsyncJob(catalog, jobId , Reg = chivoReg):
+def tapAsyncQuote(catalog, jobId , Reg = chivoReg):
 	cat = Reg.getCatalog(catalog)
 	#Validate catalog
 	if cat is None:
@@ -192,6 +192,18 @@ def tapAsyncJob(catalog, jobId , Reg = chivoReg):
 	#Validate service
 	if 'tap' in cat.getServices():
 		r = cat.tapAsyncQuote(jobId)
+		return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
+		
+@app.route('/<path:catalog>/tap/async/<jobId>/executionduration', methods=['GET'])
+@app.route('/<path:catalog>/TAP/async/<jobId>/executionduration', methods=['GET'])
+def tapAsyncDuration(catalog, jobId , Reg = chivoReg):
+	cat = Reg.getCatalog(catalog)
+	#Validate catalog
+	if cat is None:
+		return 'Error'
+	#Validate service
+	if 'tap' in cat.getServices():
+		r = cat.tapAsyncDuration(jobId)
 		return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
 		
 

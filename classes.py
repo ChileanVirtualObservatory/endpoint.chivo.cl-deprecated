@@ -118,7 +118,10 @@ class Catalog():
 	def tapAsyncQuote(self,jobID):
 		r = requests.get(self.getAcessUrl("TAP")+"/async/"+jobId+"/quote")
 		return r		
-	
+	##Execution duration
+	def tapAsyncDuration(self,jobID):
+		r = requests.get(self.getAcessUrl("TAP")+"/async/"+jobId+"/quote")
+		return r		
 	##Return Tap tables	
 	def tapTables(self):
 		r = requests.get(self.getAcessUrl("TAP")+"/tables")
