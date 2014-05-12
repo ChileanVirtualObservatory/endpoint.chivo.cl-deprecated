@@ -135,9 +135,11 @@ def tapAsync(catalog, Reg= chivoReg):
 	#If the catalog has 'tap' service, we make the request
 	if 'tap' in cat.getServices():
 		r = cat.tapAsyncQuery(data,request.method)
+		print r.content
 		if request.method == "POST":
 			return Response(streamDataPost(r) , mimetype=getResponseType(r.headers))
 		else:
+			print r
 			return Response(streamDataGet(r), mimetype=getResponseType(r.headers))		
 		
 #Tap Async Job Info
@@ -151,6 +153,20 @@ def tapAsyncJob(catalog, jobId , Reg = chivoReg):
 	#Validate service
 	if 'tap' in cat.getServices():
 		r = cat.tapAsyncJob(jobId)
+		return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
+
+
+
+@app.route('/<path:catalog>/tap/async/<jobId>/results/result', methods=['GET'])
+@app.route('/<path:catalog>/TAP/async/<jobId>/results/result', methods=['GET'])
+def tapAsyncJob(catalog, jobId , Reg = chivoReg):
+	cat = Reg.getCatalog(catalog)
+	#Validate catalog
+	if cat is None:
+		return 'Error'
+	#Validate service
+	if 'tap' in cat.getServices():
+		r = cat.tapAsyncResult(jobId)
 		return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
 
 #Show external tap tables from a catalog

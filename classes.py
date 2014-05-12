@@ -101,11 +101,16 @@ class Catalog():
 		elif method == "GET":
 			r = requests.get(self.getAcessUrl("TAP")+"/async")
 			return r
+			
 	##Show tapAsyncJob info	
 	def tapAsyncJob(self, jobId):
 		r = requests.get(self.getAcessUrl("TAP")+"/async/"+jobId)
 		return r
-		
+	
+	def tapAsyncResult(self, jobId):
+		r = requests.get(self.getAcessUrl("TAP")+"/async/"+jobId+"/results/result")
+		return r
+	
 	##Return Tap tables	
 	def tapTables(self):
 		r = requests.get(self.getAcessUrl("TAP")+"/tables")
@@ -173,7 +178,7 @@ class ChivoRegistry(Registry):
 				u'capabilities':[
 							{	
 								"standardid": "ivo://ivoa.net/std/TAP",
-								"accessurl" : "http://wfaudata.roe.ac.uk/twomass-dsa/TAP"
+								"accessurl" : "http://voparis-tap.obspm.fr/__system__/tap/run/tap"
 							}
 							, 
 							{
@@ -192,7 +197,7 @@ class ChivoRegistry(Registry):
 							}
 						]
 			}
-			)
+		)
 		self.append(alma)
 
 #VoParis Registry, we get the JSON for all the services, then merge them in a hash with Catalogs

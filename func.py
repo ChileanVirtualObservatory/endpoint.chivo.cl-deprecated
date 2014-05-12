@@ -2,10 +2,9 @@ from classes import Catalog, Registry
 
 #Functions for data streaming
 def streamDataGet(r):
-	#~ for line in r.iter_lines():
-			#~ if line: # filter out keep-alive new lines
-				#~ yield line
-	return r
+	for line in r.iter_lines():
+			if line: # filter out keep-alive new lines
+				yield line
 
 def streamDataPost(r):
 	#~ CHUNK = 1024
