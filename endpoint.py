@@ -157,6 +157,19 @@ def tapAsyncJob(catalog, jobId , Reg = chivoReg):
 
 
 
+@app.route('/<path:catalog>/tap/async/<jobId>/results', methods=['GET'])
+@app.route('/<path:catalog>/TAP/async/<jobId>/results', methods=['GET'])
+def tapAsyncJob(catalog, jobId , Reg = chivoReg):
+	cat = Reg.getCatalog(catalog)
+	#Validate catalog
+	if cat is None:
+		return 'Error'
+	#Validate service
+	if 'tap' in cat.getServices():
+		r = cat.tapAsyncResults(jobId)
+		return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
+		
+		
 @app.route('/<path:catalog>/tap/async/<jobId>/results/result', methods=['GET'])
 @app.route('/<path:catalog>/TAP/async/<jobId>/results/result', methods=['GET'])
 def tapAsyncJob(catalog, jobId , Reg = chivoReg):
