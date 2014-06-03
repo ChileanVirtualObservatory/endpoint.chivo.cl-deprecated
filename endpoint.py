@@ -327,7 +327,10 @@ def exterCatalog(catalog):
 @app.route('/raise/')
 def Praise():
 	raise
-	return	
+	return
+@app.route('/testsync')
+def testsync():
+	return render_template("sync.html")	
 	
 if __name__ == '__main__':
     app.run(debug=True)

@@ -83,7 +83,9 @@ class Catalog():
 	
 	##SyncQuery
 	def tapSyncQuery(self, params):
-		req = urllib2.Request(self.getAcessUrl("TAP")+"/sync")
+		url = self.getAcessUrl("TAP")+"/sync"
+		print url
+		req = urllib2.Request(url, params)
 		response = urllib2.urlopen(req)
 		return response
 	
