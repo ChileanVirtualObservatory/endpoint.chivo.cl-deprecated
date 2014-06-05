@@ -85,9 +85,16 @@ class Catalog():
 	def tapSyncQuery(self, params):
 		url = self.getAcessUrl("TAP")+"/sync"
 		print url
-		req = urllib2.Request(url, params)
-		response = urllib2.urlopen(req)
-		return response
+		
+		try:
+			req = urllib2.Request(url, params)
+			response = urllib2.urlopen(req)
+			return response
+		except urllib2.HTTPError as e:
+			error_message = e.read()
+			return error_message
+			
+		
 	
 	##Async Simple Query
 	def tapAsyncQuery(self, params, method):

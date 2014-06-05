@@ -79,7 +79,10 @@ def syncTap(catalog, Reg = chivoReg):
 		return 'Error'
 	#If the catalog has 'tap' service, we make the request
 	if 'tap' in cat.getServices():
+		
 		res = cat.tapSyncQuery(data)
+		if type(res) is str:
+			return res
 		return Response(streamDataPost(res) , mimetype=getResponseType(res.headers))
 	return 'Error2'
 
@@ -226,8 +229,8 @@ def extTapTables(catalog):
 	return tapTables(catalog, Reg= extReg)
 
 #External TAP
-@app.route('/external/<path:catalog>/tap/')
-@app.route('/external/<path:catalog>/TAP/')
+@app.route('/external/<path:catalog>/tap')
+@app.route('/external/<path:catalog>/TAP')
 def ExternTap(catalog):
 	return tap(catalog, extReg)
 
@@ -279,14 +282,14 @@ def scs(catalog, Reg= chivoReg):
 			return Response(streamDataGet(r))
 	return 'Catalog without service'
 
-@app.route('/external/<path:catalog>/scs/', methods=['POST', 'GET'])
-@app.route('/external/<path:catalog>/SCS/', methods=['POST', 'GET'])
+@app.route('/external/<path:catalog>/scs', methods=['POST', 'GET'])
+@app.route('/external/<path:catalog>/SCS', methods=['POST', 'GET'])
 def ExternScs(catalog):
 	return scs(catalog, extReg)
 
 #SSA Query
-@app.route('/<path:catalog>/ssa/', methods=['POST', 'GET'])
-@app.route('/<path:catalog>/SSA/', methods=['POST', 'GET'])
+@app.route('/<path:catalog>/ssa', methods=['POST', 'GET'])
+@app.route('/<path:catalog>/SSA', methods=['POST', 'GET'])
 def ssa(catalog, Reg = chivoReg):
 	
 	queryType = "ssa"
