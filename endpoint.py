@@ -223,8 +223,8 @@ def tapAsyncDuration(catalog, jobId , Reg = chivoReg):
 		r = cat.tapAsyncDuration(jobId)
 		return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
 
-@app.route('/<path:catalog>/tap/async/<jobId>/executionduration/', methods= ['GET', 'POST'])
-@app.route('/<path:catalog>/TAP/async/<jobId>/executionduration/', methods= ['GET', 'POST'])
+@app.route('/<path:catalog>/tap/async/<jobId>/phase/', methods= ['GET', 'POST'])
+@app.route('/<path:catalog>/TAP/async/<jobId>/phase/', methods= ['GET', 'POST'])
 def tapAsyncPhase(catalog, jobID, Reg = chivoReg):
 	cat = Reg.getCatalog(catalog)
 	data = urllib.urlencode(request.form)
