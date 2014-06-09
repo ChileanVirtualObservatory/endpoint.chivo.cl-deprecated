@@ -146,10 +146,14 @@ class Catalog():
 		r = requests.get(self.getAcessUrl("TAP")+"/availability")
 		return r
 	##Tap phase
-	def tapPhase(self,jobID, params):
-		req = urllib2.Request(self.getAcessUrl("TAP")+"/"+jobID+"/phase", params)
-		response = urllib2.urlopen(req)
-		return response
+	def tapPhase(self,jobID, method,params = None):
+		if method == 'GET':
+			r = requests.get(self.getAcessUrl("TAP")+"/async/"+jobId+"/phase")
+			return r
+		elif method == 'POST':
+			req = urllib2.Request(self.getAcessUrl("TAP")+"/"+jobID+"/phase", params)
+			response = urllib2.urlopen(req)
+			return response
 
 
 

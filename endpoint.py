@@ -222,7 +222,22 @@ def tapAsyncDuration(catalog, jobId , Reg = chivoReg):
 	if 'tap' in cat.getServices():
 		r = cat.tapAsyncDuration(jobId)
 		return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
-		
+
+@app.route('/<path:catalog>/tap/async/<jobId>/executionduration/', methods= ['GET', 'POST'])
+@app.route('/<path:catalog>/TAP/async/<jobId>/executionduration/', methods= ['GET', 'POST'])
+def tapAsyncPhase(catalog, jobID, Reg = chivoReg):
+	cat = Reg.getCatalog(catalog)
+	data = urllib.urlencode(request.form)
+	#Validate catalog
+	if cat is None:
+		return 'Error'
+	#Validate service
+	if 'tap' in cat.getServices():
+		r = cat.tapAsyncPhase(jobId, request.method, data)
+		if request.method == "GET":
+			return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
+		elif request.method == 'POST':
+			return Response(streamDataPost(r), mimetype=getResponseType(r.headers))
 
 #Show external tap tables from a catalog
 @app.route('/external/<path:catalog>/tap/tables/')
