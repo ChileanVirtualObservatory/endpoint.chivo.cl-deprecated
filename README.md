@@ -42,7 +42,7 @@
 ##Services
 
 ### List of al catalogs:
-   * WEB : http://dachs.lirae.cl:5000/registry
+   * WEB : http://dachs.lirae.cl:80/registry
    
    * Method: *GET*
 
@@ -53,13 +53,13 @@
 
 #### Service Capabilities:
 
-   * WEB : http://dachs.lirae.cl:5000/{catalog}/tap/capabilities
+   * WEB : http://dachs.lirae.cl:80/{catalog}/tap/capabilities
    
    * Method: *GET*
 
 #### SYNC Query:
 
-   * WEB : http://dachs.lirae.cl:5000/{catalog}/tap/sync
+   * WEB : http://dachs.lirae.cl:80/{catalog}/tap/sync
    
    * Methond : *POST*
    
@@ -69,7 +69,7 @@
 
 ##### New Query
 
-   * WEB : http://dachs.lirae.cl:5000/{catalog}/tap/async
+   * WEB : http://dachs.lirae.cl:80/{catalog}/tap/async
    
    * Method : *POST*
    
@@ -77,7 +77,7 @@
    
 ##### List Querys
 
-   * WEB : http://dachs.lirae.cl:5000/{catalog}/tap/async
+   * WEB : http://dachs.lirae.cl:80/{catalog}/tap/async
  
    * Method: *GET*
    
@@ -86,7 +86,7 @@
    * RETURN: *UWL* an xml with all querys with their status
    
 ##### Query Info
-   * WEB : http://dachs.lirae.cl:5000/{catalog}/tap/async/:id
+   * WEB : http://dachs.lirae.cl:80/{catalog}/tap/async/:id
    
    * Method: *GET*
    
@@ -96,14 +96,14 @@
    
 ##### Other options
 
-   * WEB : http://dachs.lirae.cl:5000/{catalog}/tap/async/:id/:option
+   * WEB : http://dachs.lirae.cl:80/{catalog}/tap/async/:id/:option
   
    * Parameters: `option phase , quote , executionduration , destruction , error , parameters , results , owner`   
 
    * Method: *GET*
    
 ###Simple Cone Search:
-* Web: http://dachs.lirae.cl:5000/{catalog}/scs
+* Web: http://dachs.lirae.cl:80/{catalog}/scs
 
 * Method: *GET*
 
@@ -116,7 +116,7 @@
 
 
 ###Simple Image Acess:
-* Web: http://dachs.lirae.cl:5000/{catalog}/sia
+* Web: http://dachs.lirae.cl:80/{catalog}/sia
 
 * Method: *GET*
 
@@ -137,7 +137,7 @@
 	* VERB `1 , 2 , 3`
 
 ### Simple Spectral Access:
-* Web: http://dachs.lirae.cl:5000/{catalog}/ssa
+* Web: http://dachs.lirae.cl:80/{catalog}/ssa
 
 * Method: *GET*
 
@@ -179,7 +179,7 @@
 
 ### External Registry
 
-* Use  http://dachs.lirae.cl:5000/external/URL, i.e  http://dachs.lirae.cl:5000/external/registry , to se all catalogs
+* Use  http://dachs.lirae.cl:80/external/URL, i.e  http://dachs.lirae.cl:80/external/registry , to se all catalogs
 	
 
 
