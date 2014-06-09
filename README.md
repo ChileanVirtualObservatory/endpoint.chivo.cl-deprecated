@@ -8,13 +8,13 @@
 
 #### Service Capabilities:
 
-   * WEB : http://dachs.lirae.cl:5000/alma/tap/capabilities
+   * WEB : http://dachs.lirae.cl:80/alma/tap/capabilities
    
    * Method: *GET*
 
 #### SYNC Query:
 
-   * WEB : http://dachs.lirae.cl:5000/alma/tap/sync
+   * WEB : http://dachs.lirae.cl:80/alma/tap/sync
    
    * Methond : *POST*
    
@@ -24,7 +24,7 @@
 
 ##### New Query
 
-   * WEB : http://dachs.lirae.cl:5000/alma/tap/async
+   * WEB : http://dachs.lirae.cl:80/alma/tap/async
    
    * Method : *POST*
    
@@ -32,7 +32,7 @@
    
 ##### List Querys
 
-   * WEB : http://dachs.lirae.cl:5000/alma/tap/async
+   * WEB : http://dachs.lirae.cl:80/alma/tap/async
  
    * Method: *GET*
    
@@ -41,7 +41,7 @@
    * RETURN: *UWL* an xml with all querys with their status
    
 ##### Query Info
-   * WEB : http://dachs.lirae.cl:5000/alma/tap/async/:id
+   * WEB : http://dachs.lirae.cl:80/alma/tap/async/:id
    
    * Method: *GET*
    
@@ -51,14 +51,14 @@
    
 ##### Other options
 
-   * WEB : http://dachs.lirae.cl:5000/alma/tap/async/:id/:option
+   * WEB : http://dachs.lirae.cl:80/alma/tap/async/:id/:option
   
    * Parameters: `option phase , quote , executionduration , destruction , error , parameters , results , owner`   
 
    * Method: *GET*
    
 ###Simple Cone Search:
-* Web: http://dachs.lirae.cl:5000/alma/scs
+* Web: http://dachs.lirae.cl:80/alma/scs
 
 * Method: *GET*
 
@@ -71,7 +71,7 @@
 
 
 ###Simple Image Acess:
-* Web: http://dachs.lirae.cl:5000/alma/sia
+* Web: http://dachs.lirae.cl:80/alma/sia
 
 * Method: *GET*
 
@@ -92,7 +92,7 @@
 	* VERB `1 , 2 , 3`
 
 ### Simple Spectral Access:
-* Web: http://dachs.lirae.cl:5000/alma/ssa
+* Web: http://dachs.lirae.cl:80/alma/ssa
 
 * Method: *GET*
 
