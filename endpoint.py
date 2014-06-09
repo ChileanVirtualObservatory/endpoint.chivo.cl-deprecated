@@ -73,6 +73,7 @@ def tap(catalog, Reg = chivoReg):
 @app.route('/<path:catalog>/tap/sync', methods = ['POST'])
 def syncTap(catalog, Reg = chivoReg):
 	data = urllib.urlencode(request.form)
+	print request.form
 	cat = Reg.getCatalog(catalog)
 	#If the catalog is not in our registry
 	if cat is None:
@@ -324,10 +325,16 @@ def catalogServices(catalog, Reg = chivoReg):
 def exterCatalog(catalog):
 	return catalogServices(catalog, extReg)
 
-@app.route('/raise/')
+@app.route('/raise/', methods = ['POST','GET'])
 def Praise():
 	raise
 	return	
+	
+@app.route('/raise2/', methods = ['POST','GET'])
+def Praise():
+	
+	return render_template("asdf.html")
+	
 	
 if __name__ == '__main__':
     app.run(debug=True)

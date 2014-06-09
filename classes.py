@@ -80,18 +80,17 @@ class Catalog():
 	
 	#Tap
 	
-	
 	##SyncQuery
 	def tapSyncQuery(self, params):
-		req = urllib2.Request(self.getAcessUrl("TAP")+"/sync")
+		url = self.getAcessUrl("TAP")+"/sync"
+		req = urllib2.Request(url, params)
+		print req
 		response = urllib2.urlopen(req)
 		return response
-	
 	##Async Simple Query
 	def tapAsyncQuery(self, params, method):
 		### If we get POST method, is a request with parameters
 		if method == "POST":
-			
 			#Making the request then sending it, and getting a response
 			req = urllib2.Request(self.getAcessUrl("TAP")+"/async", params)
 			response = urllib2.urlopen(req)
@@ -141,6 +140,11 @@ class Catalog():
 	def tapAvailability(self):
 		r = requests.get(self.getAcessUrl("TAP")+"/availability")
 		return r
+	##Tap phase
+	def tapPhase(self,jobID, params):
+		req = urllib2.Request(self.getAcessUrl("TAP")+"/"+jobID+"/phase", params)
+		response = urllib2.urlopen(req)
+		return response
 
 
 
