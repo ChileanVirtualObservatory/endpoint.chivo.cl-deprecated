@@ -200,7 +200,28 @@ class VOparisRegistry(Registry):
 	def __init__(self):
 		self.catalogs = dict()
 		self.__getRegistry()
+	
+	def keywordsearch(self, a):
+		b = {}
+			
+		for key in a.keys():
+
+			if key in ["numberReturned", "total","form","resoure","max"]:
+				b[key] = a[key]
+			elif key == "keywords":
+				b["keywords"] = a["keywords"] 
+			elif key != "keywords":
+				b["keywords"] +=" "+ key +":"+a[key]
+		r = requests.get( "http://voparis-registry.obspm.fr/vo/ivoa/1/voresources/search", params=b, stream=True)
+		try:
+			entries = json.loads(r.content)['resources']
+		except:
+			return "Error 500\n"
+		return entries
+				
+	
 		
+			
 	def __getRegistry(self):
 		
 		#Max response items

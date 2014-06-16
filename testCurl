@@ -1,0 +1,2 @@
+#curl -v --location -d 'keywords="galaxies"&max=20&standardid="ivo://ivoa.net/std/ConeSearch"&publisher="cds"' http://127.0.0.1:5000/prueba2
+curl -v --location -d 'keywords="taco"' http://127.0.0.1:5000/prueba2

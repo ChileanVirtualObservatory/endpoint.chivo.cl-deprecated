@@ -261,6 +261,14 @@ def exterCatalog(catalog):
 def Praise():
 	raise
 	return	
-	
+@app.route('/prueba/')
+def prueba():
+	return render_template('p.html')	
+
+@app.route('/prueba2', methods=['POST'])
+def prueba2():
+	data = request.form	
+	e = extReg.keywordsearch(data)
+	return str(e) 
 if __name__ == '__main__':
     app.run(debug=True)
