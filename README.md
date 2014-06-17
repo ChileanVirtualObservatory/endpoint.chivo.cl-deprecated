@@ -1,6 +1,51 @@
 # Flask Endpoint
 
+##Requeriments
+
+###Python Requirements
+* Python >= 2.7 
+* [Python Flask](http://flask.pocoo.org/)
+* [Python requests](http://docs.python-requests.org/en/latest/)
+* Python urllib
+* Python urllib2
+* Python json
+
+###For deployment
+* [Apache web Server](http://httpd.apache.org/)
+* [wsgi_mod](http://flask.pocoo.org/docs/deploying/mod_wsgi/)
+
+
+
+##For Develop and testing
+* First clone the repo
+
+    git clone git@github.com:ChileanVirtualObservatory/flask_endpoint.git
+
+* Open a terminal and run *endpoint.py*
+
+    python endpoint.py
+
+* The webserver will be running in *localhost:5000/*
+
+##Deployment
+
+* First clone the repo
+
+    git clone git@github.com:ChileanVirtualObservatory/flask_endpoint.git
+
+* Edit *endpoint.wsgi* with the file's path
+
+    sys.path.insert(0,"/var/www/flask_endpoint")
+
+* [Configure Apache](http://flask.pocoo.org/docs/deploying/mod_wsgi/#configuring-apache)
+
 ##Services
+
+### List of al catalogs:
+   * WEB : http://dachs.lirae.cl:80/registry
+   
+   * Method: *GET*
+
 
 ### Table Access Protocol:
 
@@ -8,13 +53,13 @@
 
 #### Service Capabilities:
 
-   * WEB : http://dachs.lirae.cl:80/alma/tap/capabilities
+   * WEB : http://dachs.lirae.cl:80/{catalog}/tap/capabilities
    
    * Method: *GET*
 
 #### SYNC Query:
 
-   * WEB : http://dachs.lirae.cl:80/alma/tap/sync
+   * WEB : http://dachs.lirae.cl:80/{catalog}/tap/sync
    
    * Methond : *POST*
    
@@ -24,7 +69,7 @@
 
 ##### New Query
 
-   * WEB : http://dachs.lirae.cl:80/alma/tap/async
+   * WEB : http://dachs.lirae.cl:80/{catalog}/tap/async
    
    * Method : *POST*
    
@@ -32,7 +77,7 @@
    
 ##### List Querys
 
-   * WEB : http://dachs.lirae.cl:80/alma/tap/async
+   * WEB : http://dachs.lirae.cl:80/{catalog}/tap/async
  
    * Method: *GET*
    
@@ -41,7 +86,7 @@
    * RETURN: *UWL* an xml with all querys with their status
    
 ##### Query Info
-   * WEB : http://dachs.lirae.cl:80/alma/tap/async/:id
+   * WEB : http://dachs.lirae.cl:80/{catalog}/tap/async/:id
    
    * Method: *GET*
    
@@ -51,14 +96,14 @@
    
 ##### Other options
 
-   * WEB : http://dachs.lirae.cl:80/alma/tap/async/:id/:option
+   * WEB : http://dachs.lirae.cl:80/{catalog}/tap/async/:id/:option
   
    * Parameters: `option phase , quote , executionduration , destruction , error , parameters , results , owner`   
 
    * Method: *GET*
    
 ###Simple Cone Search:
-* Web: http://dachs.lirae.cl:80/alma/scs
+* Web: http://dachs.lirae.cl:80/{catalog}/scs
 
 * Method: *GET*
 
@@ -71,7 +116,7 @@
 
 
 ###Simple Image Acess:
-* Web: http://dachs.lirae.cl:80/alma/sia
+* Web: http://dachs.lirae.cl:80/{catalog}/sia
 
 * Method: *GET*
 
@@ -92,7 +137,7 @@
 	* VERB `1 , 2 , 3`
 
 ### Simple Spectral Access:
-* Web: http://dachs.lirae.cl:80/alma/ssa
+* Web: http://dachs.lirae.cl:80/{catalog}/ssa
 
 * Method: *GET*
 
@@ -132,5 +177,9 @@
 		* SPECRP `double`
 		* TIMERES `double`
 
+### External Registry
+
+* Use  http://dachs.lirae.cl:80/external/URL, i.e  http://dachs.lirae.cl:80/external/registry , to se all catalogs
+	
 
 

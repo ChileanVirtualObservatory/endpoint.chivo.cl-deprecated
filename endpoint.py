@@ -1,192 +1,362 @@
-import subprocess
+
 import urllib
-import urllib2
-#import redis 
-import requests
+
+from classes import *
+from func import *
+
 from os import system
 from flask import Flask, render_template, request, Response, redirect
+
+
+#Application Itself
 app = Flask(__name__)
+chivoReg = ChivoRegistry()
+extReg = VOparisRegistry() 
 
-SERVER_TAP	= 'http://200.1.19.130:8080/__system__/tap/run/tap'
-SERVER_TAP1	= 'http://wfaudata.roe.ac.uk/twomass-dsa/TAP'
-SERVER_SCS	= 'http://wfaudata.roe.ac.uk/twomass-dsa/DirectCone?DSACAT=TWOMASS&DSATAB=twomass_psc'
-SERVER_SSA	= 'http://wfaudata.roe.ac.uk/6dF-ssap/?'
-SERVER_SIA	= 'http://irsa.ipac.caltech.edu/ibe/sia/wise/prelim/p3am_cdd?'
+#Remove trailing slash in POST requests
+@app.before_request
+def remove_trailing_slash():
+	if request.path != '/' and request.path.endswith('/') and request.method == "POST":
+		return redirect(request.path[:-1], code=307)
 
-
-#redisConn = redis.StrictRedis(host='localhost', port=6379, db=0)
-
+#Index Page
 @app.route('/')
 def index():
-    return 'Index page'
+	return 'Index Page'
 
-@app.route('/alma/<query>', methods=['POST', 'GET'])
-@app.route('/alma/<query>/<option>', methods=['POST', 'GET'])
-@app.route('/alma/<query>/<option>/<qid>', methods=['GET'])
-@app.route('/alma/<query>/<option>/<qid>/<qidOption>', methods=['GET'])
-@app.route('/alma/<query>/<option>/<qid>/<qidOption>/<qidOptionRequest>', methods=['GET'])
-def chivo_query(query,qid=None,option=None, qidOption = None, qidOptionRequest = None):
-	CHUNK = 1024
-	if query.lower() == 'tap':
-		if option:
-			if option.lower() == "capabilities":
-				r = requests.get(SERVER_TAP +"/" +option,stream=True)
-				
-				def generate():
-					for line in r.iter_lines():
-							if line: # filter out keep-alive new lines
-								yield line
-			
-				#return Response(generate(), mimetype='text/xml')
-				return Response(generate())
-
-			if option.lower() == "sync":
-				if request.method == 'POST':
-					
-					data = urllib.urlencode(request.form)
-					req = urllib2.Request(SERVER_TAP+"/"+option, data)
-					response = urllib2.urlopen(req)
-					
-					def generate():
-						for the_page in iter(lambda: response.read(CHUNK), ''):
-							yield the_page
-		
-					#return Response(generate(), mimetype='text/xml')
-					return Response(generate())
-					
-				elif request.method == 'GET':
-					return 'Bad Tad Request'
-					
-			elif option.lower() == "async":
-				if request.method == 'POST':
-					if qid == None:
-						data = urllib.urlencode(request.form)
-						req = urllib2.Request(SERVER_TAP+"/"+option, data)
-						response = urllib2.urlopen(req)
-						def generate():
-							for the_page in iter(lambda: response.read(CHUNK), ''):
-								yield the_page
-								
-						#return Response(generate(), mimetype='text/xml')
-						return Response(generate())
-					else:
-						return 'Bad Tad Request'
-				
-				elif request.method == 'GET':
-					params  = "/" + option
-					if qid:
-						params += "/" + qid
-					if qidOption:
-						params += "/" + qidOption	
-					if qidOptionRequest:
-						params += "/" + qidOptionRequest
-					r = requests.get(SERVER_TAP + params,stream=True)
-					
-					def generate():
-						for line in r.iter_lines():
-								if line: # filter out keep-alive new lines
-									yield line
-				
-					#return Response(generate(), mimetype='text/xml')
-					return Response(generate())
-						
-			return 'Bad Tap Request'
-
-	if query == 'scs':
-		if request.method == 'GET':
-			#SCS Request GET 
-			#values = {}
-			#VERB	= 0
-
-			#values['RA']	= request.args.get('RA')
-			#values['DEC']	= request.args.get('DEC')
-			#values['SR']	= request.args.get('SR')
-			#VERB			= request.args.get('VERB')
-
-			#Validation of request
-
-			#if VERB is not None:
-			#	values['VERB'] = VERB
-
-			#Run SCS request
-			
-			
-			#Testing Redis in SCS
-			
-
-			parameters=request.args
-			#key = "scs;"+str(parameters)
-			#r = redisConn.get(key)
-			#if(r):
-			#	return r
-			#else:
-			#	r = requests.get(SERVER_SCS, params= parameters,stream=True)
-			#	redisConn.set(key, r.content)
-			#	redisConn.expire(key,1 * 24 * 60 * 60)
-			r = requests.get(SERVER_SCS, params= parameters,stream=True)
-			def generate():
-				for line in r.iter_lines():
-						if line: # filter out keep-alive new lines
-							yield line
-		
-				#return Response(generate(), mimetype='text/xml')
-			return Response(generate())
-		return 'Bad SCS Request'
-
-	if query == 'sia':
-		if request.method == 'GET':
-			#SIA Request GET 
-			#POS = request.args.get('POS')
-			#SIZE = request.args.get('SIZE')
-			#FORMAT = request.args.get('FORMAT')
-			#NAXIS = request.args.get('NAXIS')
-			#PROJ = request.args.get('PROJ')
-			#CFRAME = request.args.get('CFRAME')
-			#EQUINOX = request.args.get('EQUINOX')
-			
-			#Validation of request
-
-			#Run SIA request
-			
-			r = requests.get(SERVER_SIA, params= request.args,stream=True)
-			
-			
-			def generate():
-				for line in r.iter_lines():
-						if line: # filter out keep-alive new lines
-							yield line
-			
-			#return Response(generate(), mimetype='text/xml')
-			return Response(generate())
-			
-
-		return 'Bad SIA Request'
-
-	if query == 'ssa':
-		if request.method == 'GET':
-			#SSA Request GET
-			#POS = request.args.get('POS')
-			#SIZE = request.args.get('SIZE')
-
-			#Validation of request
-
-			#Run SSA request
-			r = requests.get(SERVER_SSA, params=request.args,stream=True)
+#Renders MAX catalogs from alma's registry
+@app.route('/registry/', methods = ['GET'])
+def registry(Reg = chivoReg, external = None):
 	
-			def generate():
-				for line in r.iter_lines():
-    					if line: # filter out keep-alive new lines
-        					yield line
+	#Max entries in registry page
+	MAX = 100
+	
+	keys= list()
+	
+	#The page we are now
+	if request.args:
+		page = int(request.args['page'])
+	else:
+		page = 1
+	
+	#Getting catalog services
+	cat = dict()
+	for i in Reg.catalogs.keys():
+		cat[i] =Reg.getCatalog(i).getServices()
+	
+	#Getting number of pages
+	if len(cat.keys())%MAX != 0:
+		pages =  (len(cat.keys())/MAX) + 1
+	else:
+		pages = len(cat.keys())/MAX
+	
+	for i in sorted(cat.keys())[(page-1)*MAX:page*MAX]:
+		keys.append((i ,i))
+
+	return render_template('registry.html' , cat = cat, keys = keys, pages = pages, page = page, MAX = MAX, external = external)
+
+#External Registry
+@app.route('/external/registry/', methods = ['GET'])
+def extRegistry():
+	return registry(extReg, True)
+
+#Tap Catalog
+@app.route('/<path:catalog>/tap/')
+@app.route('/<path:catalog>/TAP/')
+def tap(catalog, Reg = chivoReg):
+	cat = Reg.getCatalog(catalog)
+	if cat is None:
+		return 'Error'
+	if 'tap' in cat.getServices():
+		return 'OK'
+
+#Tap Sync Query, only POST method
+@app.route('/<path:catalog>/tap/sync', methods = ['POST'])
+def syncTap(catalog, Reg = chivoReg):
+	data = urllib.urlencode(request.form)
+	print request.form
+	cat = Reg.getCatalog(catalog)
+	#If the catalog is not in our registry
+	if cat is None:
+		return 'Error'
+	#If the catalog has 'tap' service, we make the request
+	if 'tap' in cat.getServices():
+		
+		res = cat.tapSyncQuery(data)
+		if type(res) is str:
+			return res
+		return Response(streamDataPost(res) , mimetype=getResponseType(res.headers))
+	return 'Error2'
+
+#External Tap Sync Query
+@app.route('/external/<path:catalog>/tap/sync', methods = ['POST'])
+def extSyncTap(catalog):
+	return syncTap(catalog, extReg)
+
+#Show tap tables from a catalog
+@app.route('/<path:catalog>/tap/tables/')
+def tapTables(catalog, Reg= chivoReg):
+	cat = Reg.getCatalog(catalog)
+	#Validate catalog
+	if cat is None:
+		return 'Error'
+	#Validate service
+	if 'tap' in cat.getServices():
+		r = cat.tapTables()
+		return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
+
+#Show tap capabilities from a catalog
+@app.route('/<path:catalog>/tap/capabilities/')
+def tapCapability(catalog, Reg= chivoReg):
+	cat = Reg.getCatalog(catalog)
+	#Validate catalog
+	if cat is None:
+		return 'Error'
+	#Validate service
+	if 'tap' in cat.getServices():
+		r = cat.tapCapabilities()
+		return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
+
+#Show tap availability from a catalog		
+@app.route('/<path:catalog>/tap/availability/')
+def tapAvailability(catalog, Reg= chivoReg):
+	cat = Reg.getCatalog(catalog)
+	#Validate catalog
+	if cat is None:
+		return 'Error'
+	#Validate service
+	if 'tap' in cat.getServices():
+		r = cat.tapAvailability()
+		return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
+		
+#Tap Async Query, Post method for making request, and Get for getting all requests made
+@app.route('/<path:catalog>/tap/async', methods=['POST', 'GET'])
+def tapAsync(catalog, Reg= chivoReg):
+	data = urllib.urlencode(request.form)
+	cat = Reg.getCatalog(catalog)
+	#If the catalog is not in our registry
+	if cat is None:
+		return 'Error'
+	#If the catalog has 'tap' service, we make the request
+	if 'tap' in cat.getServices():
+		r = cat.tapAsyncQuery(data,request.method)
+		print r.content
+		if request.method == "POST":
+			return Response(streamDataPost(r) , mimetype=getResponseType(r.headers))
+		else:
+			print r
+			return Response(streamDataGet(r), mimetype=getResponseType(r.headers))		
+		
+#Tap Async Job Info
+@app.route('/<path:catalog>/tap/async/<jobId>/', methods=['GET'])
+@app.route('/<path:catalog>/TAP/async/<jobId>/', methods=['GET'])
+def tapAsyncJob(catalog, jobId , Reg = chivoReg):
+	cat = Reg.getCatalog(catalog)
+	#Validate catalog
+	if cat is None:
+		return 'Error'
+	#Validate service
+	if 'tap' in cat.getServices():
+		r = cat.tapAsyncJob(jobId)
+		return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
+
+
+
+@app.route('/<path:catalog>/tap/async/<jobId>/results/', methods=['GET'])
+@app.route('/<path:catalog>/TAP/async/<jobId>/results/', methods=['GET'])
+def tapAsyncResults(catalog, jobId , Reg = chivoReg):
+	cat = Reg.getCatalog(catalog)
+	#Validate catalog
+	if cat is None:
+		return 'Error'
+	#Validate service
+	if 'tap' in cat.getServices():
+		r = cat.tapAsyncResults(jobId)
+		return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
+
+@app.route('/<path:catalog>/tap/async/<jobId>/results/<path:result>', methods=['GET'])
+@app.route('/<path:catalog>/TAP/async/<jobId>/results/<path:result>', methods=['GET'])
+def tapAsyncResult(catalog, jobId, result, Reg = chivoReg):
+	cat = Reg.getCatalog(catalog)
+	#Validate catalog
+	if cat is None:
+		return 'Error'
+	#Validate service
+	if 'tap' in cat.getServices():
+		r = cat.tapAsyncResult(jobId,result)
+		return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
+
+@app.route('/<path:catalog>/tap/async/<jobId>/quote/', methods=['GET'])
+@app.route('/<path:catalog>/TAP/async/<jobId>/quote/', methods=['GET'])
+def tapAsyncQuote(catalog, jobId , Reg = chivoReg):
+	cat = Reg.getCatalog(catalog)
+	#Validate catalog
+	if cat is None:
+		return 'Error'
+	#Validate service
+	if 'tap' in cat.getServices():
+		r = cat.tapAsyncQuote(jobId)
+		return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
+		
+@app.route('/<path:catalog>/tap/async/<jobId>/destruction/', methods=['GET'])
+@app.route('/<path:catalog>/TAP/async/<jobId>/destruction/', methods=['GET'])
+def tapAsyncQuote(catalog, jobId , Reg = chivoReg):
+	cat = Reg.getCatalog(catalog)
+	#Validate catalog
+	if cat is None:
+		return 'Error'
+	#Validate service
+	print "destroy"
+	print jobId
+	if 'tap' in cat.getServices():
+		r = cat.tapAsyncDestruction(jobId)
+		return Response(streamDataGet(r), mimetype=getResponseType(r.headers))		
+		
+@app.route('/<path:catalog>/tap/async/<jobId>/executionduration/', methods=['GET'])
+@app.route('/<path:catalog>/TAP/async/<jobId>/executionduration/', methods=['GET'])
+def tapAsyncDuration(catalog, jobId , Reg = chivoReg):
+	cat = Reg.getCatalog(catalog)
+	#Validate catalog
+	if cat is None:
+		return 'Error'
+	#Validate service
+	if 'tap' in cat.getServices():
+		r = cat.tapAsyncDuration(jobId)
+		return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
+
+@app.route('/<path:catalog>/tap/async/<jobId>/phase/', methods= ['GET', 'POST'])
+@app.route('/<path:catalog>/TAP/async/<jobId>/phase/', methods= ['GET', 'POST'])
+def tapAsyncPhase(catalog, jobID, Reg = chivoReg):
+	cat = Reg.getCatalog(catalog)
+	data = urllib.urlencode(request.form)
+	#Validate catalog
+	if cat is None:
+		return 'Error'
+	#Validate service
+	if 'tap' in cat.getServices():
+		r = cat.tapAsyncPhase(jobId, request.method, data)
+		if request.method == "GET":
+			return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
+		elif request.method == 'POST':
+			return Response(streamDataPost(r), mimetype=getResponseType(r.headers))
+
+#Show external tap tables from a catalog
+@app.route('/external/<path:catalog>/tap/tables/')
+def extTapTables(catalog):
+	return tapTables(catalog, Reg= extReg)
+
+#External TAP
+@app.route('/external/<path:catalog>/tap')
+@app.route('/external/<path:catalog>/TAP')
+def ExternTap(catalog):
+	return tap(catalog, extReg)
+
+#Make SIA Query
+@app.route('/<path:catalog>/sia', methods=['POST', 'GET'])
+@app.route('/<path:catalog>/SIA', methods=['POST', 'GET'])
+def sia(catalog, Reg = chivoReg):
+	
+	queryType = "sia"
+	cat = Reg.getCatalog(catalog)
+	#Validate catalog
+	if cat is None:
+		return 'Error'
+	#Validate SIA service
+	if queryType in cat.getServices():
+		#Protocol need GET
+		if request.method == "GET":
+			#Making the request			
+			r = cat.query(request.args, request.method, queryType) 
+			if request.args:
+				return Response(streamDataGet(r), mimetype= getResponseType(r.headers))
+			 
+			return Response(streamDataGet(r))		
+	return 'Catalog without service'
+	
+@app.route('/external/<path:catalog>/sia', methods=['POST', 'GET'])
+@app.route('/external/<path:catalog>/SIA', methods=['POST', 'GET'])
+def ExternSia(catalog):
+	return sia(catalog, extReg)
+
+#SCS query
+@app.route('/<path:catalog>/scs', methods=['POST', 'GET'])
+@app.route('/<path:catalog>/SCS', methods=['POST', 'GET'])
+def scs(catalog, Reg= chivoReg):
+	queryType = "scs"
+	cat = Reg.getCatalog(catalog)
+	#validating catalog
+	if cat is None:
+		return 'Error'
+	#validating service
+	if queryType in cat.getServices():
+		# GET needed in protocol
+		if request.method == "GET":
+			#Making Query
+			r = cat.query(request.args, request.method, queryType ) 
+			if request.args:
+				return Response(streamDataGet(r), mimetype= getResponseType(r.headers))
 			
-			#return Response(generate(), mimetype='text/xml')
-			return Response(generate())
-		return 'Bad SSA Request'
-	return 'Bad Request'
+			return Response(streamDataGet(r))
+	return 'Catalog without service'
 
+@app.route('/external/<path:catalog>/scs', methods=['POST', 'GET'])
+@app.route('/external/<path:catalog>/SCS', methods=['POST', 'GET'])
+def ExternScs(catalog):
+	return scs(catalog, extReg)
 
-@app.errorhandler(404)
-def page_not_found(error):
-	return 'This page does not exist', 404
+#SSA Query
+@app.route('/<path:catalog>/ssa', methods=['POST', 'GET'])
+@app.route('/<path:catalog>/SSA', methods=['POST', 'GET'])
+def ssa(catalog, Reg = chivoReg):
+	
+	queryType = "ssa"
+	cat = Reg.getCatalog(catalog)
+	#validating catalog
+	if cat is None:
+		return 'Error'
+	#validating service
+	if queryType in cat.getServices():
+		#GET needed in protocol
+		if request.method == "GET":
+			#Making request
+			r = cat.query(request.args, request.method, queryType) 
+			if request.args:
+				return Response(streamDataGet(r), mimetype= getResponseType(r.headers))
+			
+			return Response(streamDataGet(r))
+			
+	return 'Catalog without service'
+	
+@app.route('/external/<path:catalog>/ssa/', methods=['POST', 'GET'])
+@app.route('/external/<path:catalog>/SSA/', methods=['POST', 'GET'])
+def ExternSsa(catalog):
+	return ssa(catalog, extReg)
 
+#Showing catalog metadata
+@app.route('/<path:catalog>/')
+def catalogServices(catalog, Reg = chivoReg):
+	if catalog in Reg.catalogs.keys():
+		i =Reg.getCatalog(catalog)
+		return " ".join(i.getServices())
+	return 'Catalog not found'
+	
+@app.route('/external/<path:catalog>/')
+def exterCatalog(catalog):
+	return catalogServices(catalog, extReg)
+
+@app.route('/raise/', methods = ['POST','GET'])
+def Praise():
+	raise
+	return
+@app.route('/testsync')
+def testsync():
+	return render_template("sync.html")	
+	
+@app.route('/raise2/', methods = ['POST','GET'])
+def Praise():
+	
+	return render_template("asdf.html")
+	
+	
 if __name__ == '__main__':
     app.run(debug=True)
