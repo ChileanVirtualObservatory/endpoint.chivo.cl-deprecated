@@ -26,39 +26,99 @@ def index():
 
 #Renders MAX catalogs from alma's registry
 @app.route('/registry/', methods = ['GET'])
-def registry(Reg = chivoReg, external = None):
+def registry(Reg = chivoReg):
 	
+	cat = []
+	for i in Reg.catalogs.keys():
+		cati=Reg.getCatalog(i)
+		if cati.status == "active":
+			cat.append(cati.data)
+	
+	return json.dumps(cat)
+	
+@app.route('/registry/allTap', methods = ['GET'])
+def registry1(Reg = chivoReg,  service = "tap"):
+	SERVICEPARAMS = {
+			"tap": "ivo://ivoa.net/std/TAP",
+			"sia": "ivo://ivoa.net/std/SIA",
+			"ssa": "ivo://ivoa.net/std/SSA",
+			"scs": "ivo://ivoa.net/std/ConeSearch",
+			}
+	cat = []
+	for i in Reg.catalogs.keys():
+		cati=Reg.getCatalog(i)
+		data = cati.data
+		if data["status"] == "active" and service in cati.getServices() :
+			unfiltered = data["capabilities"]
+			for s in unfiltered:
+				if s["standardid"] == SERVICEPARAMS[service]:
+					filtered = s
+					break
+			data["capabilities"] = filtered
+			cat.append(data)
+			return json.dumps(cat)
+	
+@app.route('/registry/allScs', methods = ['GET'])
+def registry2():
+	return registry1(chivoReg, "scs")
+
+
+@app.route('/registry/allSia', methods = ['GET'])
+def registry2():
+	return registry1(chivoReg, "sia")
+	
+@app.route('/registry/allSsa', methods = ['GET'])
+def registry2():
+	return registry1(chivoReg, "ssa")
+	
+	
+@app.route('/external/registry/allTap', methods = ['GET'])
+def extRegistry():
+	return registry1(extReg ,"tap")
+	
+@app.route('/external/registry/allScs', methods = ['GET'])
+def extRegistry():
+	return registry1(extReg, "scs")
+
+@app.route('/external/registry/allSia', methods = ['GET'])
+def extRegistry():
+	return registry1( extReg,  "sia")
+	
+@app.route('/external/registry/allSsa', methods = ['GET'])
+def extRegistry():
+	return registry1(extReg,  "ssa")
 	#Max entries in registry page
-	MAX = 100
+	#MAX = 100
 	
-	keys= list()
+	#keys= list()
 	
 	#The page we are now
-	if request.args:
-		page = int(request.args['page'])
-	else:
-		page = 1
+	#if request.args:
+	#	page = int(request.args['page'])
+	#else:
+	#	page = 1
 	
 	#Getting catalog services
-	cat = dict()
-	for i in Reg.catalogs.keys():
-		cat[i] =Reg.getCatalog(i).getServices()
-	
+	#cat = dict()
+	#for i in Reg.catalogs.keys():
+	#	cat[i] =Reg.getCatalog(i).getServices()
 	#Getting number of pages
-	if len(cat.keys())%MAX != 0:
-		pages =  (len(cat.keys())/MAX) + 1
-	else:
-		pages = len(cat.keys())/MAX
-	
-	for i in sorted(cat.keys())[(page-1)*MAX:page*MAX]:
-		keys.append((i ,i))
+	#if len(cat.keys())%MAX != 0:
+	#	pages =  (len(cat.keys())/MAX) + 1
+	#else:
+	#	pages = len(cat.keys())/MAX
+	#
+	#for i in sorted(cat.keys())[(page-1)*MAX:page*MAX]:
+	#	keys.append((i ,i))
 
-	return render_template('registry.html' , cat = cat, keys = keys, pages = pages, page = page, MAX = MAX, external = external)
+	
+
+	#return render_template('registry.html' , cat = cat, keys = keys, pages = pages, page = page, MAX = MAX, external = external)
 
 #External Registry
 @app.route('/external/registry/', methods = ['GET'])
 def extRegistry():
-	return registry(extReg, True)
+	return registry(extReg)
 
 #Tap Catalog
 @app.route('/<path:catalog>/tap/')

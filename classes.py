@@ -6,7 +6,7 @@ import json
 class Catalog():
 	def __init__(self, data):
 		#All the metadata
-		self.stauts = data["status"] if data.has_key("status") else None
+		self.status = data["status"] if data.has_key("status") else None
 		self.publisher = data["publisher"] if data.has_key("publisher") else None
 		self.updated = data["updated"] if data.has_key("updated") else None
 		self.contentlevel = data["contentlevel"] if data.has_key("contentlevel") else None
@@ -21,6 +21,7 @@ class Catalog():
 		self.shortname = data["shortname"] if data.has_key("shortname") else None
 		self.identifier = data["identifier"] if data.has_key("identifier") else None
 		self.type = data["type"] if data.has_key("type") else None
+		self.data = data
 	
 	#Return the different protocols that are implemented in the catalog
 	def getServices(self):
