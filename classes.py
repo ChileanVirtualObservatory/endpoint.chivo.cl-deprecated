@@ -271,13 +271,14 @@ class VOparisRegistry(Registry):
 		
 		
 		#We get all services with tap,sia,ssa,tap from vo-paris registry 
-		threads = []
+		#threads = []
 		for _type in SERVICEPARAMS:
-			t = threading.Thread(target=threadQuery , args=(_type,))
-			threads.append(t)
+			threadQuery(_type)
+			#t = threading.Thread(target=threadQuery , args=(_type,))
+			#threads.append(t)
 			
-		[x.start() for x in threads]
-		[x.join() for x in threads]
+		#[x.start() for x in threads]
+		#[x.join() for x in threads]
 					
 		#giving the catalogs to the external dictionary
 		for item in catalogsList:
