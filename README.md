@@ -183,11 +183,11 @@
 
 * To get all data from TAP , SCS , SIA , SSA Sevices just go to
 
-	dachs.lirae.cl:80/external/registry
+	 http://dachs.lirae.cl:80/external/registry
 
 * To get specific Service (not all the data, just Shortname, Title, and AccessUrl)
 
-	dachs.lirae.cl:80/external/{service} , service can be tap,scs,sia,ssa
+	 http://dachs.lirae.cl:80/external/{service} , service can be tap,scs,sia,ssa
 	
 
 
