@@ -66,7 +66,6 @@ class Catalog():
 				return r
 			else:
 				return False
-		#Only tap 
 		else:
 			return False	
 		
@@ -239,9 +238,10 @@ class ChivoRegistry(Registry):
 class VOparisRegistry(Registry):
 	def __init__(self):
 		self.catalogs = dict()
-		self.__getRegistry()
+		self.getRegistry()
 		
-	def __getRegistry(self):
+		
+	def getRegistry(self):
 		
 		#Max response items
 		MAX = 1000
