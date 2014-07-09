@@ -12,7 +12,6 @@ from flask import Flask, render_template, request, Response, redirect
 app = Flask(__name__)
 chivoReg = ChivoRegistry()
 extReg = VOparisRegistry() 
-
 #Remove trailing slash in POST requests
 @app.before_request
 def remove_trailing_slash():
@@ -22,8 +21,8 @@ def remove_trailing_slash():
 #Index Page
 @app.route('/')
 def index():
-	return 'Index Page'
-
+	return render_template("index.html")
+	
 #Renders MAX catalogs from alma's registry
 @app.route('/registry/', methods = ['GET'])
 def registry(Reg = chivoReg):
@@ -32,11 +31,16 @@ def registry(Reg = chivoReg):
 	for i in Reg.catalogs.keys():
 		cati=Reg.getCatalog(i)
 		if cati.status == "active":
-			cat.append(cati.data)
+			_temp = dict()
+			_temp["shortname"] = cati.shortname
+			_temp["title"] = cati.title
+			_temp["capabilities"] = cati.capabilities
+			cat.append(_temp)
 	
 	return json.dumps(cat)
 	
 @app.route('/registry/allTap', methods = ['GET'])
+@app.route('/tap' , methods = ['GET'])
 def registry1(Reg = chivoReg,  service = "tap"):
 	SERVICEPARAMS = {
 			"tap": "ivo://ivoa.net/std/TAP",
@@ -47,74 +51,55 @@ def registry1(Reg = chivoReg,  service = "tap"):
 	cat = []
 	for i in Reg.catalogs.keys():
 		cati=Reg.getCatalog(i)
-		data = cati.data
-		if data["status"] == "active" and service in cati.getServices() :
-			unfiltered = data["capabilities"]
+		print cati.shortname
+		print cati.getServices()
+		if cati.status == "active" and service in cati.getServices() :
+			_temp = dict()
+			_temp["title"] =cati.title
+			_temp["shortname"] = cati.shortname
+			unfiltered = cati.capabilities
 			for s in unfiltered:
 				if s["standardid"] == SERVICEPARAMS[service]:
-					filtered = s
-					break
-			data["capabilities"] = filtered
-			cat.append(data)
-			return json.dumps(cat)
+					_temp["accessurl"] = s["accessurl"]
+			cat.append(_temp)
+	return json.dumps(cat)
 	
 @app.route('/registry/allScs', methods = ['GET'])
+@app.route('/scs' , methods = ['GET'])
 def registry2():
 	return registry1(chivoReg, "scs")
 
-
 @app.route('/registry/allSia', methods = ['GET'])
-def registry2():
+@app.route('/sia' , methods = ['GET'])
+def registry3():
 	return registry1(chivoReg, "sia")
 	
 @app.route('/registry/allSsa', methods = ['GET'])
-def registry2():
+@app.route('/ssa' , methods = ['GET'])
+def registry4():
 	return registry1(chivoReg, "ssa")
 	
 	
 @app.route('/external/registry/allTap', methods = ['GET'])
-def extRegistry():
+@app.route('/external/tap', methods = ['GET'])
+def extRegistry1():
 	return registry1(extReg ,"tap")
 	
 @app.route('/external/registry/allScs', methods = ['GET'])
-def extRegistry():
+@app.route('/external/scs', methods = ['GET'])
+def extRegistry2():
 	return registry1(extReg, "scs")
 
 @app.route('/external/registry/allSia', methods = ['GET'])
-def extRegistry():
+@app.route('/external/sia', methods = ['GET'])
+def extRegistry3():
 	return registry1( extReg,  "sia")
 	
 @app.route('/external/registry/allSsa', methods = ['GET'])
-def extRegistry():
+@app.route('/external/ssa', methods = ['GET'])
+def extRegistry4():
 	return registry1(extReg,  "ssa")
-	#Max entries in registry page
-	#MAX = 100
 	
-	#keys= list()
-	
-	#The page we are now
-	#if request.args:
-	#	page = int(request.args['page'])
-	#else:
-	#	page = 1
-	
-	#Getting catalog services
-	#cat = dict()
-	#for i in Reg.catalogs.keys():
-	#	cat[i] =Reg.getCatalog(i).getServices()
-	#Getting number of pages
-	#if len(cat.keys())%MAX != 0:
-	#	pages =  (len(cat.keys())/MAX) + 1
-	#else:
-	#	pages = len(cat.keys())/MAX
-	#
-	#for i in sorted(cat.keys())[(page-1)*MAX:page*MAX]:
-	#	keys.append((i ,i))
-
-	
-
-	#return render_template('registry.html' , cat = cat, keys = keys, pages = pages, page = page, MAX = MAX, external = external)
-
 #External Registry
 @app.route('/external/registry/', methods = ['GET'])
 def extRegistry():
@@ -134,7 +119,6 @@ def tap(catalog, Reg = chivoReg):
 @app.route('/<path:catalog>/tap/sync', methods = ['POST'])
 def syncTap(catalog, Reg = chivoReg):
 	data = urllib.urlencode(request.form)
-	print request.form
 	cat = Reg.getCatalog(catalog)
 	#If the catalog is not in our registry
 	if cat is None:
@@ -148,10 +132,10 @@ def syncTap(catalog, Reg = chivoReg):
 		return Response(streamDataPost(res) , mimetype=getResponseType(res.headers))
 	return 'Error2'
 
-#External Tap Sync Query
-@app.route('/external/<path:catalog>/tap/sync', methods = ['POST'])
-def extSyncTap(catalog):
-	return syncTap(catalog, extReg)
+#~ #External Tap Sync Query
+#~ @app.route('/external/<path:catalog>/tap/sync', methods = ['POST'])
+#~ def extSyncTap(catalog):
+	#~ return syncTap(catalog, extReg)
 
 #Show tap tables from a catalog
 @app.route('/<path:catalog>/tap/tables/')
@@ -200,11 +184,9 @@ def tapAsync(catalog, Reg= chivoReg):
 	#If the catalog has 'tap' service, we make the request
 	if 'tap' in cat.getServices():
 		r = cat.tapAsyncQuery(data,request.method)
-		print r.content
 		if request.method == "POST":
 			return Response(streamDataPost(r) , mimetype=getResponseType(r.headers))
 		else:
-			print r
 			return Response(streamDataGet(r), mimetype=getResponseType(r.headers))		
 		
 #Tap Async Job Info
@@ -260,14 +242,12 @@ def tapAsyncQuote(catalog, jobId , Reg = chivoReg):
 		
 @app.route('/<path:catalog>/tap/async/<jobId>/destruction/', methods=['GET'])
 @app.route('/<path:catalog>/TAP/async/<jobId>/destruction/', methods=['GET'])
-def tapAsyncQuote(catalog, jobId , Reg = chivoReg):
+def tapAsyncDestruction(catalog, jobId , Reg = chivoReg):
 	cat = Reg.getCatalog(catalog)
 	#Validate catalog
 	if cat is None:
 		return 'Error'
 	#Validate service
-	print "destroy"
-	print jobId
 	if 'tap' in cat.getServices():
 		r = cat.tapAsyncDestruction(jobId)
 		return Response(streamDataGet(r), mimetype=getResponseType(r.headers))		
@@ -300,16 +280,16 @@ def tapAsyncPhase(catalog, jobID, Reg = chivoReg):
 		elif request.method == 'POST':
 			return Response(streamDataPost(r), mimetype=getResponseType(r.headers))
 
-#Show external tap tables from a catalog
-@app.route('/external/<path:catalog>/tap/tables/')
-def extTapTables(catalog):
-	return tapTables(catalog, Reg= extReg)
-
-#External TAP
-@app.route('/external/<path:catalog>/tap')
-@app.route('/external/<path:catalog>/TAP')
-def ExternTap(catalog):
-	return tap(catalog, extReg)
+#~ #Show external tap tables from a catalog
+#~ @app.route('/external/<path:catalog>/tap/tables/')
+#~ def extTapTables(catalog):
+	#~ return tapTables(catalog, Reg= extReg)
+#~ 
+#~ #External TAP
+#~ @app.route('/external/<path:catalog>/tap')
+#~ @app.route('/external/<path:catalog>/TAP')
+#~ def ExternTap(catalog):
+	#~ return tap(catalog, extReg)
 
 #Make SIA Query
 @app.route('/<path:catalog>/sia', methods=['POST', 'GET'])
@@ -333,10 +313,10 @@ def sia(catalog, Reg = chivoReg):
 			return Response(streamDataGet(r))		
 	return 'Catalog without service'
 	
-@app.route('/external/<path:catalog>/sia', methods=['POST', 'GET'])
-@app.route('/external/<path:catalog>/SIA', methods=['POST', 'GET'])
-def ExternSia(catalog):
-	return sia(catalog, extReg)
+#~ @app.route('/external/<path:catalog>/sia', methods=['POST', 'GET'])
+#~ @app.route('/external/<path:catalog>/SIA', methods=['POST', 'GET'])
+#~ def ExternSia(catalog):
+	#~ return sia(catalog, extReg)
 
 #SCS query
 @app.route('/<path:catalog>/scs', methods=['POST', 'GET'])
@@ -359,10 +339,10 @@ def scs(catalog, Reg= chivoReg):
 			return Response(streamDataGet(r))
 	return 'Catalog without service'
 
-@app.route('/external/<path:catalog>/scs', methods=['POST', 'GET'])
-@app.route('/external/<path:catalog>/SCS', methods=['POST', 'GET'])
-def ExternScs(catalog):
-	return scs(catalog, extReg)
+#~ @app.route('/external/<path:catalog>/scs', methods=['POST', 'GET'])
+#~ @app.route('/external/<path:catalog>/SCS', methods=['POST', 'GET'])
+#~ def ExternScs(catalog):
+	#~ return scs(catalog, extReg)
 
 #SSA Query
 @app.route('/<path:catalog>/ssa', methods=['POST', 'GET'])
@@ -387,10 +367,10 @@ def ssa(catalog, Reg = chivoReg):
 			
 	return 'Catalog without service'
 	
-@app.route('/external/<path:catalog>/ssa/', methods=['POST', 'GET'])
-@app.route('/external/<path:catalog>/SSA/', methods=['POST', 'GET'])
-def ExternSsa(catalog):
-	return ssa(catalog, extReg)
+#~ @app.route('/external/<path:catalog>/ssa/', methods=['POST', 'GET'])
+#~ @app.route('/external/<path:catalog>/SSA/', methods=['POST', 'GET'])
+#~ def ExternSsa(catalog):
+	#~ return ssa(catalog, extReg)
 
 #Showing catalog metadata
 @app.route('/<path:catalog>/')
@@ -400,23 +380,9 @@ def catalogServices(catalog, Reg = chivoReg):
 		return " ".join(i.getServices())
 	return 'Catalog not found'
 	
-@app.route('/external/<path:catalog>/')
-def exterCatalog(catalog):
-	return catalogServices(catalog, extReg)
-
-@app.route('/raise/', methods = ['POST','GET'])
-def Praise():
-	raise
-	return
-@app.route('/testsync')
-def testsync():
-	return render_template("sync.html")	
-	
-@app.route('/raise2/', methods = ['POST','GET'])
-def Praise():
-	
-	return render_template("asdf.html")
-	
+#~ @app.route('/external/<path:catalog>/')
+#~ def exterCatalog(catalog):
+	#~ return catalogServices(catalog, extReg)	
 	
 if __name__ == '__main__':
-    app.run(debug=True)
+	app.run(debug=True)
