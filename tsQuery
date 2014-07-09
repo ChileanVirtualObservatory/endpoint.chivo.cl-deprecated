@@ -2,7 +2,7 @@
 
 #TAP
 #curl -v --location -d 'REQUEST=doQuery&LANG=ADQL&QUERY=SELECT TOP 1000 * FROM twomass_psc' http://127.0.0.1:5000/alma/tap/sync
-#curl -v --location -d 'REQUEST=doQuery&LANG=ADQL&QUERY=SELECT TOP 1000 * FROM basecom.epn_core' http://127.0.0.1:5000/alma/tap/async
+curl -v --location -d 'REQUEST=doQuery&LANG=ADQL&QUERY=SELECT TOP 1000 * FROM basecom.epn_core' http://127.0.0.1:5000/alma/tap/async
 #curl --request GET 'http://127.0.0.1:5000/alma/tap/async'
 #curl -v --location -d 'REQUEST=doQuery&LANG=ADQL&QUERY=SELECT TOP 1000 * FROM basecom.epn_core' http://voparis-tap.obspm.fr/__system__/tap/run/tap/sync
 #curl -X POST  http://127.0.0.1:5000/alma/tap/async/4e995eed:142be32bf37:-7fe9

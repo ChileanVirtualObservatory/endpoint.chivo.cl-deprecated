@@ -1,6 +1,11 @@
 import urllib2
 import requests
 import json
+import threading
+
+
+#Empty list
+catalogsList= list()	
 
 #Has all the metadata from the catalog and make the different query's
 class Catalog():
@@ -240,30 +245,40 @@ class VOparisRegistry(Registry):
 		
 		#Max response items
 		MAX = 1000
-		
+
 		#All standardid from ivoa services, those are the params from the query
 		SERVICEPARAMS = {
 			"tap":'standardid:"ivo://ivoa.net/std/TAP"',
-			#"sia": 'standardid:"ivo://ivoa.net/std/SIA"',
-			#"ssa": 'standardid:"ivo://ivoa.net/std/SSA"',
-			#"scs": 'standardid:"ivo://ivoa.net/std/ConeSearch"',
+			"sia": 'standardid:"ivo://ivoa.net/std/SIA"',
+			"ssa": 'standardid:"ivo://ivoa.net/std/SSA"',
+			"scs": 'standardid:"ivo://ivoa.net/std/ConeSearch"',
 			}
+
 		
-		#Empty list
-		catalogsList= list()
-		
-		#We get all services with tap,sia,ssa,tap from vo-paris registry 
-		for _type in SERVICEPARAMS:
-			parameters ={"keywords": SERVICEPARAMS[_type] , "max": MAX}
+		def threadQuery(serv):
+			print "Starting "+ serv
+			global catalogsList
+			
+			parameters ={"keywords": SERVICEPARAMS[serv] , "max": MAX}
 			r = requests.get( "http://voparis-registry.obspm.fr/vo/ivoa/1/voresources/search", params = parameters)
 			entries = json.loads(r.content)['resources']
 			
 			#Merging list and removing duplicated items
 			catalogsList += entries
 			catalogsList = {v['identifier']:v for v in catalogsList}.values()
+			print "Ready "+serv
 			
-			print _type + " Ready"
 		
+		
+		#We get all services with tap,sia,ssa,tap from vo-paris registry 
+		threads = []
+		for _type in SERVICEPARAMS:
+			t = threading.Thread(target=threadQuery , args=(_type,))
+			threads.append(t)
+			
+		[x.start() for x in threads]
+		[x.join() for x in threads]
+					
 		#giving the catalogs to the external dictionary
 		for item in catalogsList:
 			if item.has_key('shortname'):
