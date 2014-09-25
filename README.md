@@ -177,9 +177,19 @@
 		* SPECRP `double`
 		* TIMERES `double`
 
-### External Registry
+### External 
 
-* Use  http://dachs.lirae.cl:80/external/URL, i.e  http://dachs.lirae.cl:80/external/registry , to se all catalogs
+#### Get External JSON Services
+
+* To get all data from TAP , SCS , SIA , SSA Sevices just go to
+
+	 http://dachs.lirae.cl:80/external/registry
+
+* To get specific Service (not all the data, just Shortname, Title, and AccessUrl)
+
+	 http://dachs.lirae.cl:80/external/{service} , service can be tap,scs,sia,ssa
 	
+
+
 
 
