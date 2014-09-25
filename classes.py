@@ -80,18 +80,22 @@ class Catalog():
 	
 	#Tap
 	
-	
 	##SyncQuery
 	def tapSyncQuery(self, params):
-		req = urllib2.Request(self.getAcessUrl("TAP")+"/sync")
-		response = urllib2.urlopen(req)
-		return response
-	
+		url = self.getAcessUrl("TAP")+"/sync"
+		
+		try:
+			req = urllib2.Request(url, params)
+			response = urllib2.urlopen(req)
+			return response
+		except urllib2.HTTPError as e:
+			error_message = e.read()
+			return error_message
+			
 	##Async Simple Query
 	def tapAsyncQuery(self, params, method):
 		### If we get POST method, is a request with parameters
 		if method == "POST":
-			
 			#Making the request then sending it, and getting a response
 			req = urllib2.Request(self.getAcessUrl("TAP")+"/async", params)
 			response = urllib2.urlopen(req)
@@ -101,11 +105,32 @@ class Catalog():
 		elif method == "GET":
 			r = requests.get(self.getAcessUrl("TAP")+"/async")
 			return r
+			
 	##Show tapAsyncJob info	
 	def tapAsyncJob(self, jobId):
 		r = requests.get(self.getAcessUrl("TAP")+"/async/"+jobId)
 		return r
-		
+	##Show list of results
+	def tapAsyncResults(self, jobId):
+		r = requests.get(self.getAcessUrl("TAP")+"/async/"+jobId+"/results")
+		return r
+	##Show result itself
+	def tapAsyncResult(self,jobId, path):
+		r = requests.get(self.getAcessUrl("TAP")+"/async/"+jobId+"/results/"+path)
+		return r
+	##Job Quote
+	def tapAsyncQuote(self,jobId):
+		r = requests.get(self.getAcessUrl("TAP")+"/async/"+jobId+"/quote")
+		return r		
+	##Execution duration
+	def tapAsyncDuration(self,jobId):
+		r = requests.get(self.getAcessUrl("TAP")+"/async/"+jobId+"/quote")
+		return r		
+	
+	##Execution destruction
+	def tapAsyncDestruction(self,jobId):
+		r = requests.get(self.getAcessUrl("TAP")+"/async/"+jobId+"/destruction")
+		return r
 	##Return Tap tables	
 	def tapTables(self):
 		r = requests.get(self.getAcessUrl("TAP")+"/tables")
@@ -120,6 +145,15 @@ class Catalog():
 	def tapAvailability(self):
 		r = requests.get(self.getAcessUrl("TAP")+"/availability")
 		return r
+	##Tap phase
+	def tapPhase(self,jobID, method,params = None):
+		if method == 'GET':
+			r = requests.get(self.getAcessUrl("TAP")+"/async/"+jobId+"/phase")
+			return r
+		elif method == 'POST':
+			req = urllib2.Request(self.getAcessUrl("TAP")+"/"+jobID+"/phase", params)
+			response = urllib2.urlopen(req)
+			return response
 
 
 
@@ -173,7 +207,7 @@ class ChivoRegistry(Registry):
 				u'capabilities':[
 							{	
 								"standardid": "ivo://ivoa.net/std/TAP",
-								"accessurl" : "http://wfaudata.roe.ac.uk/twomass-dsa/TAP"
+								"accessurl" : "http://voparis-tap.obspm.fr/__system__/tap/run/tap"
 							}
 							, 
 							{
@@ -192,7 +226,7 @@ class ChivoRegistry(Registry):
 							}
 						]
 			}
-			)
+		)
 		self.append(alma)
 
 #VoParis Registry, we get the JSON for all the services, then merge them in a hash with Catalogs
