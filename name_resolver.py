@@ -10,7 +10,7 @@ class SCS:
 	def query(self,ra, dec, sr):
 		#Transforming sr from degree to radians
 		sr = sr * u.degree
-		sr.to(u.rad)
+		sr = sr.to(u.rad)
 		
 		#Generating the circular query
 		params = {'loc':
