@@ -1,0 +1,3026 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Produced with astropy.io.votable version 0.3.1
+     http://www.astropy.org/ -->
+<VOTABLE version="1.2" xmlns="http://www.ivoa.net/xml/VOTable/v1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.ivoa.net/xml/VOTable/v1.2">
+ <RESOURCE type="results">
+  <TABLE>
+   <FIELD ID="DEC_PREC" arraysize="*" datatype="char" name="DEC_PREC"/>
+   <FIELD ID="PMDEC" arraysize="*" datatype="char" name="PMDEC"/>
+   <FIELD ID="FILTER_NAME_B" arraysize="*" datatype="char" name="FILTER_NAME_B"/>
+   <FIELD ID="RVZ_RADVEL" arraysize="*" datatype="char" name="RVZ_RADVEL"/>
+   <FIELD ID="loc" arraysize="*" datatype="char" name="loc"/>
+   <FIELD ID="FILTER_NAME_H" arraysize="*" datatype="char" name="FILTER_NAME_H"/>
+   <FIELD ID="FILTER_NAME_J" arraysize="*" datatype="char" name="FILTER_NAME_J"/>
+   <FIELD ID="FILTER_NAME_K" arraysize="*" datatype="char" name="FILTER_NAME_K"/>
+   <FIELD ID="FLUX_BIBCODE_J" arraysize="*" datatype="char" name="FLUX_BIBCODE_J"/>
+   <FIELD ID="PM_ERR_MINA" arraysize="*" datatype="char" name="PM_ERR_MINA"/>
+   <FIELD ID="RA_PREC" arraysize="*" datatype="char" name="RA_PREC"/>
+   <FIELD ID="COO_ERR_ANGLE" arraysize="*" datatype="char" name="COO_ERR_ANGLE"/>
+   <FIELD ID="PM_ERR_MAJA" arraysize="*" datatype="char" name="PM_ERR_MAJA"/>
+   <FIELD ID="FILTER_NAME_R" arraysize="*" datatype="char" name="FILTER_NAME_R"/>
+   <FIELD ID="PMRA_PREC" arraysize="*" datatype="char" name="PMRA_PREC"/>
+   <FIELD ID="FLUX_BIBCODE_V" arraysize="*" datatype="char" name="FLUX_BIBCODE_V"/>
+   <FIELD ID="RVZ_TYPE" arraysize="*" datatype="char" name="RVZ_TYPE"/>
+   <FIELD ID="FILTER_NAME_V" arraysize="*" datatype="char" name="FILTER_NAME_V"/>
+   <FIELD ID="PMDEC_PREC" arraysize="*" datatype="char" name="PMDEC_PREC"/>
+   <FIELD ID="FLUX_BIBCODE_R" arraysize="*" datatype="char" name="FLUX_BIBCODE_R"/>
+   <FIELD ID="FLUX_QUAL_K" arraysize="*" datatype="char" name="FLUX_QUAL_K"/>
+   <FIELD ID="FLUX_QUAL_J" arraysize="*" datatype="char" name="FLUX_QUAL_J"/>
+   <FIELD ID="FLUX_QUAL_H" arraysize="*" datatype="char" name="FLUX_QUAL_H"/>
+   <FIELD ID="COO_WAVELENGTH" arraysize="*" datatype="char" name="COO_WAVELENGTH"/>
+   <FIELD ID="FLUX_QUAL_B" arraysize="*" datatype="char" name="FLUX_QUAL_B"/>
+   <FIELD ID="FLUX_UNIT_R" arraysize="*" datatype="char" name="FLUX_UNIT_R"/>
+   <FIELD ID="FLUX_UNIT_V" arraysize="*" datatype="char" name="FLUX_UNIT_V"/>
+   <FIELD ID="FLUX_UNIT_H" arraysize="*" datatype="char" name="FLUX_UNIT_H"/>
+   <FIELD ID="FLUX_UNIT_J" arraysize="*" datatype="char" name="FLUX_UNIT_J"/>
+   <FIELD ID="FLUX_UNIT_K" arraysize="*" datatype="char" name="FLUX_UNIT_K"/>
+   <FIELD ID="BIBLIST" arraysize="*" datatype="char" name="BIBLIST"/>
+   <FIELD ID="FLUX_BIBCODE_B" arraysize="*" datatype="char" name="FLUX_BIBCODE_B"/>
+   <FIELD ID="COO_BIBCODE" arraysize="*" datatype="char" name="COO_BIBCODE"/>
+   <FIELD ID="FLUX_QUAL_R" arraysize="*" datatype="char" name="FLUX_QUAL_R"/>
+   <FIELD ID="FLUX_UNIT_B" arraysize="*" datatype="char" name="FLUX_UNIT_B"/>
+   <FIELD ID="FLUX_BIBCODE_K" arraysize="*" datatype="char" name="FLUX_BIBCODE_K"/>
+   <FIELD ID="FLUX_QUAL_V" arraysize="*" datatype="char" name="FLUX_QUAL_V"/>
+   <FIELD ID="SP_QUAL" arraysize="*" datatype="char" name="SP_QUAL"/>
+   <FIELD ID="FLUX_ERROR_H" arraysize="*" datatype="char" name="FLUX_ERROR_H"/>
+   <FIELD ID="RVZ_BIBCODE" arraysize="*" datatype="char" name="RVZ_BIBCODE"/>
+   <FIELD ID="PM_BIBCODE" arraysize="*" datatype="char" name="PM_BIBCODE"/>
+   <FIELD ID="FLUX_ERROR_V" arraysize="*" datatype="char" name="FLUX_ERROR_V"/>
+   <FIELD ID="PM_QUAL" arraysize="*" datatype="char" name="PM_QUAL"/>
+   <FIELD ID="SP_BIBCODE" arraysize="*" datatype="char" name="SP_BIBCODE"/>
+   <FIELD ID="FLUX_ERROR_B" arraysize="*" datatype="char" name="FLUX_ERROR_B"/>
+   <FIELD ID="FLUX_B" arraysize="*" datatype="char" name="FLUX_B"/>
+   <FIELD ID="COO_QUAL" arraysize="*" datatype="char" name="COO_QUAL"/>
+   <FIELD ID="COO_ERR_MINA" arraysize="*" datatype="char" name="COO_ERR_MINA"/>
+   <FIELD ID="SP_TYPE" arraysize="*" datatype="char" name="SP_TYPE"/>
+   <FIELD ID="FLUX_J" arraysize="*" datatype="char" name="FLUX_J"/>
+   <FIELD ID="FLUX_K" arraysize="*" datatype="char" name="FLUX_K"/>
+   <FIELD ID="MAIN_ID" arraysize="*" datatype="char" name="MAIN_ID"/>
+   <FIELD ID="FLUX_V" arraysize="*" datatype="char" name="FLUX_V"/>
+   <FIELD ID="OTYPE" arraysize="*" datatype="char" name="OTYPE"/>
+   <FIELD ID="FLUX_R" arraysize="*" datatype="char" name="FLUX_R"/>
+   <FIELD ID="FLUX_H" arraysize="*" datatype="char" name="FLUX_H"/>
+   <FIELD ID="COO_ERR_MAJA" arraysize="*" datatype="char" name="COO_ERR_MAJA"/>
+   <FIELD ID="RVZ_ERROR" arraysize="*" datatype="char" name="RVZ_ERROR"/>
+   <FIELD ID="_id" arraysize="*" datatype="char" name="_id"/>
+   <FIELD ID="FLUX_ERROR_K" arraysize="*" datatype="char" name="FLUX_ERROR_K"/>
+   <FIELD ID="PMRA" arraysize="*" datatype="char" name="PMRA"/>
+   <FIELD ID="RVZ_QUAL" arraysize="*" datatype="char" name="RVZ_QUAL"/>
+   <FIELD ID="FLUX_ERROR_J" arraysize="*" datatype="char" name="FLUX_ERROR_J"/>
+   <FIELD ID="FLUX_BIBCODE_H" arraysize="*" datatype="char" name="FLUX_BIBCODE_H"/>
+   <FIELD ID="PM_ERR_ANGLE" arraysize="*" datatype="char" name="PM_ERR_ANGLE"/>
+   <DATA>
+    <TABLEDATA>
+     <TR>
+      <TD>9</TD>
+      <TD>135.65</TD>
+      <TD>B</TD>
+      <TD>-6.90</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-10.425260041666661, 46.28929138888889]}</TD>
+      <TD>H</TD>
+      <TD>J</TD>
+      <TD>K</TD>
+      <TD>2003yCat.2246....0C</TD>
+      <TD>1.67</TD>
+      <TD>9</TD>
+      <TD>90</TD>
+      <TD>1.25</TD>
+      <TD>R</TD>
+      <TD>2</TD>
+      <TD>2000A&amp;A...355L..27H</TD>
+      <TD>v</TD>
+      <TD>V</TD>
+      <TD>2</TD>
+      <TD>2003AJ....125..984M</TD>
+      <TD>C</TD>
+      <TD>C</TD>
+      <TD>C</TD>
+      <TD>Opt</TD>
+      <TD>D</TD>
+      <TD>R</TD>
+      <TD>V</TD>
+      <TD>H</TD>
+      <TD>J</TD>
+      <TD>K</TD>
+      <TD>29</TD>
+      <TD>2000A&amp;A...355L..27H</TD>
+      <TD>2007A&amp;A...474..653V</TD>
+      <TD>E</TD>
+      <TD>B</TD>
+      <TD>2003yCat.2246....0C</TD>
+      <TD>D</TD>
+      <TD>D</TD>
+      <TD>0.018</TD>
+      <TD>2006AstL...32..759G</TD>
+      <TD>2007A&amp;A...474..653V</TD>
+      <TD>0.05</TD>
+      <TD>A</TD>
+      <TD>' '</TD>
+      <TD>0.11</TD>
+      <TD>12.06</TD>
+      <TD>A</TD>
+      <TD>10.99</TD>
+      <TD>M1</TD>
+      <TD>7.890</TD>
+      <TD>7.021</TD>
+      <TD>GJ   894.1</TD>
+      <TD>10.93</TD>
+      <TD>RotV*</TD>
+      <TD>10.2</TD>
+      <TD>7.230</TD>
+      <TD>14.66</TD>
+      <TD>2.7</TD>
+      <TD>542db4a53abf3f56ecb1f45a</TD>
+      <TD>0.018</TD>
+      <TD>330.15</TD>
+      <TD>C</TD>
+      <TD>0.021</TD>
+      <TD>2003yCat.2246....0C</TD>
+      <TD>0</TD>
+     </TR>
+     <TR>
+      <TD>3</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.524999999999977, 49.28333333333333]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>3</TD>
+      <TD>90</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>2</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>D</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>10.55</TD>
+      <TD>E</TD>
+      <TD>180000</TD>
+      <TD>A1IV</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686     6</TD>
+      <TD>10.37</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>180000</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f504</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+     <TR>
+      <TD>9</TD>
+      <TD>-7.04</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.635854083333356, 49.23357188888889]}</TD>
+      <TD>H</TD>
+      <TD>J</TD>
+      <TD>K</TD>
+      <TD>2003yCat.2246....0C</TD>
+      <TD>0.90</TD>
+      <TD>9</TD>
+      <TD>90</TD>
+      <TD>0.69</TD>
+      <TD>' '</TD>
+      <TD>2</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>2</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>C</TD>
+      <TD>C</TD>
+      <TD>Opt</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>H</TD>
+      <TD>J</TD>
+      <TD>K</TD>
+      <TD>5</TD>
+      <TD>' '</TD>
+      <TD>2007A&amp;A...474..653V</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>2003yCat.2246....0C</TD>
+      <TD>C</TD>
+      <TD>D</TD>
+      <TD>0.027</TD>
+      <TD>' '</TD>
+      <TD>2007A&amp;A...474..653V</TD>
+      <TD>' '</TD>
+      <TD>A</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>10.14</TD>
+      <TD>A</TD>
+      <TD>6.06</TD>
+      <TD>K0III</TD>
+      <TD>6.732</TD>
+      <TD>5.966</TD>
+      <TD>BD+48  4067</TD>
+      <TD>8.92</TD>
+      <TD>Star</TD>
+      <TD>' '</TD>
+      <TD>6.134</TD>
+      <TD>7.90</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f50b</TD>
+      <TD>0.021</TD>
+      <TD>-12.89</TD>
+      <TD>' '</TD>
+      <TD>0.023</TD>
+      <TD>2003yCat.2246....0C</TD>
+      <TD>0</TD>
+     </TR>
+     <TR>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.554166666666674, 49.19]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>0</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>15.71</TD>
+      <TD>E</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686    35</TD>
+      <TD>14.93</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f51d</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+     <TR>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.541666666666686, 49.16166666666667]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>0</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>13.13</TD>
+      <TD>E</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686    20</TD>
+      <TD>12.59</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f50e</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+     <TR>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.541666666666686, 49.163333333333334]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>0</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>13.41</TD>
+      <TD>E</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686    21</TD>
+      <TD>12.62</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f50f</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+     <TR>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.541666666666686, 49.178333333333335]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>0</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>13.98</TD>
+      <TD>E</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686    29</TD>
+      <TD>13.73</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f517</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+     <TR>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.537500000000023, 49.178333333333335]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>0</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>14.38</TD>
+      <TD>E</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686    32</TD>
+      <TD>13.91</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f51a</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+     <TR>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.537500000000023, 49.17166666666667]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>0</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>13.75</TD>
+      <TD>E</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686    23</TD>
+      <TD>12.68</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f511</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+     <TR>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.541666666666686, 49.17]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>0</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>13.00</TD>
+      <TD>E</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686    18</TD>
+      <TD>12.48</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f50c</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+     <TR>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.52916666666664, 49.17666666666667]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>0</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>14.48</TD>
+      <TD>E</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686    28</TD>
+      <TD>13.68</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f516</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+     <TR>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.52916666666664, 49.19]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>0</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>14.67</TD>
+      <TD>E</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686    25</TD>
+      <TD>13.48</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f513</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+     <TR>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.52916666666664, 49.19]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>0</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>16.00</TD>
+      <TD>E</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686    37</TD>
+      <TD>15.24</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f51f</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+     <TR>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.537500000000023, 49.19166666666667]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>0</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>16.46</TD>
+      <TD>E</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686    39</TD>
+      <TD>15.74</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f521</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+     <TR>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.541666666666686, 49.196666666666665]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>0</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>14.77</TD>
+      <TD>E</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686    30</TD>
+      <TD>13.76</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f518</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+     <TR>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.53333333333336, 49.2]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>0</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>14.42</TD>
+      <TD>E</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686    26</TD>
+      <TD>13.63</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f514</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+     <TR>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.520833333333314, 49.19]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>0</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>13.54</TD>
+      <TD>E</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686    24</TD>
+      <TD>12.91</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f512</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+     <TR>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.520833333333314, 49.18666666666667]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>0</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>15.74</TD>
+      <TD>E</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686    36</TD>
+      <TD>15.16</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f51e</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+     <TR>
+      <TD>3</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.5, 49.166666666666664]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>3</TD>
+      <TD>90</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>1</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>12.20</TD>
+      <TD>E</TD>
+      <TD>180000</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686    15</TD>
+      <TD>11.54</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>180000</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f506</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+     <TR>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.504166666666663, 49.166666666666664]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>0</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>15.11</TD>
+      <TD>E</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686    33</TD>
+      <TD>14.32</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f51b</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+     <TR>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.512499999999989, 49.156666666666666]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>0</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>14.37</TD>
+      <TD>E</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686    31</TD>
+      <TD>13.82</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f519</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+     <TR>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.491666666666674, 49.16]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>0</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>14.84</TD>
+      <TD>E</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686    27</TD>
+      <TD>13.64</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f515</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+     <TR>
+      <TD>9</TD>
+      <TD>2.80</TD>
+      <TD>B</TD>
+      <TD>-8.41</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.469108875000018, 49.13314416666667]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>0.41</TD>
+      <TD>9</TD>
+      <TD>90</TD>
+      <TD>0.32</TD>
+      <TD>' '</TD>
+      <TD>2</TD>
+      <TD>' '</TD>
+      <TD>v</TD>
+      <TD>V</TD>
+      <TD>2</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>Opt</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>26</TD>
+      <TD>' '</TD>
+      <TD>2007A&amp;A...474..653V</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>2005A&amp;A...430..165F</TD>
+      <TD>2007A&amp;A...474..653V</TD>
+      <TD>' '</TD>
+      <TD>A</TD>
+      <TD>2011ARep...55...31S</TD>
+      <TD>' '</TD>
+      <TD>7.672</TD>
+      <TD>A</TD>
+      <TD>2.81</TD>
+      <TD>K3III</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>HR  8925</TD>
+      <TD>6.179</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>3.60</TD>
+      <TD>0.15</TD>
+      <TD>542db4a53abf3f56ecb1f4fb</TD>
+      <TD>' '</TD>
+      <TD>28.94</TD>
+      <TD>A</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>0</TD>
+     </TR>
+     <TR>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.5166666666666515, 49.16]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>0</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>13.95</TD>
+      <TD>E</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686    22</TD>
+      <TD>12.65</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f510</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+     <TR>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.524999999999977, 49.16]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>0</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>13.21</TD>
+      <TD>E</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686    19</TD>
+      <TD>12.49</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f50d</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+     <TR>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.520833333333314, 49.151666666666664]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>0</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>15.35</TD>
+      <TD>E</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686    34</TD>
+      <TD>14.72</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f51c</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+     <TR>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.537500000000023, 49.145]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>0</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>16.11</TD>
+      <TD>E</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686    38</TD>
+      <TD>15.62</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f520</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+     <TR>
+      <TD>3</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.699999999999989, 49.13333333333333]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>3</TD>
+      <TD>90</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>1</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>12.46</TD>
+      <TD>E</TD>
+      <TD>180000</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686    10</TD>
+      <TD>11.07</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>180000</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f503</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+     <TR>
+      <TD>3</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.725000000000023, 49.15]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>3</TD>
+      <TD>90</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>1</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>12.48</TD>
+      <TD>E</TD>
+      <TD>180000</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686    14</TD>
+      <TD>11.53</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>180000</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f502</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+     <TR>
+      <TD>7</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.7440083333333405, 49.15020555555556]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>7</TD>
+      <TD>90</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>Opt</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>1</TD>
+      <TD>' '</TD>
+      <TD>2000A&amp;A...355L..27H</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>13.26</TD>
+      <TD>B</TD>
+      <TD>63</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686    17</TD>
+      <TD>11.90</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>111</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f500</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+     <TR>
+      <TD>3</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.75, 48.983333333333334]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>3</TD>
+      <TD>90</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>1</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>11.91</TD>
+      <TD>E</TD>
+      <TD>180000</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686    13</TD>
+      <TD>11.39</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>180000</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f501</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+     <TR>
+      <TD>9</TD>
+      <TD>0.04</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.586323416666687, 49.107145277777775]}</TD>
+      <TD>H</TD>
+      <TD>J</TD>
+      <TD>K</TD>
+      <TD>2003yCat.2246....0C</TD>
+      <TD>0.66</TD>
+      <TD>9</TD>
+      <TD>90</TD>
+      <TD>0.54</TD>
+      <TD>' '</TD>
+      <TD>2</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>2</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>C</TD>
+      <TD>C</TD>
+      <TD>Opt</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>H</TD>
+      <TD>J</TD>
+      <TD>K</TD>
+      <TD>7</TD>
+      <TD>' '</TD>
+      <TD>2007A&amp;A...474..653V</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>2003yCat.2246....0C</TD>
+      <TD>C</TD>
+      <TD>D</TD>
+      <TD>0.027</TD>
+      <TD>' '</TD>
+      <TD>2007A&amp;A...474..653V</TD>
+      <TD>' '</TD>
+      <TD>A</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>8.657</TD>
+      <TD>A</TD>
+      <TD>4.74</TD>
+      <TD>K0</TD>
+      <TD>6.076</TD>
+      <TD>5.525</TD>
+      <TD>HD 221203</TD>
+      <TD>7.738</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>5.657</TD>
+      <TD>5.79</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f4f9</TD>
+      <TD>0.023</TD>
+      <TD>-5.48</TD>
+      <TD>' '</TD>
+      <TD>0.035</TD>
+      <TD>2003yCat.2246....0C</TD>
+      <TD>0</TD>
+     </TR>
+     <TR>
+      <TD>9</TD>
+      <TD>-2.81</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.483509125000012, 49.05118816666667]}</TD>
+      <TD>H</TD>
+      <TD>J</TD>
+      <TD>K</TD>
+      <TD>2003yCat.2246....0C</TD>
+      <TD>1.77</TD>
+      <TD>9</TD>
+      <TD>90</TD>
+      <TD>1.61</TD>
+      <TD>' '</TD>
+      <TD>2</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>2</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>C</TD>
+      <TD>C</TD>
+      <TD>Opt</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>H</TD>
+      <TD>J</TD>
+      <TD>K</TD>
+      <TD>5</TD>
+      <TD>' '</TD>
+      <TD>2007A&amp;A...474..653V</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>2003yCat.2246....0C</TD>
+      <TD>C</TD>
+      <TD>D</TD>
+      <TD>0.023</TD>
+      <TD>' '</TD>
+      <TD>2007A&amp;A...474..653V</TD>
+      <TD>' '</TD>
+      <TD>A</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>10.66</TD>
+      <TD>A</TD>
+      <TD>14.14</TD>
+      <TD>K0</TD>
+      <TD>9.398</TD>
+      <TD>9.196</TD>
+      <TD>BD+48  4065</TD>
+      <TD>10.20</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>9.233</TD>
+      <TD>15.54</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f4f8</TD>
+      <TD>0.020</TD>
+      <TD>7.05</TD>
+      <TD>' '</TD>
+      <TD>0.023</TD>
+      <TD>2003yCat.2246....0C</TD>
+      <TD>0</TD>
+     </TR>
+     <TR>
+      <TD>3</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.524999999999977, 49.05]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>3</TD>
+      <TD>90</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>1</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>12.11</TD>
+      <TD>E</TD>
+      <TD>180000</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686    12</TD>
+      <TD>11.37</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>180000</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f505</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+     <TR>
+      <TD>3</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.675000000000011, 48.18333333333333]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>3</TD>
+      <TD>90</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>1</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>12.80</TD>
+      <TD>E</TD>
+      <TD>180000</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686     9</TD>
+      <TD>11.03</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>180000</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f507</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+     <TR>
+      <TD>3</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.574999999999989, 48.166666666666664]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>3</TD>
+      <TD>90</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>1</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>11.99</TD>
+      <TD>E</TD>
+      <TD>180000</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686    16</TD>
+      <TD>11.63</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>180000</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f508</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+     <TR>
+      <TD>7</TD>
+      <TD>-5.2</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.513620833333334, 48.16880833333333]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>1.8</TD>
+      <TD>7</TD>
+      <TD>90</TD>
+      <TD>2.0</TD>
+      <TD>' '</TD>
+      <TD>1</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>1</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>Opt</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>1</TD>
+      <TD>' '</TD>
+      <TD>2000A&amp;A...355L..27H</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>2000A&amp;A...355L..27H</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>11.54</TD>
+      <TD>B</TD>
+      <TD>44</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686    11</TD>
+      <TD>11.15</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>76</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f509</TD>
+      <TD>' '</TD>
+      <TD>-7.8</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>90</TD>
+     </TR>
+     <TR>
+      <TD>8</TD>
+      <TD>1.50</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.3435204166666495, 49.14938305555555]}</TD>
+      <TD>H</TD>
+      <TD>J</TD>
+      <TD>K</TD>
+      <TD>2003yCat.2246....0C</TD>
+      <TD>1.80</TD>
+      <TD>8</TD>
+      <TD>0</TD>
+      <TD>1.90</TD>
+      <TD>' '</TD>
+      <TD>2</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>2</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>C</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>H</TD>
+      <TD>J</TD>
+      <TD>K</TD>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>1998A&amp;A...335L..65H</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>2003yCat.2246....0C</TD>
+      <TD>C</TD>
+      <TD>D</TD>
+      <TD>0.018</TD>
+      <TD>' '</TD>
+      <TD>1998A&amp;A...335L..65H</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>11.6</TD>
+      <TD>B</TD>
+      <TD>33.15</TD>
+      <TD>K0III</TD>
+      <TD>8.168</TD>
+      <TD>7.373</TD>
+      <TD>BD+48  4076</TD>
+      <TD>10.37</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>7.539</TD>
+      <TD>33.53</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f4ff</TD>
+      <TD>0.018</TD>
+      <TD>4.30</TD>
+      <TD>' '</TD>
+      <TD>0.021</TD>
+      <TD>2003yCat.2246....0C</TD>
+      <TD>90</TD>
+     </TR>
+     <TR>
+      <TD>7</TD>
+      <TD>38.0</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.392066666666665, 49.15825]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>6.1</TD>
+      <TD>7</TD>
+      <TD>0</TD>
+      <TD>6.2</TD>
+      <TD>' '</TD>
+      <TD>1</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>1</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>3</TD>
+      <TD>' '</TD>
+      <TD>1988A&amp;AS...74..449R</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>D</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>1988A&amp;AS...74..449R</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>12.15</TD>
+      <TD>B</TD>
+      <TD>458.80</TD>
+      <TD>K0III</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>BD+48  4073</TD>
+      <TD>10.92</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>465.72</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f4fd</TD>
+      <TD>' '</TD>
+      <TD>2.0</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>179</TD>
+     </TR>
+     <TR>
+      <TD>3</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.449999999999989, 49.13333333333333]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>3</TD>
+      <TD>90</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>E</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>13</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>D</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>6.79</TD>
+      <TD>E</TD>
+      <TD>180000</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>NGC  7686</TD>
+      <TD>5.6</TD>
+      <TD>Cl*</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>180000</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f50a</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+     <TR>
+      <TD>8</TD>
+      <TD>-8.5</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.468033750000018, 49.20700444444444]}</TD>
+      <TD>H</TD>
+      <TD>J</TD>
+      <TD>K</TD>
+      <TD>2003yCat.2246....0C</TD>
+      <TD>1.3</TD>
+      <TD>8</TD>
+      <TD>90</TD>
+      <TD>1.4</TD>
+      <TD>' '</TD>
+      <TD>1</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>1</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>C</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>H</TD>
+      <TD>J</TD>
+      <TD>K</TD>
+      <TD>3</TD>
+      <TD>' '</TD>
+      <TD>1998A&amp;A...335L..65H</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>2003yCat.2246....0C</TD>
+      <TD>C</TD>
+      <TD>D</TD>
+      <TD>0.020</TD>
+      <TD>' '</TD>
+      <TD>2000A&amp;A...355L..27H</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>10.48</TD>
+      <TD>B</TD>
+      <TD>25.24</TD>
+      <TD>G8</TD>
+      <TD>7.751</TD>
+      <TD>7.176</TD>
+      <TD>BD+48  4068</TD>
+      <TD>9.52</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>7.296</TD>
+      <TD>27.12</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f4fa</TD>
+      <TD>0.018</TD>
+      <TD>1.0</TD>
+      <TD>' '</TD>
+      <TD>0.023</TD>
+      <TD>2003yCat.2246....0C</TD>
+      <TD>90</TD>
+     </TR>
+     <TR>
+      <TD>7</TD>
+      <TD>-1.0</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.380033333333358, 49.27521388888889]}</TD>
+      <TD>H</TD>
+      <TD>J</TD>
+      <TD>K</TD>
+      <TD>2003yCat.2246....0C</TD>
+      <TD>1.3</TD>
+      <TD>7</TD>
+      <TD>90</TD>
+      <TD>1.3</TD>
+      <TD>' '</TD>
+      <TD>1</TD>
+      <TD>2000A&amp;A...355L..27H</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>1</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>C</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>D</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>H</TD>
+      <TD>J</TD>
+      <TD>K</TD>
+      <TD>1</TD>
+      <TD>2000A&amp;A...355L..27H</TD>
+      <TD>1988A&amp;AS...74..449R</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>2003yCat.2246....0C</TD>
+      <TD>D</TD>
+      <TD>D</TD>
+      <TD>0.021</TD>
+      <TD>' '</TD>
+      <TD>2000A&amp;A...355L..27H</TD>
+      <TD>0.02</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>0.02</TD>
+      <TD>10.08</TD>
+      <TD>B</TD>
+      <TD>376.22</TD>
+      <TD>A0</TD>
+      <TD>9.543</TD>
+      <TD>9.521</TD>
+      <TD>BD+48  4072</TD>
+      <TD>9.93</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>9.547</TD>
+      <TD>383.10</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f4fc</TD>
+      <TD>0.018</TD>
+      <TD>-9.2</TD>
+      <TD>' '</TD>
+      <TD>0.022</TD>
+      <TD>2003yCat.2246....0C</TD>
+      <TD>6</TD>
+     </TR>
+     <TR>
+      <TD>8</TD>
+      <TD>-4.0</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-7.3558170833333065, 49.33199388888889]}</TD>
+      <TD>H</TD>
+      <TD>J</TD>
+      <TD>K</TD>
+      <TD>2003yCat.2246....0C</TD>
+      <TD>1.3</TD>
+      <TD>8</TD>
+      <TD>90</TD>
+      <TD>1.3</TD>
+      <TD>' '</TD>
+      <TD>1</TD>
+      <TD>2000A&amp;A...355L..27H</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>1</TD>
+      <TD>' '</TD>
+      <TD>C</TD>
+      <TD>C</TD>
+      <TD>C</TD>
+      <TD>' '</TD>
+      <TD>D</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>H</TD>
+      <TD>J</TD>
+      <TD>K</TD>
+      <TD>1</TD>
+      <TD>2000A&amp;A...355L..27H</TD>
+      <TD>1998A&amp;A...335L..65H</TD>
+      <TD>' '</TD>
+      <TD>B</TD>
+      <TD>2003yCat.2246....0C</TD>
+      <TD>D</TD>
+      <TD>D</TD>
+      <TD>0.021</TD>
+      <TD>' '</TD>
+      <TD>2000A&amp;A...355L..27H</TD>
+      <TD>0.02</TD>
+      <TD>B</TD>
+      <TD>' '</TD>
+      <TD>0.02</TD>
+      <TD>9.56</TD>
+      <TD>B</TD>
+      <TD>16.70</TD>
+      <TD>A0</TD>
+      <TD>9.415</TD>
+      <TD>9.381</TD>
+      <TD>HD 221278</TD>
+      <TD>9.52</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>9.401</TD>
+      <TD>17.25</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f4fe</TD>
+      <TD>0.020</TD>
+      <TD>10.3</TD>
+      <TD>' '</TD>
+      <TD>0.021</TD>
+      <TD>2003yCat.2246....0C</TD>
+      <TD>0</TD>
+     </TR>
+     <TR>
+      <TD>6</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>{u'type': u'Point', u'coordinates': [-13.580458333333354, 46.561527777777776]}</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>6</TD>
+      <TD>90</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>V</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>4</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>D</TD>
+      <TD>D</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>D</TD>
+      <TD>300</TD>
+      <TD>A0</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>BD+45  3798</TD>
+      <TD>10.923</TD>
+      <TD>*inCl</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>300</TD>
+      <TD>' '</TD>
+      <TD>542db4a53abf3f56ecb1f459</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+      <TD>' '</TD>
+     </TR>
+    </TABLEDATA>
+   </DATA>
+  </TABLE>
+ </RESOURCE>
+</VOTABLE>

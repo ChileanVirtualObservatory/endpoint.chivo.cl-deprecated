@@ -1,13 +1,17 @@
+import json
 from pymongo import MongoClient
 from astropy import units as u
 from astropy.io.votable.tree import VOTableFile, Resource, Table, Field
+from bson import BSON
+from bson import json_util
+
 class ChivoBib:
 	def __init__(self):
 		#Making the connection with mongo
 		client = MongoClient('localhost', 27017)
 		db = client.chivo
 		self.collection = db.name_resolver			
-	def SCS(self,ra, dec, sr):
+	def scs(self,ra, dec, sr):
 		#Transforming sr from degree to radians
 		sr = sr * u.degree
 		sr = sr.to(u.rad)
@@ -19,7 +23,14 @@ class ChivoBib:
 						[[ra,dec], sr.value]}}}
 		#Sending the request
 		data = self.collection.find(params)
-		return toVotable(data)		
+		return toVotable(data)
+	
+	def nameResolver(self,name):
+		query = {'MAIN_ID': {'$regex': name}}
+		data = self.collection.find(query)
+		return json_util.dumps(data, sort_keys=True, indent=4, default=json_util.default)
+		
+		
 	
 def toVotable(data):
 	data2 = list() 
@@ -66,6 +77,11 @@ def toVotable(data):
 		table.array[lap] = (rellenar)
 		lap = lap + 1	
 	
-	return votable
+	table = votable.to_xml("temp.xml")
+	f = open("temp.xml")
+	return f.read()
+		
+	
+	
 
         

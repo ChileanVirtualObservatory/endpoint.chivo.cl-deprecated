@@ -360,10 +360,17 @@ def catalogServices(catalog, Reg = chivoReg):
 #Chivo Bib Conesearch
 @app.route('/bib/conesearch', methods=['GET'])
 def bibConesearch():
-	params = request.arg
-	return params
-	#votable = chivoBib.query
-	#return Response(steamDataGet(votable), mimetype = "text/xml")
+	params = request.args
+	ra = float(params["RA"])
+	dec = float(params["DEC"])
+	sr = float(params["SR"])
+	votable = chivoBib.scs(ra,dec,sr)
+	return Response(votable, mimetype = "text/xml")
+#Chivo Name Resolver
+@app.route('/name_resolver/<name>', methods=['GET'])
+def name_resolver(name):
+	response = chivoBib.nameResolver(name)
+	return Response(response, mimetype = "application/json")
 
 	
 if __name__ == '__main__':
