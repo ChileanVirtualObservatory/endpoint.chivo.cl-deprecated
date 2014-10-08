@@ -239,7 +239,7 @@ class ChivoRegistry(Registry):
 class VOparisRegistry(Registry):
 	def __init__(self):
 		self.catalogs = dict()
-		self.__getRegistry()
+		self.getRegistry()
 	
 	def keywordsearch(self, a):
 		b = {}

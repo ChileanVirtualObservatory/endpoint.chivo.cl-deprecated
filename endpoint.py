@@ -1,8 +1,8 @@
-
 import urllib
 
 from classes import *
 from func import *
+from name_resolver import *
 
 from os import system
 from flask import Flask, render_template, request, Response, redirect
@@ -12,6 +12,7 @@ from flask import Flask, render_template, request, Response, redirect
 app = Flask(__name__)
 chivoReg = ChivoRegistry()
 extReg = VOparisRegistry() 
+chivoBib = ChivoBib()
 
 #Remove trailing slash in POST requests
 @app.before_request
@@ -353,6 +354,17 @@ def catalogServices(catalog, Reg = chivoReg):
 		i =Reg.getCatalog(catalog)
 		return " ".join(i.getServices())
 	return 'Catalog not found'
+	
+	
+	
+#Chivo Bib Conesearch
+@app.route('/bib/conesearch', methods=['GET'])
+def bibConesearch():
+	params = request.arg
+	return params
+	#votable = chivoBib.query
+	#return Response(steamDataGet(votable), mimetype = "text/xml")
+
 	
 if __name__ == '__main__':
 	app.run(debug=True)
