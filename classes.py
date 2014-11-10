@@ -4,6 +4,8 @@ import json
 import threading
 
 
+CHIVO_URL = "dachs.lirae.cl"
+
 #Empty list
 catalogsList= list()	
 
@@ -160,6 +162,16 @@ class Catalog():
 			req = urllib2.Request(self.getAcessUrl("TAP")+"/"+jobID+"/phase", params)
 			response = urllib2.urlopen(req)
 			return response
+	
+	def setAlias(self,data):
+		self.alias = data
+		return True
+			
+	def alias():
+		if self.alias:
+			return self.alias
+
+		return False
 
 
 
@@ -179,9 +191,9 @@ class Registry():
 #Chivo Registry, now has only 1 test catalog, with testing metadata
 class ChivoRegistry(Registry):
 	def __init__(self):
+
 		self.catalogs = dict()
-		alma = Catalog(
-		{
+		data = 		{
 				u'status' : "active",
 				
 				u'publisher': 'LIRAE',
@@ -192,7 +204,7 @@ class ChivoRegistry(Registry):
 				
 				u'description': 'Alma dataset',
 				
-				u'title': 'title',
+				u'title': 'Chilean Virtual Observatory, Alma Cycle 0',
 				
 				u'provenance': 'ivo://jvo/publishingregistry',
 				
@@ -222,17 +234,16 @@ class ChivoRegistry(Registry):
 							}
 							,
 							{
-								"standardid": "ivo://ivoa.net/std/SSA" ,
-								"accessurl" : "http://wfaudata.roe.ac.uk/6dF-ssap/?" 
-							}
-							,
-							{
 								"standardid":"ivo://ivoa.net/std/SIA" ,
 								"accessurl" :"http://irsa.ipac.caltech.edu/ibe/sia/wise/prelim/p3am_cdd?"
 							}
 						]
 			}
-		)
+		alma = Catalog(data)
+		data["capabilities"][0]["accessurl"] = CHIVO_URL + "/alma/tap"
+		data["capabilities"][1]["accessurl"] = CHIVO_URL + "/alma/scs"
+		data["capabilities"][2]["accessurl"] = CHIVO_URL + "/alma/sia"
+		alma.setAlias(data)
 		self.append(alma)
 
 #VoParis Registry, we get the JSON for all the services, then merge them in a hash with Catalogs

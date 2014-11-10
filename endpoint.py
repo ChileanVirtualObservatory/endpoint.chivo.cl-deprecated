@@ -6,8 +6,8 @@ from name_resolver import *
 
 from os import system
 from flask import Flask, render_template, request, Response, redirect
-from celery.schedules import crontab
-from tasks import update_external
+#~ from celery.schedules import crontab
+#~ from tasks import update_external
 
 #Application Itself
 app = Flask(__name__)
@@ -94,27 +94,37 @@ def registry4():
 @app.route('/external/registry/allTap', methods = ['GET'])
 @app.route('/external/tap', methods = ['GET'])
 def extRegistry1():
-	return registry1(extReg ,"tap")
+	internal = json.loads(registry1(chivoReg, "tap"))
+	external = json.loads(registry1(extReg ,"tap"))
+	return json.dumps(internal+external)
+	
 	
 @app.route('/external/registry/allScs', methods = ['GET'])
 @app.route('/external/scs', methods = ['GET'])
 def extRegistry2():
-	return registry1(extReg, "scs")
+	internal = json.loads(registry1(chivoReg, "scs"))
+	external = json.loads(registry1(extReg ,"scs"))
+	return json.dumps(internal+external)
 
 @app.route('/external/registry/allSia', methods = ['GET'])
 @app.route('/external/sia', methods = ['GET'])
 def extRegistry3():
-	return registry1( extReg,  "sia")
+	internal = json.loads(registry1(chivoReg, "sia"))
+	external = json.loads(registry1(extReg ,"sia"))
+	return json.dumps(internal+external)
 	
 @app.route('/external/registry/allSsa', methods = ['GET'])
 @app.route('/external/ssa', methods = ['GET'])
 def extRegistry4():
-	return registry1(extReg,  "ssa")
+	external = json.loads(registry1(extReg ,"ssa"))
+	return json.dumps(external)
 	
 #External Registry
 @app.route('/external/registry/', methods = ['GET'])
 def extRegistry():
-	return registry(extReg)
+	internal = json.loads(registry(chivoReg))
+	external = json.loads(registry(extReg))
+	return json.dumps(internal+external)
 
 #Tap Catalog
 @app.route('/<catalog>/tap/')
