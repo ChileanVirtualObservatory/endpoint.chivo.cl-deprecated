@@ -4,6 +4,8 @@ import json
 import threading
 
 
+CHIVO_URL = "dachs.lirae.cl"
+
 #Empty list
 catalogsList= list()	
 
@@ -66,6 +68,7 @@ class Catalog():
 				return r
 			else:
 				return False
+		#Only tap 
 		else:
 			return False	
 		
@@ -159,6 +162,16 @@ class Catalog():
 			req = urllib2.Request(self.getAcessUrl("TAP")+"/"+jobID+"/phase", params)
 			response = urllib2.urlopen(req)
 			return response
+	
+	def setAlias(self,data):
+		self.alias = data
+		return True
+			
+	def alias():
+		if self.alias:
+			return self.alias
+
+		return False
 
 
 
@@ -178,9 +191,9 @@ class Registry():
 #Chivo Registry, now has only 1 test catalog, with testing metadata
 class ChivoRegistry(Registry):
 	def __init__(self):
+
 		self.catalogs = dict()
-		alma = Catalog(
-		{
+		data = 		{
 				u'status' : "active",
 				
 				u'publisher': 'LIRAE',
@@ -191,7 +204,7 @@ class ChivoRegistry(Registry):
 				
 				u'description': 'Alma dataset',
 				
-				u'title': 'title',
+				u'title': 'Chilean Virtual Observatory, Alma Cycle 0',
 				
 				u'provenance': 'ivo://jvo/publishingregistry',
 				
@@ -221,17 +234,16 @@ class ChivoRegistry(Registry):
 							}
 							,
 							{
-								"standardid": "ivo://ivoa.net/std/SSA" ,
-								"accessurl" : "http://wfaudata.roe.ac.uk/6dF-ssap/?" 
-							}
-							,
-							{
 								"standardid":"ivo://ivoa.net/std/SIA" ,
 								"accessurl" :"http://irsa.ipac.caltech.edu/ibe/sia/wise/prelim/p3am_cdd?"
 							}
 						]
 			}
-		)
+		alma = Catalog(data)
+		data["capabilities"][0]["accessurl"] = CHIVO_URL + "/alma/tap"
+		data["capabilities"][1]["accessurl"] = CHIVO_URL + "/alma/scs"
+		data["capabilities"][2]["accessurl"] = CHIVO_URL + "/alma/sia"
+		alma.setAlias(data)
 		self.append(alma)
 
 #VoParis Registry, we get the JSON for all the services, then merge them in a hash with Catalogs
@@ -239,6 +251,26 @@ class VOparisRegistry(Registry):
 	def __init__(self):
 		self.catalogs = dict()
 		self.getRegistry()
+	
+	def keywordsearch(self, a):
+		b = {}
+			
+		for key in a.keys():
+
+			if key in ["numberReturned", "total","form","resoure","max"]:
+				b[key] = a[key]
+			elif key == "keywords":
+				b["keywords"] = a["keywords"] 
+			elif key != "keywords":
+				b["keywords"] +=" "+ key +":"+a[key]
+		r = requests.get( "http://voparis-registry.obspm.fr/vo/ivoa/1/voresources/search", params=b, stream=True)
+		try:
+			entries = json.loads(r.content)['resources']
+		except:
+			return "Error 500\n"
+		return entries
+				
+	
 		
 		
 	def getRegistry(self):
@@ -268,6 +300,7 @@ class VOparisRegistry(Registry):
 			catalogsList = {v['identifier']:v for v in catalogsList}.values()
 			print "Ready "+serv
 			
+			print _type + " Ready"
 		
 		
 		#We get all services with tap,sia,ssa,tap from vo-paris registry 

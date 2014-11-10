@@ -1,17 +1,30 @@
-
 import urllib
 
 from classes import *
 from func import *
+from name_resolver import *
 
 from os import system
 from flask import Flask, render_template, request, Response, redirect
-
+#~ from celery.schedules import crontab
+#~ from tasks import update_external
 
 #Application Itself
 app = Flask(__name__)
 chivoReg = ChivoRegistry()
 extReg = VOparisRegistry() 
+#~ chivoBib = ChivoBib()
+
+#Cron celery configuration to update
+#external from voparis registry
+#~ CELERYBEAT_SCHEDULE = {
+	#~ 'update-catalogs': {
+	#~ 'task': 'tasks.update_external', 
+	#~ 'schedule': crontab(hour='*/1'),
+	#~ 'args':(extReg,),
+	#~ },
+#~ }
+
 #Remove trailing slash in POST requests
 @app.before_request
 def remove_trailing_slash():
@@ -81,27 +94,37 @@ def registry4():
 @app.route('/external/registry/allTap', methods = ['GET'])
 @app.route('/external/tap', methods = ['GET'])
 def extRegistry1():
-	return registry1(extReg ,"tap")
+	internal = json.loads(registry1(chivoReg, "tap"))
+	external = json.loads(registry1(extReg ,"tap"))
+	return json.dumps(internal+external)
+	
 	
 @app.route('/external/registry/allScs', methods = ['GET'])
 @app.route('/external/scs', methods = ['GET'])
 def extRegistry2():
-	return registry1(extReg, "scs")
+	internal = json.loads(registry1(chivoReg, "scs"))
+	external = json.loads(registry1(extReg ,"scs"))
+	return json.dumps(internal+external)
 
 @app.route('/external/registry/allSia', methods = ['GET'])
 @app.route('/external/sia', methods = ['GET'])
 def extRegistry3():
-	return registry1( extReg,  "sia")
+	internal = json.loads(registry1(chivoReg, "sia"))
+	external = json.loads(registry1(extReg ,"sia"))
+	return json.dumps(internal+external)
 	
 @app.route('/external/registry/allSsa', methods = ['GET'])
 @app.route('/external/ssa', methods = ['GET'])
 def extRegistry4():
-	return registry1(extReg,  "ssa")
+	external = json.loads(registry1(extReg ,"ssa"))
+	return json.dumps(external)
 	
 #External Registry
 @app.route('/external/registry/', methods = ['GET'])
 def extRegistry():
-	return registry(extReg)
+	internal = json.loads(registry(chivoReg))
+	external = json.loads(registry(extReg))
+	return json.dumps(internal+external)
 
 #Tap Catalog
 @app.route('/<catalog>/tap/')
@@ -352,6 +375,24 @@ def catalogServices(catalog, Reg = chivoReg):
 		i =Reg.getCatalog(catalog)
 		return " ".join(i.getServices())
 	return 'Catalog not found'
+	
+	
+	
+#Chivo Bib Conesearch
+@app.route('/bib/conesearch', methods=['GET'])
+def bibConesearch():
+	params = request.args
+	ra = float(params["RA"])
+	dec = float(params["DEC"])
+	sr = float(params["SR"])
+	votable = chivoBib.scs(ra,dec,sr)
+	return Response(votable, mimetype = "text/xml")
+#Chivo Name Resolver
+@app.route('/name_resolver/<name>', methods=['GET'])
+def name_resolver(name):
+	response = chivoBib.nameResolver(name)
+	return Response(response, mimetype = "application/json")
+
 	
 if __name__ == '__main__':
 	app.run(debug=True)
