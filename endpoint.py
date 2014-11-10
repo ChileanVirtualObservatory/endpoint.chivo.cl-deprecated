@@ -2,7 +2,7 @@ import urllib
 
 from classes import *
 from func import *
-from name_resolver import *
+#~ from name_resolver import *
 
 from os import system
 from flask import Flask, render_template, request, Response, redirect
