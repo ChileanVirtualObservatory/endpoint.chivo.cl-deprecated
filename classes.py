@@ -230,12 +230,12 @@ class ChivoRegistry(Registry):
 							, 
 							{
 								"standardid":"ivo://ivoa.net/std/ConeSearch",
-								"accessurl" : "http://heasarc.gsfc.nasa.gov/xamin/vo/cone?showoffsets&table=atlascscpt&"
+								"accessurl" : "http://dachs.lirae.cl:8080/fitsdachs/q/scsfits/scs.xml?"
 							}
 							,
 							{
 								"standardid":"ivo://ivoa.net/std/SIA" ,
-								"accessurl" :"http://irsa.ipac.caltech.edu/ibe/sia/wise/prelim/p3am_cdd?"
+								"accessurl" :"http://dachs.lirae.cl:8080/fitsdachs/q/siapfits/siap.xml?"
 							}
 						]
 			}
