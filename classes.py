@@ -2,7 +2,7 @@ import urllib2
 import requests
 import json
 import threading
-
+import copy
 
 CHIVO_URL = "dachs.lirae.cl"
 
@@ -240,10 +240,11 @@ class ChivoRegistry(Registry):
 						]
 			}
 		alma = Catalog(data)
-		data["capabilities"][0]["accessurl"] = CHIVO_URL + "/alma/tap"
-		data["capabilities"][1]["accessurl"] = CHIVO_URL + "/alma/scs"
-		data["capabilities"][2]["accessurl"] = CHIVO_URL + "/alma/sia"
-		alma.setAlias(data)
+		dataAlias = copy.deepcopy(data)
+		dataAlias["capabilities"][0]["accessurl"] = CHIVO_URL + "/alma/tap"
+		dataAlias["capabilities"][1]["accessurl"] = CHIVO_URL + "/alma/scs"
+		dataAlias["capabilities"][2]["accessurl"] = CHIVO_URL + "/alma/sia"
+		alma.setAlias(dataAlias)
 		self.append(alma)
 
 #VoParis Registry, we get the JSON for all the services, then merge them in a hash with Catalogs
