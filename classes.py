@@ -60,6 +60,10 @@ class Catalog():
 				r=self.scsQuery(parameters)
 				return r
 			elif queryType == "sia":
+				if not("FORMAT" in parameters.keys()):
+					parameters = dict(parameters)
+					parameters["FORMAT"] = "ALL"
+					
 				r=self.siaQuery(parameters)
 				return r
 
