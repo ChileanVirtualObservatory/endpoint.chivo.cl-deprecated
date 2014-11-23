@@ -11,6 +11,8 @@ from flask import Flask, render_template, request, Response, redirect
 
 #Application Itself
 app = Flask(__name__)
+if os.environ.get('PRODUCTION'):
+	app.debug = False
 chivoReg = ChivoRegistry()
 extReg = VOparisRegistry() 
 #~ chivoBib = ChivoBib()
