@@ -230,7 +230,7 @@ class ChivoRegistry(Registry):
 				u'capabilities':[
 							{	
 								"standardid": "ivo://ivoa.net/std/TAP",
-								"accessurl" : "http://voparis-tap.obspm.fr/__system__/tap/run/tap"
+								"accessurl" : "http://dachs.lirae.cl:8080/__system__/tap/run/tap"
 							}
 							, 
 							{
