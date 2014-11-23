@@ -29,6 +29,7 @@ class Catalog():
 		self.identifier = data["identifier"] if data.has_key("identifier") else None
 		self.type = data["type"] if data.has_key("type") else None
 		self.data = data
+		self.alias = None
 	
 	#Return the different protocols that are implemented in the catalog
 	def getServices(self):
@@ -171,7 +172,7 @@ class Catalog():
 		self.alias = data
 		return True
 			
-	def alias():
+	def getAlias(self):
 		if self.alias:
 			return self.alias
 

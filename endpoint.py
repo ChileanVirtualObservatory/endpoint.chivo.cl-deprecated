@@ -44,10 +44,11 @@ def registry(Reg = chivoReg):
 	for i in Reg.catalogs.keys():
 		cati=Reg.getCatalog(i)
 		if cati.status == "active":
+			
 			_temp = dict()
-			_temp["shortname"] = cati.shortname
-			_temp["title"] = cati.title
-			_temp["capabilities"] = cati.capabilities
+			_temp["shortname"] =cati.getAlias()["title"] if cati.getAlias() else cati.title
+			_temp["title"] = cati.getAlias()["shortname"] if cati.getAlias() else cati.title
+			_temp["capabilities"] = cati.getAlias()["capabilities"] if cati.getAlias() else cati.capabilities
 			cat.append(_temp)
 	
 	return json.dumps(cat)
@@ -66,9 +67,9 @@ def registry1(Reg = chivoReg,  service = "tap"):
 		cati=Reg.getCatalog(i)
 		if cati.status == "active" and service in cati.getServices() :
 			_temp = dict()
-			_temp["title"] =cati.title
-			_temp["shortname"] = cati.shortname
-			unfiltered = cati.capabilities
+			_temp["title"] =cati.getAlias()["title"] if cati.getAlias() else cati.title
+			_temp["shortname"] = cati.getAlias()["shortname"] if cati.getAlias() else cati.shortname
+			unfiltered = cati.getAlias()["capabilities"] if cati.getAlias() else cati.capabilities
 			for s in unfiltered:
 				if s["standardid"] == SERVICEPARAMS[service]:
 					_temp["accessurl"] = s["accessurl"]
