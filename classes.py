@@ -257,7 +257,7 @@ class ChivoRegistry(Registry):
 		data2["capabilities"][2]["accessurl"] = CHIVO_URL + "/alma/sia"
 		
 		alma.setAlias(data2)
-		alma.setFilePath("dachs.lirae.cl:8080/getproduct/fitsdachs/res/FITS/")
+		alma.setFilePath("http://10.10.3.56:8080/getproduct/fitsdachs/res/FITS/")
 		self.append(alma)
 
 

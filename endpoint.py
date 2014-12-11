@@ -393,6 +393,13 @@ def name_resolver(name):
 	response = chivoBib.nameResolver(name)
 	return Response(response, mimetype = "application/json")
 
+@app.route('/<catalog>/file/<fitsFile>')
+def getfits(catalog, fitsFile,Reg= chivoReg):
+	cat = Reg.getCatalog(catalog)
+	cat = cat.filePath + fitsFile
+	r = requests.get(cat)
+	return r.data 
+	
 	
 if __name__ == '__main__':
 	app.run(debug=True)
