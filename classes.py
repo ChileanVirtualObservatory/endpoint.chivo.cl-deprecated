@@ -4,10 +4,19 @@ import json
 import threading
 
 
-CHIVO_URL = "dachs.lirae.cl"
+CHIVO_URL = "http://dachs.lirae.cl"
+FILE_URL = "http://10.10.3.56:8080/getproduct/fitsdachs/res/FITS/" #Bender ip
+#FILE_URL = "http://dachs.lirae.cl:8080/getproduct/fitsdachs/res/"
+
 
 #Empty list
 catalogsList= list()	
+
+class siaResponse():
+	def __init__(self):
+		self.headers = None
+		self.text = None
+
 
 #Has all the metadata from the catalog and make the different query's
 class Catalog():
@@ -85,8 +94,13 @@ class Catalog():
 	def siaQuery(self,parameters):
 		#r = requests.get(self.getAcessUrl("SIA") , params = parameters, stream = True)
 		r = requests.get(self.getAcessUrl("SIA"), params = parameters)
-		raise
-		return r
+		res = siaResponse()
+		res.headers = r.headers
+		if self.filePath != None:
+			text = r.text.replace(self.filePath, "http://dachs.lirae.cl/"+self.shortname+"/file/")
+		res.text = text
+		
+		return res
 	
 	#Tap
 	
@@ -257,7 +271,7 @@ class ChivoRegistry(Registry):
 		data2["capabilities"][2]["accessurl"] = CHIVO_URL + "/alma/sia"
 		
 		alma.setAlias(data2)
-		alma.setFilePath("http://10.10.3.56:8080/getproduct/fitsdachs/res/FITS/")
+		alma.setFilePath(FILE_URL)
 		self.append(alma)
 
 

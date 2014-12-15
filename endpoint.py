@@ -2,7 +2,6 @@ import urllib
 
 from classes import *
 from func import *
-#~ from name_resolver import *
 
 from os import system
 from flask import Flask, render_template, request, Response, redirect
@@ -13,7 +12,6 @@ from flask import Flask, render_template, request, Response, redirect
 app = Flask(__name__)
 chivoReg = ChivoRegistry()
 extReg = VOparisRegistry() 
-#~ chivoBib = ChivoBib()
 
 #Cron celery configuration to update
 #external from voparis registry
@@ -317,10 +315,13 @@ def sia(catalog, Reg = chivoReg):
 		if request.method == "GET":
 			#Making the request			
 			r = cat.query(request.args, request.method, queryType) 
-			if request.args:
-				return Response(streamDataGet(r), mimetype= getResponseType(r.headers))
+			
+			#if request.args:
+			#	return Response(streamDataGet(r), mimetype= getResponseType(r.headers))
 			 
-			return Response(streamDataGet(r))		
+			#return Response(streamDataGet(r))	
+			return Response(r.text, mimetype= getResponseType(r.headers))
+	
 	return 'Catalog without service'
 	
 
