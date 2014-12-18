@@ -246,9 +246,9 @@ class ChivoRegistry(Registry):
 			}
 		alma = Catalog(data)
 		dataAlias = copy.deepcopy(data)
-		dataAlias["capabilities"][0]["accessurl"] = CHIVO_URL + "/alma/tap"
-		dataAlias["capabilities"][1]["accessurl"] = CHIVO_URL + "/alma/scs"
-		dataAlias["capabilities"][2]["accessurl"] = CHIVO_URL + "/alma/sia"
+		dataAlias["capabilities"][0]["accessurl"] = CHIVO_URL + "/alma/tap?"
+		dataAlias["capabilities"][1]["accessurl"] = CHIVO_URL + "/alma/scs?"
+		dataAlias["capabilities"][2]["accessurl"] = CHIVO_URL + "/alma/sia?"
 		alma.setAlias(dataAlias)
 		self.append(alma)
 
