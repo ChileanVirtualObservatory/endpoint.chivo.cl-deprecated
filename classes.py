@@ -4,7 +4,7 @@ import json
 import threading
 import copy
 
-CHIVO_URL = "dachs.lirae.cl"
+CHIVO_URL = "http://dachs.lirae.cl"
 
 #Empty list
 catalogsList= list()	
