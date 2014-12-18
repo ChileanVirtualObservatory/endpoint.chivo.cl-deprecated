@@ -266,9 +266,9 @@ class ChivoRegistry(Registry):
 			}
 		alma = Catalog(data)
 		data2 = data.copy()
-		data2["capabilities"][0]["accessurl"] = CHIVO_URL + "/alma/tap"
-		data2["capabilities"][1]["accessurl"] = CHIVO_URL + "/alma/scs"
-		data2["capabilities"][2]["accessurl"] = CHIVO_URL + "/alma/sia"
+		data2["capabilities"][0]["accessurl"] = CHIVO_URL + "/alma/tap?"
+		data2["capabilities"][1]["accessurl"] = CHIVO_URL + "/alma/scs?"
+		data2["capabilities"][2]["accessurl"] = CHIVO_URL + "/alma/sia?"
 		
 		alma.setAlias(data2)
 		alma.setFilePath(FILE_URL)
