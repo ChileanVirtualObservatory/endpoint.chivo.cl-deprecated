@@ -2,7 +2,6 @@ import urllib
 
 from classes import *
 from func import *
-#~ from name_resolver import *
 
 from os import system
 from flask import Flask, render_template, request, Response, redirect
@@ -13,7 +12,6 @@ from flask import Flask, render_template, request, Response, redirect
 app = Flask(__name__)
 chivoReg = ChivoRegistry()
 extReg = VOparisRegistry() 
-#~ chivoBib = ChivoBib()
 
 #Cron celery configuration to update
 #external from voparis registry
@@ -318,10 +316,13 @@ def sia(catalog, Reg = chivoReg):
 		if request.method == "GET":
 			#Making the request			
 			r = cat.query(request.args, request.method, queryType) 
-			if request.args:
-				return Response(streamDataGet(r), mimetype= getResponseType(r.headers))
+			
+			#if request.args:
+			#	return Response(streamDataGet(r), mimetype= getResponseType(r.headers))
 			 
-			return Response(streamDataGet(r))		
+			#return Response(streamDataGet(r))	
+			return Response(r.text, mimetype= getResponseType(r.headers))
+	
 	return 'Catalog without service'
 	
 
@@ -394,6 +395,12 @@ def name_resolver(name):
 	response = chivoBib.nameResolver(name)
 	return Response(response, mimetype = "application/json")
 
+@app.route('/<catalog>/file/<fitsFile>')
+def getfits(catalog, fitsFile,Reg= chivoReg):
+	cat = Reg.getCatalog(catalog)
+	cat = cat.filePath + fitsFile
+	r = requests.get(cat)
+	return Response(r.text,mimetype= getResponseType(r.headers))	
 	
 if __name__ == '__main__':
 	app.run(debug=True)

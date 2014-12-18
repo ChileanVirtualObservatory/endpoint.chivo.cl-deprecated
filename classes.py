@@ -4,7 +4,11 @@ import json
 import threading
 import copy
 
+
 CHIVO_URL = "http://dachs.lirae.cl"
+#FILE_URL = "http://10.10.3.56:8080/getproduct/fitsdachs/res/FITS/" #Bender ip
+FILE_URL = "http://dachs.lirae.cl:8080/getproduct/fitsdachs/res/"
+
 
 #Empty list
 catalogsList= list()	
@@ -88,8 +92,15 @@ class Catalog():
 		return r
 	#SIA
 	def siaQuery(self,parameters):
-		r = requests.get(self.getAcessUrl("SIA") , params = parameters, stream = True)
-		return r	
+		#r = requests.get(self.getAcessUrl("SIA") , params = parameters, stream = True)
+		r = requests.get(self.getAcessUrl("SIA"), params = parameters)
+		res = siaResponse()
+		res.headers = r.headers
+		if self.filePath != None:
+			text = r.text.replace(self.filePath, "http://dachs.lirae.cl/"+self.shortname+"/file/")
+		res.text = text
+		
+		return res
 	
 	#Tap
 	
@@ -177,6 +188,15 @@ class Catalog():
 			return self.alias
 
 		return False
+		
+	def setFilePath(self,path):
+		self.filePath = path
+		return True
+	
+	def filePath():
+		if self.filePath():
+			return self.filePath
+		return False
 
 
 
@@ -245,12 +265,15 @@ class ChivoRegistry(Registry):
 						]
 			}
 		alma = Catalog(data)
-		dataAlias = copy.deepcopy(data)
-		dataAlias["capabilities"][0]["accessurl"] = CHIVO_URL + "/alma/tap?"
-		dataAlias["capabilities"][1]["accessurl"] = CHIVO_URL + "/alma/scs?"
-		dataAlias["capabilities"][2]["accessurl"] = CHIVO_URL + "/alma/sia?"
-		alma.setAlias(dataAlias)
+		data2 = data.copy()
+		data2["capabilities"][0]["accessurl"] = CHIVO_URL + "/alma/tap"
+		data2["capabilities"][1]["accessurl"] = CHIVO_URL + "/alma/scs"
+		data2["capabilities"][2]["accessurl"] = CHIVO_URL + "/alma/sia"
+		
+		alma.setAlias(data2)
+		alma.setFilePath(FILE_URL)
 		self.append(alma)
+
 
 #VoParis Registry, we get the JSON for all the services, then merge them in a hash with Catalogs
 class VOparisRegistry(Registry):
