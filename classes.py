@@ -5,8 +5,8 @@ import threading
 
 
 CHIVO_URL = "http://dachs.lirae.cl"
-FILE_URL = "http://10.10.3.56:8080/getproduct/fitsdachs/res/FITS/" #Bender ip
-#FILE_URL = "http://dachs.lirae.cl:8080/getproduct/fitsdachs/res/"
+#FILE_URL = "http://10.10.3.56:8080/getproduct/fitsdachs/res/FITS/" #Bender ip
+FILE_URL = "http://dachs.lirae.cl:8080/getproduct/fitsdachs/res/"
 
 
 #Empty list

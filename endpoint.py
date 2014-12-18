@@ -399,8 +399,7 @@ def getfits(catalog, fitsFile,Reg= chivoReg):
 	cat = Reg.getCatalog(catalog)
 	cat = cat.filePath + fitsFile
 	r = requests.get(cat)
-	return r.data 
-	
+	return Response(r.text,mimetype= getResponseType(r.headers))	
 	
 if __name__ == '__main__':
 	app.run(debug=True)
