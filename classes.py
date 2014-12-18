@@ -29,6 +29,7 @@ class Catalog():
 		self.identifier = data["identifier"] if data.has_key("identifier") else None
 		self.type = data["type"] if data.has_key("type") else None
 		self.data = data
+		self.alias = None
 	
 	#Return the different protocols that are implemented in the catalog
 	def getServices(self):
@@ -60,6 +61,10 @@ class Catalog():
 				r=self.scsQuery(parameters)
 				return r
 			elif queryType == "sia":
+				if not("FORMAT" in parameters.keys()):
+					parameters = dict(parameters)
+					parameters["FORMAT"] = "ALL"
+					
 				r=self.siaQuery(parameters)
 				return r
 
@@ -167,7 +172,7 @@ class Catalog():
 		self.alias = data
 		return True
 			
-	def alias():
+	def getAlias(self):
 		if self.alias:
 			return self.alias
 
@@ -225,17 +230,17 @@ class ChivoRegistry(Registry):
 				u'capabilities':[
 							{	
 								"standardid": "ivo://ivoa.net/std/TAP",
-								"accessurl" : "http://voparis-tap.obspm.fr/__system__/tap/run/tap"
+								"accessurl" : "http://dachs.lirae.cl:8080/__system__/tap/run/tap"
 							}
 							, 
 							{
 								"standardid":"ivo://ivoa.net/std/ConeSearch",
-								"accessurl" : "http://heasarc.gsfc.nasa.gov/xamin/vo/cone?showoffsets&table=atlascscpt&"
+								"accessurl" : "http://dachs.lirae.cl:8080/fitsdachs/q/scsfits/scs.xml?"
 							}
 							,
 							{
 								"standardid":"ivo://ivoa.net/std/SIA" ,
-								"accessurl" :"http://irsa.ipac.caltech.edu/ibe/sia/wise/prelim/p3am_cdd?"
+								"accessurl" :"http://dachs.lirae.cl:8080/fitsdachs/q/siapfits/siap.xml?"
 							}
 						]
 			}
