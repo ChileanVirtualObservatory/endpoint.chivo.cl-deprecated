@@ -13,6 +13,12 @@ FILE_URL = "http://dachs.lirae.cl:8080/getproduct/fitsdachs/res/"
 #Empty list
 catalogsList= list()	
 
+
+class siaResponse():
+	def __init__(self):
+		self.text = None
+		self.headers = None
+
 #Has all the metadata from the catalog and make the different query's
 class Catalog():
 	def __init__(self, data):
