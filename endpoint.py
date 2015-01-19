@@ -5,7 +5,7 @@ from func import *
 
 from os import system
 from flask import Flask, render_template, request, Response, redirect
-#~ from celery.schedules import crontab
+from celery.schedules import crontab
 #~ from tasks import update_external
 
 #Application Itself
@@ -15,13 +15,13 @@ extReg = VOparisRegistry()
 
 #Cron celery configuration to update
 #external from voparis registry
-#~ CELERYBEAT_SCHEDULE = {
-	#~ 'update-catalogs': {
-	#~ 'task': 'tasks.update_external', 
-	#~ 'schedule': crontab(hour='*/1'),
-	#~ 'args':(extReg,),
-	#~ },
-#~ }
+CELERYBEAT_SCHEDULE = {
+	'update-catalogs': {
+	'task': 'tasks.update_external', 
+	'schedule': crontab(hour='*/1'),
+	'args':(extReg,),
+	},
+}
 
 #Remove trailing slash in POST requests
 @app.before_request
