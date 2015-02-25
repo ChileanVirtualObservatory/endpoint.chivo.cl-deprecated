@@ -21,3 +21,7 @@ CSRF_SESSION_KEY = "12c4bf6531cb3aeafca38c742f06294555b5dd17042185faf01b106d60e8
 
 # Secret key for signing cookies
 SECRET_KEY = "08cca79fecaffbfdba7dead9f0c9e1fb156f67c8a99d3162f7f44930634e4f5422967531589d7feb3786618f61a0bc7cd78149c9511395c645bfef6ea47645e1"
+
+
+#Dachs servers
+DACHS_SERVERS = []

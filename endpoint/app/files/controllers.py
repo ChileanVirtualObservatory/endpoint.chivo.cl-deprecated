@@ -14,7 +14,13 @@ files = Blueprint('files', __name__)
 
 @files.route('/<catalog>/file/<fitsFile>')
 def getfits(catalog, fitsFile,Reg= chivoReg):
+	
 	cat = Reg.getCatalog(catalog)
+	
+	#If the catalog is not in our registry
+	if cat is None:
+		return render_template("404.html"), 404
+		
 	url = cat.filePath + fitsFile
 	r = requests.get(url)
 	return Response(r.text , mimetype= getResponseType(r.headers))
