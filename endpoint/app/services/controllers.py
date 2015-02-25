@@ -3,7 +3,7 @@ from flask import Blueprint, request, render_template, \
                   flash, g, session, redirect, url_for, Response
 
 # Import needed classes
-from app.services.models import SiaResponse, Catalog, ChivoRegistry
+from app.services.models import CustomResponse, Catalog, ChivoRegistry
 from app.helpers.functions import *
 
 import urllib

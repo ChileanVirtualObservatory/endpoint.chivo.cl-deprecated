@@ -10,7 +10,7 @@ FILE_URL = "http://dachs.lirae.cl:8080/getproduct/fitsdachs/res/"
 catalogsList= list()	
 
 
-class SiaResponse():
+class CustomResponse():
 	def __init__(self):
 		self.text = None
 		self.headers = None
@@ -59,24 +59,34 @@ class Catalog():
 				return i['accessurl'].replace("?","")
 		return False
 	
+	def replaceFilePath(self,r):
+		res = CustomResponse()
+		res.headers = r.headers
+		res.text = r.text
+		if self.filePath != None:
+			text = r.text.replace(self.filePath, "http://dachs.lirae.cl/"+self.shortname+"/file/")
+			res.text = text
+		return res
+
+	
 	#Generic query, it calls the other query types.
 	def query(self,parameters, method, queryType, route = None):
 		#All services
 		if method == "GET":	
 			if queryType == "scs" :
 				r=self.scsQuery(parameters)
-				return r
+				return self.replaceFilePath(r)
 			elif queryType == "sia":
 				if not("FORMAT" in parameters.keys()):
 					parameters = dict(parameters)
 					parameters["FORMAT"] = "ALL"
 					
 				r=self.siaQuery(parameters)
-				return r
+				return self.replaceFilePath(r)
 
 			elif queryType == "ssa":
 				r=self.ssaQuery(parameters)
-				return r
+				return self.replaceFilePath(r)
 			else:
 				return False
 		#Only tap 
@@ -86,23 +96,17 @@ class Catalog():
 		
 	#SCS
 	def scsQuery(self,parameters):
-		r = requests.get(self.getAcessUrl("ConeSearch") , params = parameters, stream = True)
+		r = requests.get(self.getAcessUrl("ConeSearch") , params = parameters)
 		return r
 	#SSA
 	def ssaQuery(self, parameters):
-		r = requests.get(self.getAcessUrl("SSA") , params = parameters, stream = True)
+		r = requests.get(self.getAcessUrl("SSA") , params = parameters)
 		return r
 	#SIA
 	def siaQuery(self,parameters):
 		#r = requests.get(self.getAcessUrl("SIA") , params = parameters, stream = True)
 		r = requests.get(self.getAcessUrl("SIA"), params = parameters)
-		res = SiaResponse()
-		res.headers = r.headers
-		if self.filePath != None:
-			text = r.text.replace(self.filePath, "http://dachs.lirae.cl/"+self.shortname+"/file/")
-		res.text = text
-		
-		return res
+		return r
 	
 	#Tap
 	
