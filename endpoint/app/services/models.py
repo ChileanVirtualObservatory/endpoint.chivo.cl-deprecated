@@ -117,7 +117,10 @@ class Catalog():
 		try:
 			req = urllib2.Request(url, params)
 			response = urllib2.urlopen(req)
-			return response
+			res = CustomResponse()
+			res.text = response.read()
+			res.headers = response.headers
+			return self.replaceFilePath(res)
 		except urllib2.HTTPError as e:
 			error_message = e.read()
 			return error_message
@@ -143,7 +146,7 @@ class Catalog():
 	##Show list of results
 	def tapAsyncResults(self, jobId):
 		r = requests.get(self.getAcessUrl("TAP")+"/async/"+jobId+"/results")
-		return r
+		return self.replaceFilePath(r)
 	##Show result itself
 	def tapAsyncResult(self,jobId, path):
 		r = requests.get(self.getAcessUrl("TAP")+"/async/"+jobId+"/results/"+path)

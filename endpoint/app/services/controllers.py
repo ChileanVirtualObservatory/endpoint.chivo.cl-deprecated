@@ -33,7 +33,7 @@ def syncTap(catalog, Reg = chivoReg):
 		res = cat.tapSyncQuery(data)
 		if type(res) is str:
 			return res
-		return Response(streamDataPost(res) , mimetype=getResponseType(res.headers))
+		return Response(res.text , mimetype=getResponseType(res.headers))
 	return 'Error2', 404
 
 #Show tap tables from a catalog
@@ -84,7 +84,7 @@ def tapAsync(catalog, Reg= chivoReg):
 	if 'tap' in cat.getServices():
 		r = cat.tapAsyncQuery(data,request.method)
 		if request.method == "POST":
-			return Response(streamDataPost(r) , mimetype=getResponseType(r.headers))
+			return Response(r.text , mimetype=getResponseType(r.headers))
 		else:
 			return Response(streamDataGet(r), mimetype=getResponseType(r.headers))		
 		
@@ -176,7 +176,7 @@ def tapAsyncPhase(catalog, jobID, Reg = chivoReg):
 		if request.method == "GET":
 			return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
 		elif request.method == 'POST':
-			return Response(streamDataPost(r), mimetype=getResponseType(r.headers))
+			return Response(r.text, mimetype=getResponseType(r.headers))
 
 
 
