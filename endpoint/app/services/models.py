@@ -1,17 +1,20 @@
 import urllib2
 import requests
-import json
-import threading
-import copy
 
-
-CHIVO_URL = "http://dachs.lirae.cl"
+CHIVO_URL = "http://endpoint.lirae.cl"
 #FILE_URL = "http://10.10.3.56:8080/getproduct/fitsdachs/res/FITS/" #Bender ip
-FILE_URL = "http://dachs.lirae.cl:8080/getproduct/fitsdachs/res/"
+BENDER_URL = "http://alma-be.lirae.cl:8080"
+FILE_URL = BENDER_URL+"/getproduct/fitsdachs/res/"
 
 
 #Empty list
 catalogsList= list()	
+
+
+class CustomResponse():
+	def __init__(self):
+		self.text = None
+		self.headers = None
 
 #Has all the metadata from the catalog and make the different query's
 class Catalog():
@@ -54,8 +57,18 @@ class Catalog():
 		catalogServices = self.capabilities
 		for i in catalogServices:
 			if service in i['standardid']:
-				return i['accessurl']
+				return i['accessurl'].replace("?","")
 		return False
+	
+	def replaceFilePath(self,r):
+		res = CustomResponse()
+		res.headers = r.headers
+		res.text = r.text
+		if self.filePath != None:
+			text = r.text.replace(self.filePath, CHIVO_URL+"/"+self.shortname+"/file/")
+			res.text = text
+		return res
+
 	
 	#Generic query, it calls the other query types.
 	def query(self,parameters, method, queryType, route = None):
@@ -63,18 +76,18 @@ class Catalog():
 		if method == "GET":	
 			if queryType == "scs" :
 				r=self.scsQuery(parameters)
-				return r
+				return self.replaceFilePath(r)
 			elif queryType == "sia":
 				if not("FORMAT" in parameters.keys()):
 					parameters = dict(parameters)
 					parameters["FORMAT"] = "ALL"
 					
 				r=self.siaQuery(parameters)
-				return r
+				return self.replaceFilePath(r)
 
 			elif queryType == "ssa":
 				r=self.ssaQuery(parameters)
-				return r
+				return self.replaceFilePath(r)
 			else:
 				return False
 		#Only tap 
@@ -84,23 +97,17 @@ class Catalog():
 		
 	#SCS
 	def scsQuery(self,parameters):
-		r = requests.get(self.getAcessUrl("ConeSearch") , params = parameters, stream = True)
+		r = requests.get(self.getAcessUrl("ConeSearch") , params = parameters)
 		return r
 	#SSA
 	def ssaQuery(self, parameters):
-		r = requests.get(self.getAcessUrl("SSA") , params = parameters, stream = True)
+		r = requests.get(self.getAcessUrl("SSA") , params = parameters)
 		return r
 	#SIA
 	def siaQuery(self,parameters):
 		#r = requests.get(self.getAcessUrl("SIA") , params = parameters, stream = True)
 		r = requests.get(self.getAcessUrl("SIA"), params = parameters)
-		res = siaResponse()
-		res.headers = r.headers
-		if self.filePath != None:
-			text = r.text.replace(self.filePath, "http://dachs.lirae.cl/"+self.shortname+"/file/")
-		res.text = text
-		
-		return res
+		return r
 	
 	#Tap
 	
@@ -111,7 +118,10 @@ class Catalog():
 		try:
 			req = urllib2.Request(url, params)
 			response = urllib2.urlopen(req)
-			return response
+			res = CustomResponse()
+			res.text = response.read()
+			res.headers = response.headers
+			return self.replaceFilePath(res)
 		except urllib2.HTTPError as e:
 			error_message = e.read()
 			return error_message
@@ -137,7 +147,7 @@ class Catalog():
 	##Show list of results
 	def tapAsyncResults(self, jobId):
 		r = requests.get(self.getAcessUrl("TAP")+"/async/"+jobId+"/results")
-		return r
+		return self.replaceFilePath(r)
 	##Show result itself
 	def tapAsyncResult(self,jobId, path):
 		r = requests.get(self.getAcessUrl("TAP")+"/async/"+jobId+"/results/"+path)
@@ -157,7 +167,8 @@ class Catalog():
 		return r
 	##Return Tap tables	
 	def tapTables(self):
-		r = requests.get(self.getAcessUrl("TAP")+"/tables")
+		r = requests.get(self.getAcessUrl("TAP")+"/tables/")
+
 		return r
 	
 	##Return Tap Capabilities
@@ -179,6 +190,7 @@ class Catalog():
 			response = urllib2.urlopen(req)
 			return response
 	
+	##Alias for visible url
 	def setAlias(self,data):
 		self.alias = data
 		return True
@@ -188,7 +200,8 @@ class Catalog():
 			return self.alias
 
 		return False
-		
+	
+	##Real filepath for the catalog	
 	def setFilePath(self,path):
 		self.filePath = path
 		return True
@@ -250,22 +263,43 @@ class ChivoRegistry(Registry):
 				u'capabilities':[
 							{	
 								"standardid": "ivo://ivoa.net/std/TAP",
-								"accessurl" : "http://dachs.lirae.cl:8080/__system__/tap/run/tap"
+								"accessurl" : BENDER_URL+"/__system__/tap/run/tap"
 							}
 							, 
 							{
 								"standardid":"ivo://ivoa.net/std/ConeSearch",
-								"accessurl" : "http://dachs.lirae.cl:8080/fitsdachs/q/scsfits/scs.xml?"
+								"accessurl" : BENDER_URL+"/fitsdachs/q/scsfits/scs.xml?"
 							}
 							,
 							{
 								"standardid":"ivo://ivoa.net/std/SIA" ,
-								"accessurl" :"http://dachs.lirae.cl:8080/fitsdachs/q/siapfits/siap.xml?"
+								"accessurl" : BENDER_URL+"/fitsdachs/q/siapfits/siap.xml?"
 							}
 						]
 			}
+
 		alma = Catalog(data)
-		data2 = data.copy()
+
+		#Setting Alias.
+		data2 = {}
+		data2["shortname"] = "alma"
+		data2["title"] = "Chilean Virtual Observatory, Alma Cycle 0"
+		data2['capabilities']= [
+                                                        {
+                                                                "standardid": "ivo://ivoa.net/std/TAP",
+                                                                "accessurl" : BENDER_URL+"/__system__/tap/run/tap"
+                                                        }
+                                                        ,
+                                                        {
+                                                                "standardid":"ivo://ivoa.net/std/ConeSearch",
+                                                                "accessurl" : BENDER_URL+"/fitsdachs/q/scsfits/scs.xml?"
+                                                        }
+                                                        ,
+                                                        {
+                                                                "standardid":"ivo://ivoa.net/std/SIA" ,
+                                                                "accessurl" : BENDER_URL+"/fitsdachs/q/siapfits/siap.xml?"
+                                                        }
+                                        ]
 		data2["capabilities"][0]["accessurl"] = CHIVO_URL + "/alma/tap?"
 		data2["capabilities"][1]["accessurl"] = CHIVO_URL + "/alma/scs?"
 		data2["capabilities"][2]["accessurl"] = CHIVO_URL + "/alma/sia?"
@@ -275,74 +309,3 @@ class ChivoRegistry(Registry):
 		self.append(alma)
 
 
-#VoParis Registry, we get the JSON for all the services, then merge them in a hash with Catalogs
-class VOparisRegistry(Registry):
-	def __init__(self):
-		self.catalogs = dict()
-		self.getRegistry()
-	
-	def keywordsearch(self, a):
-		b = {}
-			
-		for key in a.keys():
-
-			if key in ["numberReturned", "total","form","resoure","max"]:
-				b[key] = a[key]
-			elif key == "keywords":
-				b["keywords"] = a["keywords"] 
-			elif key != "keywords":
-				b["keywords"] +=" "+ key +":"+a[key]
-		r = requests.get( "http://voparis-registry.obspm.fr/vo/ivoa/1/voresources/search", params=b, stream=True)
-		try:
-			entries = json.loads(r.content)['resources']
-		except:
-			return "Error 500\n"
-		return entries
-				
-	
-		
-		
-	def getRegistry(self):
-		
-		#Max response items
-		MAX = 1000
-
-		#All standardid from ivoa services, those are the params from the query
-		SERVICEPARAMS = {
-			"tap":'standardid:"ivo://ivoa.net/std/TAP"',
-			"sia": 'standardid:"ivo://ivoa.net/std/SIA"',
-			"ssa": 'standardid:"ivo://ivoa.net/std/SSA"',
-			"scs": 'standardid:"ivo://ivoa.net/std/ConeSearch"',
-			}
-
-		
-		def threadQuery(serv):
-			print "Starting "+ serv
-			global catalogsList
-			
-			parameters ={"keywords": SERVICEPARAMS[serv] , "max": MAX}
-			r = requests.get( "http://voparis-registry.obspm.fr/vo/ivoa/1/voresources/search", params = parameters)
-			entries = json.loads(r.content)['resources']
-			
-			#Merging list and removing duplicated items
-			catalogsList += entries
-			catalogsList = {v['identifier']:v for v in catalogsList}.values()
-			print "Ready "+serv
-			
-			print _type + " Ready"
-		
-		
-		#We get all services with tap,sia,ssa,tap from vo-paris registry 
-		#threads = []
-		for _type in SERVICEPARAMS:
-			threadQuery(_type)
-			#t = threading.Thread(target=threadQuery , args=(_type,))
-			#threads.append(t)
-			
-		#[x.start() for x in threads]
-		#[x.join() for x in threads]
-					
-		#giving the catalogs to the external dictionary
-		for item in catalogsList:
-			if item.has_key('shortname'):
-				self.catalogs[item['shortname']] = Catalog(item)
