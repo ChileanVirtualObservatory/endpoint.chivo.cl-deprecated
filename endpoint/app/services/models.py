@@ -1,9 +1,10 @@
 import urllib2
 import requests
 
-CHIVO_URL = "http://dachs.lirae.cl"
+CHIVO_URL = "http://endpoint.chivo.cl"
 #FILE_URL = "http://10.10.3.56:8080/getproduct/fitsdachs/res/FITS/" #Bender ip
-FILE_URL = "http://dachs.lirae.cl:8080/getproduct/fitsdachs/res/"
+BENDER_URL = "http://alma-be.lirae.cl:8080"
+FILE_URL = BENDER_URL+"/getproduct/fitsdachs/res/"
 
 
 #Empty list
@@ -64,7 +65,7 @@ class Catalog():
 		res.headers = r.headers
 		res.text = r.text
 		if self.filePath != None:
-			text = r.text.replace(self.filePath, "http://dachs.lirae.cl/"+self.shortname+"/file/")
+			text = r.text.replace(self.filePath, CHIVO_URL+self.shortname+"/file/")
 			res.text = text
 		return res
 
@@ -262,17 +263,17 @@ class ChivoRegistry(Registry):
 				u'capabilities':[
 							{	
 								"standardid": "ivo://ivoa.net/std/TAP",
-								"accessurl" : "http://dachs.lirae.cl:8080/__system__/tap/run/tap"
+								"accessurl" : BENDER_URL+"/__system__/tap/run/tap"
 							}
 							, 
 							{
 								"standardid":"ivo://ivoa.net/std/ConeSearch",
-								"accessurl" : "http://dachs.lirae.cl:8080/fitsdachs/q/scsfits/scs.xml?"
+								"accessurl" : BENDER_URL+"/fitsdachs/q/scsfits/scs.xml?"
 							}
 							,
 							{
 								"standardid":"ivo://ivoa.net/std/SIA" ,
-								"accessurl" :"http://dachs.lirae.cl:8080/fitsdachs/q/siapfits/siap.xml?"
+								"accessurl" : BENDER_URL+"/fitsdachs/q/siapfits/siap.xml?"
 							}
 						]
 			}
@@ -280,7 +281,25 @@ class ChivoRegistry(Registry):
 		alma = Catalog(data)
 
 		#Setting Alias.
-		data2 = data.copy()
+		data2 = {}
+		data2["shortname"] = "alma"
+		data2["title"] = "Chilean Virtual Observatory, Alma Cycle 0"
+		data2['capabilities']= [
+                                                        {
+                                                                "standardid": "ivo://ivoa.net/std/TAP",
+                                                                "accessurl" : BENDER_URL+"/__system__/tap/run/tap"
+                                                        }
+                                                        ,
+                                                        {
+                                                                "standardid":"ivo://ivoa.net/std/ConeSearch",
+                                                                "accessurl" : BENDER_URL+"/fitsdachs/q/scsfits/scs.xml?"
+                                                        }
+                                                        ,
+                                                        {
+                                                                "standardid":"ivo://ivoa.net/std/SIA" ,
+                                                                "accessurl" : BENDER_URL+"/fitsdachs/q/siapfits/siap.xml?"
+                                                        }
+                                        ]
 		data2["capabilities"][0]["accessurl"] = CHIVO_URL + "/alma/tap?"
 		data2["capabilities"][1]["accessurl"] = CHIVO_URL + "/alma/scs?"
 		data2["capabilities"][2]["accessurl"] = CHIVO_URL + "/alma/sia?"

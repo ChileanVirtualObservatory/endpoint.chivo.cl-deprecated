@@ -1,6 +1,6 @@
 import sys
 import os
 
-sys.path.insert(0,"/var/www/flask_endpoint")
+sys.path.insert(0,"/var/www/flask_endpoint/endpoint")
 
-from endpoint import app as application
+from app import app as application
