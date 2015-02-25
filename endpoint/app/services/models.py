@@ -1,7 +1,7 @@
 import urllib2
 import requests
 
-CHIVO_URL = "http://endpoint.chivo.cl"
+CHIVO_URL = "http://endpoint.lirae.cl"
 #FILE_URL = "http://10.10.3.56:8080/getproduct/fitsdachs/res/FITS/" #Bender ip
 BENDER_URL = "http://alma-be.lirae.cl:8080"
 FILE_URL = BENDER_URL+"/getproduct/fitsdachs/res/"
@@ -65,7 +65,7 @@ class Catalog():
 		res.headers = r.headers
 		res.text = r.text
 		if self.filePath != None:
-			text = r.text.replace(self.filePath, CHIVO_URL+self.shortname+"/file/")
+			text = r.text.replace(self.filePath, CHIVO_URL+"/"+self.shortname+"/file/")
 			res.text = text
 		return res
 
