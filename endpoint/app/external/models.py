@@ -94,14 +94,12 @@ class VOparisRegistry(ExtRegistry):
 			#Merging list and removing duplicated items
 			catalogsList += entries
 			catalogsList = {v['identifier']:v for v in catalogsList}.values()
-			print "Ready "+serv
-			
-			print _type + " Ready"
 		
 		
 		#We get all services with tap,sia,ssa,tap from vo-paris registry 
 		for _type in SERVICEPARAMS:
 			threadQuery(_type)
+
 					
 		#giving the catalogs to the external dictionary
 		for item in catalogsList:

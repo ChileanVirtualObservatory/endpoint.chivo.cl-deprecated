@@ -3,7 +3,8 @@ import requests
 
 CHIVO_URL = "http://endpoint.lirae.cl"
 #FILE_URL = "http://10.10.3.56:8080/getproduct/fitsdachs/res/FITS/" #Bender ip
-BENDER_URL = "http://alma-be.lirae.cl:8080"
+#BENDER_URL = "http://alma-be.lirae.cl:8080"
+BENDER_URL = "http://10.10.3.60:8080"
 FILE_URL = BENDER_URL+"/getproduct/fitsdachs/res/"
 
 
