@@ -4,9 +4,10 @@ from app.services.models import Catalog, Registry
 
 #Iters lines from GET response object
 def streamDataGet(r):
-	for line in r.iter_lines():
-			if line: # filter out keep-alive new lines
-				yield line
+	#for line in r.iter_lines():
+	#		if line: # filter out keep-alive new lines
+	#			yield line
+	return r.text
 
 #Iters lines from POST response object
 def streamDataPost(r):
