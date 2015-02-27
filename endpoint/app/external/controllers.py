@@ -102,6 +102,6 @@ def extRegistry3():
 @external.route('/external/registry/allSsa', methods = ['GET'])
 @external.route('/external/ssa', methods = ['GET'])
 def extRegistry4():
-	external = json.loads(registry1(extReg ,"ssa"))
+	external = json.loads(registry("ssa"))
 	return json.dumps(external)
 	
