@@ -30,12 +30,12 @@ def remove_trailing_slash():
 # Import a module / component using its blueprint handler variable (mod_auth)
 from app.services.controllers import services as services_module
 from app.files.controllers import files as files_module
-#from app.external.controllers import external as external_module
+from app.external.controllers import external as external_module
 
 # Register blueprint(s)
 app.register_blueprint(services_module)
 app.register_blueprint(files_module)
-#app.register_blueprint(external_module)
+app.register_blueprint(external_module)
 
 
 

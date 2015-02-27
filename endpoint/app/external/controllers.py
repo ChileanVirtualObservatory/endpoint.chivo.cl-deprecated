@@ -2,7 +2,6 @@
 from flask import Blueprint, request, render_template, \
                   flash, g, session, redirect, url_for, Response
 
-from app.external.models import ExtService, ExtRegistry, VOparisRegistry
 from app.services.models import ChivoRegistry
 from app.helpers.functions import *
 
@@ -10,7 +9,6 @@ import requests
 import json
 
 #Creating objects
-extReg = VOparisRegistry() 
 chivoReg = ChivoRegistry()
 
 # Define the blueprint: 'services'
@@ -28,21 +26,25 @@ SERVICEPARAMS = {
 MAX = 1000
 
 def registry(service= "tap"):
-	parameters ={"keywords": SERVICEPARAMS[service] , "max": MAX}
+	standardid = 'standardid:"'+ SERVICEPARAMS[service] + '"'
+	parameters ={"keywords": standardid, "max": MAX}
 	r = requests.get( "http://voparis-registry.obspm.fr/vo/ivoa/1/voresources/search", params = parameters)
 	entries = json.loads(r.content)['resources']
 	
 	catalogsList = []
 	for entry in entries:
 		if entry["status"] == "active":
-			dic = {}
-			dic["title"] = entry["title"]
-			dic["shortname"] = entry["shortname"]
-			for s in entry["capabilities"]:
-				if s["standardid"] == SERVICEPARAMS[service]:
-					dic["accessurl"] = s["accessurl"]
-			catalogsList.append(dic)
-	return catalogsList
+			try:
+				dic = {}
+				dic["title"] = entry["title"]
+				dic["shortname"] = entry["shortname"]
+				for s in entry["capabilities"]:
+					if s["standardid"] == SERVICEPARAMS[service]:
+						dic["accessurl"] = s["accessurl"]
+				catalogsList.append(dic)
+			except:
+				pass
+	return json.dumps(catalogsList)
 
 def registry1(Reg = chivoReg,  service = "tap"):
 
