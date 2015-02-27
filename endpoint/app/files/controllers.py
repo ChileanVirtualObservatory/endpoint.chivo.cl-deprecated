@@ -22,5 +22,6 @@ def getfits(catalog, fitsFile,Reg= chivoReg):
 		return render_template("404.html"), 404
 		
 	url = cat.filePath + fitsFile
-	r = requests.get(url)
-	return Response(r.text , mimetype= getResponseType(r.headers))
+	r = requests.get(url,stream=True)
+	#r.headers["Content-Disposition"] = "attachment;"
+	return Response(streamDataGet(r) , mimetype= getResponseType(r.headers))
