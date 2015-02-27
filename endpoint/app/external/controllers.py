@@ -2,6 +2,8 @@
 from flask import Blueprint, request, render_template, \
                   flash, g, session, redirect, url_for, Response
 
+from werkzeug.contrib.cache import SimpleCache
+
 from app.services.models import ChivoRegistry
 from app.helpers.functions import *
 
@@ -25,25 +27,33 @@ SERVICEPARAMS = {
 #Max response items
 MAX = 1000
 
+#Cache
+cache = SimpleCache()
+
+#VoParis Registry
 def registry(service= "tap"):
-	standardid = 'standardid:"'+ SERVICEPARAMS[service] + '"'
-	parameters ={"keywords": standardid, "max": MAX}
-	r = requests.get( "http://voparis-registry.obspm.fr/vo/ivoa/1/voresources/search", params = parameters)
-	entries = json.loads(r.content)['resources']
+
+	catalogsList = cache.get(service)
+	if catalogsList is None:
+		standardid = 'standardid:"'+ SERVICEPARAMS[service] + '"'
+		parameters ={"keywords": standardid, "max": MAX}
+		r = requests.get( "http://voparis-registry.obspm.fr/vo/ivoa/1/voresources/search", params = parameters)
+		entries = json.loads(r.content)['resources']
 	
-	catalogsList = []
-	for entry in entries:
-		if entry["status"] == "active":
-			try:
-				dic = {}
-				dic["title"] = entry["title"]
-				dic["shortname"] = entry["shortname"]
-				for s in entry["capabilities"]:
-					if s["standardid"] == SERVICEPARAMS[service]:
-						dic["accessurl"] = s["accessurl"]
-				catalogsList.append(dic)
-			except:
-				pass
+		catalogsList = []
+		for entry in entries:
+			if entry["status"] == "active":
+				try:
+					dic = {}
+					dic["title"] = entry["title"]
+					dic["shortname"] = entry["shortname"]
+					for s in entry["capabilities"]:
+						if s["standardid"] == SERVICEPARAMS[service]:
+							dic["accessurl"] = s["accessurl"]
+					catalogsList.append(dic)
+				except:
+					pass
+		cache.set(service, catalogsList, timeout= 24*60*60)
 	return json.dumps(catalogsList)
 
 def registry1(Reg = chivoReg,  service = "tap"):

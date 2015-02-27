@@ -1,6 +1,7 @@
 # Import flask dependencies
 from flask import Blueprint, request, render_template, \
-                  flash, g, session, redirect, url_for, Response
+                  flash, g, session, redirect, url_for, Response, \
+		  stream_with_context 
 
 from app.services.models import CustomResponse, Catalog, ChivoRegistry
 from app.helpers.functions import *
@@ -23,5 +24,5 @@ def getfits(catalog, fitsFile,Reg= chivoReg):
 		
 	url = cat.filePath + fitsFile
 	r = requests.get(url,stream=True)
-	#r.headers["Content-Disposition"] = "attachment;"
-	return Response(streamDataGet(r) , mimetype= getResponseType(r.headers))
+	r.headers["Content-Disposition"] = "attachment;filename="+fitsFile
+	return Response(stream_with_context(r.iter_content()) , content_type = r.headers['content-type'])
