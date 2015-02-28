@@ -84,7 +84,7 @@ def tapAsync(catalog, Reg= chivoReg):
 	if 'tap' in cat.getServices():
 		r = cat.tapAsyncQuery(data,request.method)
 		if request.method == "POST":
-			return Response(r.text , mimetype=getResponseType(r.headers))
+			return Response(r.text , mimetype=getResponseType(r.headers)), 303
 		else:
 			return Response(streamDataGet(r), mimetype=getResponseType(r.headers))		
 		

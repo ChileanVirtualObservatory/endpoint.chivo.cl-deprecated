@@ -12,7 +12,7 @@ REG_URL = "http://alma-be.lirae.cl:8080"
 # Define the blueprint: 'services'
 registry = Blueprint('registry', __name__)
 
-@registry.route('/registry/oai.xml')
+@registry.route('/registry/oai.xml',methods=["GET","POST"])
 def reg():
 	parameters = request.args
 	r = requests.get(REG_URL, params = parameters)
