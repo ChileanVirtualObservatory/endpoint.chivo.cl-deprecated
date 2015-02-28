@@ -5,13 +5,15 @@ from flask import Blueprint, request, render_template, \
 # Import needed classes
 from app.helpers.functions import *
 
-#Creating objects
-chivoReg = ChivoRegistry()
+import requests
+#Registry URL
+REG_URL = "http://alma-be.lirae.cl:8080"
 
 # Define the blueprint: 'services'
 registry = Blueprint('registry', __name__)
 
-
 @registry.route('/registry/oai.xml')
 def reg():
-	return "it works"
+	parameters = request.args
+	r = requests.get(REG_URL, params = parameters)
+	return Response(r.text)

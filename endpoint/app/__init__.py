@@ -31,12 +31,13 @@ def remove_trailing_slash():
 from app.services.controllers import services as services_module
 from app.files.controllers import files as files_module
 from app.external.controllers import external as external_module
+from app.registry.controllers import registry as registry_module
 
 # Register blueprint(s)
 app.register_blueprint(services_module)
 app.register_blueprint(files_module)
 app.register_blueprint(external_module)
-
+app.register_blueprint(registry_module)
 
 
 
