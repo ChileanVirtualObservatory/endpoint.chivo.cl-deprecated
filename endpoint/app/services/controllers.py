@@ -7,6 +7,7 @@ from app.services.models import CustomResponse, Catalog, ChivoRegistry
 from app.helpers.functions import *
 
 import urllib
+import re
 #Creating objects
 chivoReg = ChivoRegistry()
 
@@ -77,6 +78,8 @@ def tapAvailability(catalog, Reg= chivoReg):
 def tapAsync(catalog, Reg= chivoReg):
 	data = urllib.urlencode(request.form)
 	cat = Reg.getCatalog(catalog)
+
+	print data
 	#If the catalog is not in our registry
 	if cat is None:
 		return render_template("404.html"), 404
@@ -84,7 +87,9 @@ def tapAsync(catalog, Reg= chivoReg):
 	if 'tap' in cat.getServices():
 		r = cat.tapAsyncQuery(data,request.method)
 		if request.method == "POST":
-			return Response(r.text , mimetype=getResponseType(r.headers)), 303
+			res = r.read()
+			jobid = re.findall('<uws:jobId>(.*)</uws:jobId>', res)[0]
+			return redirect(url_for('tapAsyncJob', jobid)), 303
 		else:
 			return Response(streamDataGet(r), mimetype=getResponseType(r.headers))		
 		
