@@ -1,13 +1,20 @@
 import urllib2
 import requests
 
-CHIVO_URL = "http://endpoint.lirae.cl"
+from config import DACHS_SERVERS, CHIVO_URL
+
+
 #FILE_URL = "http://10.10.3.56:8080/getproduct/fitsdachs/res/FITS/" #Bender ip
 #BENDER_URL = "http://alma-be.lirae.cl:8080"
 BENDER_URL = "http://alma-be.lirae.cl:8080"
 FILE_URL = BENDER_URL+"/getproduct/fitsdachs/res/"
 
-
+SERVICEPARAMS = {
+	"tap": "ivo://ivoa.net/std/TAP",
+	"sia": "ivo://ivoa.net/std/SIA",
+	"ssa": "ivo://ivoa.net/std/SSA",
+	"scs": "ivo://ivoa.net/std/ConeSearch"
+}
 #Empty list
 catalogsList= list()	
 
@@ -21,21 +28,10 @@ class CustomResponse():
 class Catalog():
 	def __init__(self, data):
 		#All the metadata
-		self.status = data["status"] if data.has_key("status") else None
-		self.publisher = data["publisher"] if data.has_key("publisher") else None
-		self.updated = data["updated"] if data.has_key("updated") else None
-		self.contentlevel = data["contentlevel"] if data.has_key("contentlevel") else None
-		self.description = data["description"] if data.has_key("description") else None
+		self.status = 'active'
 		self.title = data["title"] if data.has_key("title") else None
-		self.provenance = data["provenance"] if data.has_key("provenance") else None
-		self.referenceurl = data["referenceurl"] if data.has_key("referenceurl") else None
-		self.created = data["created"] if data.has_key("created") else None
-		self.subjects = data["subjects"] if data.has_key("subjects") else None
-		self.capabilities = data["capabilities"] if data.has_key("capabilities") else None
-		self.contactname = data["contactname"] if data.has_key("contactname") else None
 		self.shortname = data["shortname"] if data.has_key("shortname") else None
-		self.identifier = data["identifier"] if data.has_key("identifier") else None
-		self.type = data["type"] if data.has_key("type") else None
+		self.capabilities= data["capabilities"] if data.has_key("capabilities") else None
 		self.data = data
 		self.alias = None
 	
@@ -232,81 +228,23 @@ class ChivoRegistry(Registry):
 	def __init__(self):
 
 		self.catalogs = dict()
-		data = 		{
-				u'status' : "active",
-				
-				u'publisher': 'LIRAE',
-				
-				u'updated' : '2013-04-04T02:00:00.000Z',
-				
-				u'contentlevel': 'Research',
-				
-				u'description': 'Alma dataset',
-				
-				u'title': 'Chilean Virtual Observatory, Alma Cycle 0',
-				
-				u'provenance': 'ivo://jvo/publishingregistry',
-				
-				u'referenceurl' : 'http://www.chivo.cl',
-				
-				u'created' : u'2013-01-18T08:37:52.000Z',
-				
-				u'subjects' :[u'ACTIVE GALACTIC NUCLEI', u'BLACK HOLES', u'QUASARS'],
-				
-				u'contactname' : 'Contact',
-				
-				u'shortname' : 'alma',
-				
-				u'identifier': 'identfier',
-				
-				u'type' : 'CatalogService',
-				
-				u'capabilities':[
-							{	
-								"standardid": "ivo://ivoa.net/std/TAP",
-								"accessurl" : BENDER_URL+"/__system__/tap/run/tap"
-							}
-							, 
-							{
-								"standardid":"ivo://ivoa.net/std/ConeSearch",
-								"accessurl" : BENDER_URL+"/fitsdachs/q/scsfits/scs.xml?"
-							}
-							,
-							{
-								"standardid":"ivo://ivoa.net/std/SIA" ,
-								"accessurl" : BENDER_URL+"/fitsdachs/q/siapfits/siap.xml?"
-							}
-						]
-			}
-
-		alma = Catalog(data)
-
-		#Setting Alias.
-		data2 = {}
-		data2["shortname"] = "alma"
-		data2["title"] = "Chilean Virtual Observatory, Alma Cycle 0"
-		data2['capabilities']= [
-                                                        {
-                                                                "standardid": "ivo://ivoa.net/std/TAP",
-                                                                "accessurl" : BENDER_URL+"/__system__/tap/run/tap"
-                                                        }
-                                                        ,
-                                                        {
-                                                                "standardid":"ivo://ivoa.net/std/ConeSearch",
-                                                                "accessurl" : BENDER_URL+"/fitsdachs/q/scsfits/scs.xml?"
-                                                        }
-                                                        ,
-                                                        {
-                                                                "standardid":"ivo://ivoa.net/std/SIA" ,
-                                                                "accessurl" : BENDER_URL+"/fitsdachs/q/siapfits/siap.xml?"
-                                                        }
-                                        ]
-		data2["capabilities"][0]["accessurl"] = CHIVO_URL + "/alma/tap?"
-		data2["capabilities"][1]["accessurl"] = CHIVO_URL + "/alma/scs?"
-		data2["capabilities"][2]["accessurl"] = CHIVO_URL + "/alma/sia?"
 		
-		alma.setAlias(data2)
-		alma.setFilePath(FILE_URL)
-		self.append(alma)
+		for catalog in DACHS_SERVERS:
+			filePath = catalog['filePath']
+
+			a = catalog['capabilities']
+
+			_temp = []
+			_alias = []
+			for i in zip(a.keys(),a.values()):
+				_temp.append({'standardid':SERVICEPARAMS[i[0]], 'accessurl':i[1]})
+				_alias.append({'standardid':SERVICEPARAMS[i[0]], 'accessurl':CHIVO_URL+"/"+catalog['shortname']+"/"+i[0]+"?"})
+					
+			newCat = Catalog({'shortname':catalog['shortname'], 'title': catalog['title'],'capabilities':_temp})
+			newCat.setFilePath(filePath)
+
+			newCat.setAlias({'shortname':catalog['shortname'], 'title': catalog['title'],'capabilities':_alias})
+
+			self.append(newCat)
 
 

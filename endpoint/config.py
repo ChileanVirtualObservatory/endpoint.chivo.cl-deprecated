@@ -22,6 +22,19 @@ THREADS_PER_PAGE = 2
 # Secret key for signing cookies
 #SECRET_KEY = "08cca79fecaffbfdba7dead9f0c9e1fb156f67c8a99d3162f7f44930634e4f5422967531589d7feb3786618f61a0bc7cd78149c9511395c645bfef6ea47645e1"
 
+CHIVO_URL = "http://endpoint.lirae.cl"
 
 #Dachs servers
 DACHS_SERVERS = []
+DACHS_SERVERS.append(
+ 	{'shortname': 'alma', 
+ 	'title': 'Chilean Virtual Observatory, Alma Cycle 0',
+ 	'capabilities':
+ 		{
+ 		'tap':'http://alma-be.lirae.cl:8080/__system__/tap/run/tap',
+ 		'scs':'http://alma-be.lirae.cl:8080/fitsdachs/q/scsfits/scs.xml?',
+ 		'sia':'http://alma-be.lirae.cl:8080/fitsdachs/q/siapfits/siap.xml?'
+ 		 },
+ 	'filePath': 'http://alma-be.lirae.cl:8080/getproduct/fitsdachs/res'
+ 	}
+)

@@ -2,7 +2,7 @@
 
 #TAP
 #curl -v --location -d 'REQUEST=doQuery&LANG=ADQL&QUERY=SELECT TOP 1000 * FROM twomass_psc' http://127.0.0.1:5000/alma/tap/sync
-#curl -v --location -d 'REQUEST=doQuery&LANG=ADQL&QUERY=SELECT TOP 1000 * FROM basecom.epn_core' http://127.0.0.1:5000/alma/tap/async
+curl -v --location -d 'REQUEST=doQuery&LANG=ADQL&QUERY=SELECT TOP 1000 * FROM basecom.epn_core' http://127.0.0.1:5000/alma/tap/async
 #curl --request GET 'http://127.0.0.1:5000/alma/tap/async'
 #curl -v --location -d 'REQUEST=doQuery&LANG=ADQL&QUERY=SELECT TOP 1000 * FROM basecom.epn_core' http://voparis-tap.obspm.fr/__system__/tap/run/tap/sync
 #curl -X POST  http://127.0.0.1:5000/alma/tap/async/4e995eed:142be32bf37:-7fe9
@@ -11,7 +11,7 @@
 #curl --request GET 'http://heasarc.gsfc.nasa.gov/cgi-bin/vo/cone/coneGet.pl?table=atlascscpt&RA=21&DEC=15&SR=0.1'
 
 #SIA
-curl --request GET 'http://127.0.0.1:5000/alma/sia?POS=20,40&SIZE=1.5'
+#curl --request GET 'http://127.0.0.1:5000/alma/sia?POS=20,40&SIZE=1.5'
 #curl --request GET http://irsa.ipac.caltech.edu/ibe/sia/wise/prelim/p3am_cdd?POS=20,40&SIZE=1.5
 
 #SSA
