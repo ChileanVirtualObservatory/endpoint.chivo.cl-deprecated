@@ -5,6 +5,7 @@ from flask import Blueprint, request, render_template, \
 # Import needed classes
 from app.services.models import CustomResponse, Catalog, ChivoRegistry
 from app.helpers.functions import *
+from config import CHIVO_URL
 
 import urllib
 import re
@@ -89,7 +90,7 @@ def tapAsync(catalog, Reg= chivoReg):
 		if request.method == "POST":
 			res = r.read()
 			jobid = re.findall('<uws:jobId>(.*)</uws:jobId>', res)[0]
-			return redirect(url_for('tapAsyncJob', jobid)), 303
+			return redirect(CHIVO_URL+"/"+cat.shortname+'/tap/async/'+jobid, code = 303)
 		else:
 			return Response(streamDataGet(r), mimetype=getResponseType(r.headers))		
 		
@@ -167,9 +168,10 @@ def tapAsyncDuration(catalog, jobId , Reg = chivoReg):
 		r = cat.tapAsyncDuration(jobId)
 		return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
 
-@services.route('/<catalog>/tap/async/<jobId>/phase/', methods= ['GET', 'POST'])
-@services.route('/<catalog>/TAP/async/<jobId>/phase/', methods= ['GET', 'POST'])
-def tapAsyncPhase(catalog, jobID, Reg = chivoReg):
+@services.route('/<catalog>/tap/async/<jobId>/phase', methods= ['GET', 'POST'])
+@services.route('/<catalog>/TAP/async/<jobId>/phase', methods= ['GET', 'POST'])
+def tapAsyncPhase(catalog, jobId, Reg = chivoReg):
+
 	cat = Reg.getCatalog(catalog)
 	data = urllib.urlencode(request.form)
 	#Validate catalog
@@ -177,17 +179,20 @@ def tapAsyncPhase(catalog, jobID, Reg = chivoReg):
 		return render_template("404.html"), 404
 	#Validate service
 	if 'tap' in cat.getServices():
-		r = cat.tapAsyncPhase(jobId, request.method, data)
+		r = cat.tapPhase(jobId, request.method, data)
 		if request.method == "GET":
 			return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
 		elif request.method == 'POST':
-			return Response(r.text, mimetype=getResponseType(r.headers))
+			return Response(r.read(), mimetype=getResponseType(r.headers))
 
 
 
 #SIA,SSA,SCS Query method
 @services.route('/<catalog>/<service>')
 def query(catalog,service, Reg = chivoReg, methods=['GET']):
+
+	if service.lower() not in ["ssa","scs","ssa"]:
+		return render_template("404.html"), 404
 
 	#Looking for catalog.
 	cat = Reg.getCatalog(catalog)

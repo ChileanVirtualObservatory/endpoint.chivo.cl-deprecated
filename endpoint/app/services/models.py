@@ -62,7 +62,7 @@ class Catalog():
 		res.headers = r.headers
 		res.text = r.text
 		if self.filePath != None:
-			text = r.text.replace(self.filePath, CHIVO_URL+"/"+self.shortname+"/file/")
+			text = r.text.replace(self.filePath, CHIVO_URL+"/"+self.shortname+"/file")
 			res.text = text
 		return res
 
@@ -183,7 +183,7 @@ class Catalog():
 			r = requests.get(self.getAcessUrl("TAP")+"/async/"+jobId+"/phase")
 			return r
 		elif method == 'POST':
-			req = urllib2.Request(self.getAcessUrl("TAP")+"/"+jobID+"/phase", params)
+			req = urllib2.Request(self.getAcessUrl("TAP")+"/async/"+jobID+"/phase", params)
 			response = urllib2.urlopen(req)
 			return response
 	

@@ -6,7 +6,7 @@ import copy
 
 
 # Import flask and template operators
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 
 # Define the WSGI application object
 app = Flask(__name__)
@@ -23,7 +23,7 @@ app.config.from_object('config')
 #Remove trailing slash in POST requests
 @app.before_request
 def remove_trailing_slash():
-	if request.path != '/' and request.path.endswith('/') and request.method == "POST":
+	if request.path != '/' and request.path.endswith('/'):
 		return redirect(request.path[:-1], code=307)
 
 

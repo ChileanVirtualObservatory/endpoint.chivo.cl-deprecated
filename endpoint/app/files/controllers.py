@@ -22,7 +22,7 @@ def getfits(catalog, fitsFile,Reg= chivoReg):
 	if cat is None:
 		return render_template("404.html"), 404
 		
-	url = cat.filePath + fitsFile
+	url = cat.filePath+"/" + fitsFile
 	r = requests.get(url,stream=True)
 	r.headers["Content-Disposition"] = "attachment;filename="+fitsFile
 	return Response(stream_with_context(r.iter_content()) , content_type = r.headers['content-type'])
