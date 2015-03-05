@@ -230,7 +230,7 @@ class ChivoRegistry(Registry):
 		self.catalogs = dict()
 		
 		for catalog in DACHS_SERVERS:
-			filePath = catalog['filePath']
+			filePath = catalog['filePath'] if 'filepath' in catalog.keys() else None
 
 			a = catalog['capabilities']
 

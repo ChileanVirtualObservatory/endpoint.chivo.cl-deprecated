@@ -38,3 +38,14 @@ DACHS_SERVERS.append(
  	'filePath': 'http://alma-be.lirae.cl:8080/getproduct/fitsdachs/res'
  	}
 )
+
+DACHS_SERVERS.append(
+        {'shortname': 'test',
+        'title': 'Testing Conf',
+        'capabilities':
+                {
+                'sia':'http://skyview.gsfc.nasa.gov/cgi-bin/vo/sia.pl?survey=pspc1&'
+                 }
+        }
+)
+
