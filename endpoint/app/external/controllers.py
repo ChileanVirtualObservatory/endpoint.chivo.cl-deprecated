@@ -2,7 +2,7 @@
 from flask import Blueprint, request, render_template, \
                   flash, g, session, redirect, url_for, Response
 
-from app.external.models import ExtService, ExtRegistry, VOparisRegistry
+import app.external.models 
 from app.services.models import ChivoRegistry
 from app.helpers.functions import *
 
@@ -10,8 +10,7 @@ import requests
 import json
 
 #Creating objects
-extReg = VOparisRegistry() 
-chivoReg = ChivoRegistry()
+chivoReg = ChivoRegistry() 
 
 # Define the blueprint: 'services'
 external = Blueprint('external', __name__)
@@ -42,37 +41,36 @@ def registry1(Reg = chivoReg,  service = "tap"):
 			cat.append(_temp)
 	return json.dumps(cat)
 
+def loadJson(service):
+	file = open("/var/www/flask_endpoint/endpoint/app/templates/"+service+".json")
+	json_data = json.load(file)
+	return json_data
+
 @external.route('/external/registry/allTap', methods = ['GET'])
 @external.route('/external/tap', methods = ['GET'])
 def extRegistry1():
 	internal = json.loads(registry1(chivoReg, "tap"))
-	external = json.loads(registry1(extReg ,"tap"))
+	external = json.loads(loadJson('tap'))
 	return json.dumps(internal+external)
-	
+
 	
 @external.route('/external/registry/allScs', methods = ['GET'])
 @external.route('/external/scs', methods = ['GET'])
 def extRegistry2():
 	internal = json.loads(registry1(chivoReg, "scs"))
-	external = json.loads(registry1(extReg ,"scs"))
+	external = json.loads(loadJson('scs'))
 	return json.dumps(internal+external)
 
 @external.route('/external/registry/allSia', methods = ['GET'])
 @external.route('/external/sia', methods = ['GET'])
 def extRegistry3():
 	internal = json.loads(registry1(chivoReg, "sia"))
-	external = json.loads(registry1(extReg ,"sia"))
+        external = json.loads(loadJson('sia'))	
 	return json.dumps(internal+external)
 	
 @external.route('/external/registry/allSsa', methods = ['GET'])
 @external.route('/external/ssa', methods = ['GET'])
 def extRegistry4():
-	external = json.loads(registry1(extReg ,"ssa"))
+        external = json.loads(loadJson('ssa'))	
 	return json.dumps(external)
 	
-#External Registry
-@external.route('/external/registry/', methods = ['GET'])
-def extRegistry():
-	internal = json.loads(registry(chivoReg))
-	external = json.loads(registry(extReg))
-	return json.dumps(internal+external)
