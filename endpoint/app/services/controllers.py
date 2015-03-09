@@ -191,9 +191,6 @@ def tapAsyncPhase(catalog, jobId, Reg = chivoReg):
 @services.route('/<catalog>/<service>')
 def query(catalog,service, Reg = chivoReg, methods=['GET']):
 
-	if service.lower() not in ["ssa","scs","ssa"]:
-		return render_template("404.html"), 404
-
 	#Looking for catalog.
 	cat = Reg.getCatalog(catalog)
 

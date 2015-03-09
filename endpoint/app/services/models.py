@@ -239,12 +239,9 @@ class ChivoRegistry(Registry):
 			for i in zip(a.keys(),a.values()):
 				_temp.append({'standardid':SERVICEPARAMS[i[0]], 'accessurl':i[1]})
 				_alias.append({'standardid':SERVICEPARAMS[i[0]], 'accessurl':CHIVO_URL+"/"+catalog['shortname']+"/"+i[0]+"?"})
-					
 			newCat = Catalog({'shortname':catalog['shortname'], 'title': catalog['title'],'capabilities':_temp})
 			newCat.setFilePath(filePath)
 
 			newCat.setAlias({'shortname':catalog['shortname'], 'title': catalog['title'],'capabilities':_alias})
 
 			self.append(newCat)
-
-

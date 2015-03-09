@@ -35,7 +35,7 @@ from app.registry.controllers import registry as registry_module
 
 # Register blueprint(s)
 app.register_blueprint(services_module)
-app.register_blueprint(files_module)
+#app.register_blueprint(files_module)
 app.register_blueprint(external_module)
 app.register_blueprint(registry_module)
 
