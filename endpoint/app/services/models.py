@@ -61,8 +61,8 @@ class Catalog():
 		res = CustomResponse()
 		res.headers = r.headers
 		res.text = r.text
-		if self.filePath != None:
-			text = r.text.replace(self.filePath, CHIVO_URL+"/"+self.shortname+"/file")
+		if self.getFilePath() is not None:
+			text = r.text.replace(self.getFilePath(), CHIVO_URL+"/"+self.shortname+"/file")
 			res.text = text
 		return res
 
@@ -203,10 +203,10 @@ class Catalog():
 		self.filePath = path
 		return True
 	
-	def filePath():
-		if self.filePath():
+	def getFilePath(self):
+		if self.filePath:
 			return self.filePath
-		return False
+		return None
 
 
 
@@ -230,7 +230,7 @@ class ChivoRegistry(Registry):
 		self.catalogs = dict()
 		
 		for catalog in DACHS_SERVERS:
-			filePath = catalog['filePath'] if 'filepath' in catalog.keys() else None
+			filePath = catalog['filePath'] if 'filePath' in catalog.keys() else None
 
 			a = catalog['capabilities']
 
