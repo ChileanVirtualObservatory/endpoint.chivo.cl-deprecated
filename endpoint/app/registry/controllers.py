@@ -7,13 +7,13 @@ from app.helpers.functions import *
 
 import requests
 #Registry URL
-REG_URL = "http://alma-be.lirae.cl:8080"
+REG_URL = "http://alma-be.lirae.cl:8080/oai.xml"
 
 # Define the blueprint: 'services'
 registry = Blueprint('registry', __name__)
 
-@registry.route('/registry/oai.xml',methods=["GET","POST"])
+@registry.route('/oai.xml',methods=["GET","POST"])
 def reg():
-	parameters = request.args
-	r = requests.get(REG_URL, params = parameters)
-	return Response(r.text)
+	parameters = request.url.split("?")[1]
+	r = requests.get(REG_URL + "?" +  parameters)
+	return Response(r.text, mimetype=getResponseType(r.headers))
