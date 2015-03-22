@@ -41,12 +41,6 @@
 
 ##Services
 
-### List of al catalogs:
-   * WEB : http://endpoint.lirae.cl/registry
-   
-   * Method: *GET*
-
-
 ### Table Access Protocol:
 
 * Parameters : [DACHS](https://github.com/ChileanVirtualObservatory/dachs#parameters)
@@ -136,60 +130,19 @@
 	* FORMAT `image/fits, image/png, image/jpeg, text/html, ALL, GRAPHIC, GRAPHIC-<SOMETHING>, METADATA`
 	* VERB `1 , 2 , 3`
 
-### Simple Spectral Access:
-* Web: http://endpoint.lirae.cl/alma/ssa
-
-* Method: *GET*
-
-* Attributes:
-	* POS = RA, DEC `Decimal degree`
-		* *Ex*: 
-			* POS=52,-27.8 
-			* POS=52,-27.8;GALACTIC with GALACTIC the coordinate system 
-	* SIZE `Degree`
-		* *Ex*: 
-			* SIZE=0.05
-	* BAND `meters`
-	 	* *Ex*: 
-	 		* BAND=1E-7/3E-6
-	 		* BAND=1E-7/3E-6;source 
-	 		* BAND=1E-7/3E-6;observer
-	* TIME `ISO 8601 UTC`
-		* *Ex*: 
-			* TIME = 1998-05-21/1999
-	* Format 
-		```
-		all,
-		compliant,
-		native,
-		graphic,
-		votable,
-		fits,
-		xml,
-		metadata
-		```
-	* *Optional*:
-		* *TESTED*  
-		* TARGETNAME `string`
-		* REDSHIFT (dλ/λ) `string`
-		* *NOT TESTED*
-		* APERTURE `degree`
-		* SPECRP `double`
-		* TIMERES `double`
-
 ### External 
 
 #### Get External JSON Services
-
-* To get all data from TAP , SCS , SIA , SSA Sevices just go to
-
-	 http://endpoint.lirae.cl/external/registry
 
 * To get specific Service (not all the data, just Shortname, Title, and AccessUrl)
 
 	 http://endpoint.lirae.cl/external/{service} , service can be tap,scs,sia,ssa
 	
 
+### Harvesting Interface
 
+* Registry harvesting interface
+
+	http://endpoint.lirae.cl/oai.xml?
 
 
