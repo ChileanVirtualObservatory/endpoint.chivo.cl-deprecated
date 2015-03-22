@@ -42,7 +42,7 @@
 ##Services
 
 ### List of al catalogs:
-   * WEB : http://dachs.lirae.cl:80/registry
+   * WEB : http://endpoint.lirae.cl/registry
    
    * Method: *GET*
 
@@ -53,13 +53,13 @@
 
 #### Service Capabilities:
 
-   * WEB : http://dachs.lirae.cl:80/alma/tap/capabilities
+   * WEB : http://endpoint.lirae.cl/alma/tap/capabilities
    
    * Method: *GET*
 
 #### SYNC Query:
 
-   * WEB : http://dachs.lirae.cl:80/alma/tap/sync
+   * WEB : http://endpoint.lirae.cl/alma/tap/sync
    
    * Methond : *POST*
    
@@ -69,7 +69,7 @@
 
 ##### New Query
 
-   * WEB : http://dachs.lirae.cl:80/alma/tap/async
+   * WEB : http://endpoint.lirae.cl/alma/tap/async
    
    * Method : *POST*
    
@@ -77,7 +77,7 @@
    
 ##### List Querys
 
-   * WEB : http://dachs.lirae.cl:80/alma/tap/async
+   * WEB : http://endpoint.lirae.cl/alma/tap/async
  
    * Method: *GET*
    
@@ -86,7 +86,7 @@
    * RETURN: *UWL* an xml with all querys with their status
    
 ##### Query Info
-   * WEB : http://dachs.lirae.cl:80/alma/tap/async/:id
+   * WEB : http://endpoint.lirae.cl/alma/tap/async/:id
    
    * Method: *GET*
    
@@ -96,14 +96,14 @@
    
 ##### Other options
 
-   * WEB : http://dachs.lirae.cl:80/alma}/tap/async/:id/:option
+   * WEB : http://endpoint.lirae.cl/alma}/tap/async/:id/:option
   
    * Parameters: `option phase , quote , executionduration , destruction , error , parameters , results , owner`   
 
    * Method: *GET*
    
 ###Simple Cone Search:
-* Web: http://dachs.lirae.cl:80/alma/scs
+* Web: http://endpoint.lirae.cl/alma/scs
 
 * Method: *GET*
 
@@ -116,7 +116,7 @@
 
 
 ###Simple Image Acess:
-* Web: http://dachs.lirae.cl:80/alma/sia
+* Web: http://endpoint.lirae.cl/alma/sia
 
 * Method: *GET*
 
@@ -137,7 +137,7 @@
 	* VERB `1 , 2 , 3`
 
 ### Simple Spectral Access:
-* Web: http://dachs.lirae.cl:80/alma/ssa
+* Web: http://endpoint.lirae.cl/alma/ssa
 
 * Method: *GET*
 
@@ -183,11 +183,11 @@
 
 * To get all data from TAP , SCS , SIA , SSA Sevices just go to
 
-	 http://dachs.lirae.cl:80/external/registry
+	 http://endpoint.lirae.cl/external/registry
 
 * To get specific Service (not all the data, just Shortname, Title, and AccessUrl)
 
-	 http://dachs.lirae.cl:80/external/{service} , service can be tap,scs,sia,ssa
+	 http://endpoint.lirae.cl/external/{service} , service can be tap,scs,sia,ssa
 	
 
 
