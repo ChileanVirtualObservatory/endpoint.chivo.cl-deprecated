@@ -32,8 +32,8 @@ DACHS_SERVERS.append(
  	'capabilities':
  		{
  		'tap':'http://alma-be.lirae.cl:8080/__system__/tap/run/tap',
- 		'scs':'http://alma-be.lirae.cl:8080/fitsdachs/q/scsfits/scs.xml?',
- 		'sia':'http://alma-be.lirae.cl:8080/fitsdachs/q/siapfits/siap.xml?'
+ 		'scs':'http://alma-be.lirae.cl:8080/cycle0fits/q/siap-cycle0-fits/siap.xml?',
+ 		'sia':'http://alma-be.lirae.cl:8080/cycle0fits/q/scs-cycle0-fits/scs.xml?'
  		 },
  	'filePath': 'http://alma-be.lirae.cl:8080/getproduct/fitsdachs/res'
  	}
