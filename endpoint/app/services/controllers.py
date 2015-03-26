@@ -39,7 +39,7 @@ def syncTap(catalog, Reg = chivoReg):
 	return 'Error2', 404
 
 #Show tap tables from a catalog
-@services.route('/<catalog>/tap/tables/')
+@services.route('/<catalog>/tap/tables')
 def tapTables(catalog, Reg= chivoReg):
 	cat = Reg.getCatalog(catalog)
 	#Validate catalog
@@ -183,8 +183,7 @@ def tapAsyncPhase(catalog, jobId, Reg = chivoReg):
 		if request.method == "GET":
 			return Response(streamDataGet(r), mimetype=getResponseType(r.headers))
 		elif request.method == 'POST':
-			return Response(r.read(), mimetype=getResponseType(r.headers))
-
+			return redirect(url_for('.tapAsyncJob',catalog=catalog, jobId=jobId), code = 303)
 
 
 #SIA,SSA,SCS Query method

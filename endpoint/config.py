@@ -35,8 +35,10 @@ DACHS_SERVERS.append(
 		'scs':'http://alma-be.lirae.cl:8080/cycle0fits/q/scs-cycle0-fits/scs.xml?',
  		'sia':'http://alma-be.lirae.cl:8080/cycle0fits/q/siap-cycle0-fits/siap.xml?'
  		 },
- 	'filePath': 'http://alma-be.lirae.cl:8080/getproduct/fitsdachs/res'
+ 	'filePath': 'http://alma-be.lirae.cl:8080/getproduct/cycle0fits'
  	}
 )
 
+#Registry URL
+REG_URL = "http://alma-be.lirae.cl:8080/oai.xml"
 

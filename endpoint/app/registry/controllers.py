@@ -4,16 +4,17 @@ from flask import Blueprint, request, render_template, \
 
 # Import needed classes
 from app.helpers.functions import *
+from config import REG_URL, CHIVO_URL
 
 import requests
-#Registry URL
-REG_URL = "http://alma-be.lirae.cl:8080/oai.xml"
 
 # Define the blueprint: 'services'
 registry = Blueprint('registry', __name__)
 
 @registry.route('/oai.xml',methods=["GET","POST"])
 def reg():
-	parameters = request.url.split("?")[1]
+	full_url = request.url.split("?")
+	parameters = full_url[1] if len(full_url) == 2 else ""
 	r = requests.get(REG_URL + "?" +  parameters)
-	return Response(r.text, mimetype=getResponseType(r.headers))
+	text = r.text.replace("http://alma-be.lirae.cl:8080",CHIVO_URL )
+	return Response(text, mimetype=getResponseType(r.headers))
