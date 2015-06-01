@@ -22,7 +22,7 @@ THREADS_PER_PAGE = 4
 # Secret key for signing cookies
 #SECRET_KEY = "08cca79fecaffbfdba7dead9f0c9e1fb156f67c8a99d3162f7f44930634e4f5422967531589d7feb3786618f61a0bc7cd78149c9511395c645bfef6ea47645e1"
 
-CHIVO_URL = "http://endpoint.lirae.cl"
+CHIVO_URL = "http://endpoint.chivo.cl"
 
 #Dachs servers
 DACHS_SERVERS = []
@@ -41,4 +41,4 @@ DACHS_SERVERS.append(
 
 #Registry URL
 REG_URL = "http://alma-be.lirae.cl:8080/oai.xml"
-
+TAP_REG = "http://endpoint.chivo.cl/cycle0fits/q/siap-cycle0-fits"
