@@ -48,8 +48,8 @@ class ElasticQuery():
     def __extractor(self, element):
         return element["_source"].values()
 
-    def send_query(self):
-        data = self.__connection.search(index=self.__primary_index, doc_type=self.__primary_mapping, body=self.__query_dic, size=self.__max_result_size)
+    def send_query(self,timeout=180):
+        data = self.__connection.search(index=self.__primary_index, doc_type=self.__primary_mapping, body=self.__query_dic, size=self.__max_result_size,request_timeout=timeout)
         query_size = data["hits"]["total"]
         query_time = data["took"]
         query_data = data["hits"]["hits"]
