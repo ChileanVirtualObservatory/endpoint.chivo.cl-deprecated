@@ -7,6 +7,8 @@ import elasticsearch
 from multiprocessing import cpu_count
 from multiprocess import Pool # Allows for efficient parallel Map, To install use pip install multiprocess
 
+numeric_fields = ["WAVELENGHT", "FREQUENCY"]
+
 class ElasticQuery():
     '''
     Class designed to retrieve easily SLAP data from Elasticsearch
@@ -20,6 +22,7 @@ class ElasticQuery():
         self.__connection = elasticsearch.Elasticsearch(hosts=self.__host)
         self.__query_dic = {"query":{}}
         self.__max_result_size = self.__connection.count()["count"]
+        self.__numeric_fields = numeric_fields
 
     def add_frequency_to_query(self, minimum=None, maximum=None):
         if not self.__query_dic["query"].has_key("range"):
@@ -48,6 +51,8 @@ class ElasticQuery():
     def __extractor(self, element):
         return element["_source"].values()
 
+
+
     def send_query(self,timeout=180):
         data = self.__connection.search(index=self.__primary_index, doc_type=self.__primary_mapping, body=self.__query_dic, size=self.__max_result_size,request_timeout=timeout)
         query_size = data["hits"]["total"]
@@ -63,3 +68,41 @@ class ElasticQuery():
 
         #filtered_data = map(self.__extractor,query_data)
         return {"results":filtered_data,"time":query_time,"total":query_size}
+
+    def range(self, limits, param):
+        q = {}
+        if limits[0] and limits[1]:
+            q = {"gte": float(limits[0]), "lte": float(limits[1])}
+        elif limits[1]:
+            q = {"lte": float(limits[1])}
+        elif limits[0]:
+            q = {"gte": float(limits[0])}
+        else:
+            raise ValueError("You must specify either a maximum or minimum")
+
+        return { "range" : { param : q }}
+
+    def equality(self, value, param):
+	    processed_value = value
+	    if isinstance(value, list):
+		    if param.upper() in numeric_fields:
+			    processed_value = map(lambda x:float(x),value)
+	    else:
+		    if param.upper() in numeric_fields:
+			    value = float(value)
+	    return {"term": {param: processed_value}}
+
+    def parser(self, query):
+        for key, value in query.items():
+            contrains = value.split(",")
+            for con in contrains:
+                v = con.split("/")
+                if len(v)==2:
+                    con_value = self.range(v,key)
+                elif len(v)==1:
+                    con_value = self.equality(v,key)
+                else:
+                    raise Exception
+
+
+
