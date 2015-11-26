@@ -473,3 +473,69 @@ class TestElasticQuery(TestCase):
 		output = self.query.parser(input)
 
 		self.assertEqual(output,expected_output)
+
+	def test_parser_white_list(self):
+		input = {
+			"Frequency": "1584800/1584900,1585000/1585100,1529943.39901",
+			"Chemical Name": "Formic Acid,Formyl Chloride",
+			"This is baaad": "this, is, a / try, to ,brake / you"
+		}
+		expected_output = {
+			"query": {
+				"bool": {
+					"must": [
+						{
+							"bool": {
+								"should":
+									[
+										{
+											"range":
+												{
+													"Frequency":
+														{
+															"gte": 1584800,
+															"lte": 1584900
+														}
+												}
+										},
+										{
+											"range": {
+												"Frequency": {
+													"gte": 1585000,
+													"lte": 1585100
+												}
+											}
+										},
+										{
+											"term": {
+												"Frequency": 1529943.39901
+											}
+										}
+									],
+								"minimum_should_match": 1
+							}
+						},
+						{
+							"bool": {
+								"should": [
+									{
+										"match": {
+											"Chemical Name": "Formic Acid"
+										}
+									},
+									{
+										"match": {
+											"Chemical Name": "Formyl Chloride"
+										}
+									}
+								],
+								"minimum_should_match": 1
+							}
+						}
+					]
+				}
+			}
+		}
+		output = self.query.parser(input)
+
+		self.assertEqual(output,expected_output)
