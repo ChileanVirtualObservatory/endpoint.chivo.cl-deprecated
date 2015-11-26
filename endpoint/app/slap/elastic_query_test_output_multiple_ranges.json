@@ -1,0 +1,32 @@
+
+{ "_Comment": "Example of elastic query for Frequency betwenn 1584800 to 1884900, or between 1585000 to 1585100. Only returns 'Frequency' field",
+  "_intput": "Frequency=1584800/1584900,1585000/1585100,1529943.39901",
+  "fields": [
+    "Frequency"
+  ],
+  "size": 99999,
+  "query": {
+    "bool": {
+      "should": [
+        {
+          "range": {
+            "Frequency": {
+              "gte": 1584800,
+              "lte": 1584900
+            }
+          }
+        },
+        {
+          "range": {
+            "Frequency": {
+              "gte": 1585000,
+              "lte": 1585100
+            }
+          }
+        }
+      ],
+      "minimum_should_match": 1
+    }
+  }
+}
+

@@ -1,0 +1,57 @@
+{
+  "_Comment": "Example of elastic query for (Frequency between 1584800 to 1884900, or between 1585000 to 1585100 or exactly 1529943.39901) and (Chemical Name equal to Formic Acid or Formyl Chloride.",
+  "_input" : "Frequency=1584800/1584900,1585000/1585100,1529943.39901&Chemical Name=Formic Acid,Formyl Chloride",
+  "size": 99999,
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "bool": {
+            "should": [
+              {
+                "range": {
+                  "Frequency": {
+                    "gte": 1584800,
+                    "lte": 1584900
+                  }
+                }
+              },
+              {
+                "range": {
+                  "Frequency": {
+                    "gte": 1585000,
+                    "lte": 1585100
+                  }
+                }
+              },
+              {
+                "term": {
+                  "Frequency": 1529943.39901
+                }
+              }
+            ],
+            "minimum_should_match": 1
+          }
+        },
+        {
+          "bool": {
+            "should": [
+              {
+                "match": {
+                  "Chemical Name": "Formic Acid"
+                }
+              },
+              {
+                "match": {
+                  "Chemical Name": "Formyl Chloride"
+                }
+              }
+            ],
+            "minimum_should_match": 1
+          }
+        }
+      ]
+    }
+  }
+}
+
