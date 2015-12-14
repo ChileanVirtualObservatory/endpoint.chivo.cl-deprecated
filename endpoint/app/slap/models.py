@@ -6,9 +6,9 @@ support_mapping = "support"
 import elasticsearch
 from multiprocessing import cpu_count
 from multiprocess import Pool  # Allows for efficient parallel Map, To install use pip install multiprocess
+import pprint
 
-numeric_fields = ["WAVELENGHT", "FREQUENCY"]
-white_list_fields = ["WAVELENGHT", "FREQUENCY","CHEMICAL NAME" ]
+
 
 
 class ElasticQuery():
@@ -16,61 +16,63 @@ class ElasticQuery():
 	Class designed to retrieve easily SLAP data from Elasticsearch
 	'''
 
-	def __init__(self, host, primary_index, primary_mapping, support_mapping):
+	def __init__(self, host, primary_index, primary_mapping,slap_fields, numeric_fields):
 		self.__host = host
 		self.__primary_index = primary_index.lower()
 		self.__primary_mapping = primary_mapping
-		self.__support_mapping = support_mapping
 		self.__connection = elasticsearch.Elasticsearch(hosts=self.__host)
-		self.__query_dic = {"query": {}}
 		self.__max_result_size = self.__connection.count()["count"]
 		self.__numeric_fields = numeric_fields
-
-	def add_frequency_to_query(self, minimum=None, maximum=None):
-		if not self.__query_dic["query"].has_key("range"):
-			self.__query_dic["query"]["range"] = {}
-		if minimum and maximum:
-			self.__query_dic["query"]["range"]["Frequency"] = {"gte": minimum, "lte": maximum}
-		elif maximum:
-			self.__query_dic["query"]["range"]["Frequency"] = {"lte": maximum}
-		elif minimum:
-			self.__query_dic["query"]["range"]["Frequency"] = {"gte": minimum}
-		else:
-			raise ValueError("You must specify either a maximum or minimum")
-
-	def add_wavelenght_to_query(self, minimum=None, maximum=None):
-		if not self.__query_dic["query"].has_key("range"):
-			self.__query_dic["query"]["range"] = {}
-		if minimum and maximum:
-			self.__query_dic["query"]["range"]["Wavelenght"] = {"gte": minimum, "lte": maximum}
-		elif maximum:
-			self.__query_dic["query"]["range"]["Wavelenght"] = {"lte": maximum}
-		elif minimum:
-			self.__query_dic["query"]["range"]["Wavelenght"] = {"gte": minimum}
-		else:
-			raise ValueError("You must specify either a maximum or minimum")
+		self.__slap_fields = slap_fields
 
 	def __extractor(self, element):
-		return element["_source"].values()
+		keys = element["_source"].keys()
+		keys.sort()
 
-	def send_query(self, timeout=180):
-		data = self.__connection.search(index=self.__primary_index, doc_type=self.__primary_mapping,
-										body=self.__query_dic, size=self.__max_result_size, request_timeout=timeout)
-		query_size = data["hits"]["total"]
-		query_time = data["took"]
-		query_data = data["hits"]["hits"]
+		output = []
+		for key in keys:
+			output.append(element["_source"][key])
+		return output
 
-		pool = Pool(cpu_count())
-		filtered_data = pool.map(self.__extractor, query_data)
-		pool.close()
-		pool.join()
-		data.clear()
-		del query_data[:]
+	def __metadata_extractor(self, sample):
+		med = sample[0]["_source"].keys()
+		med.sort()
+		out = []
+		for key in med:
+			out.append(self.__slap_fields[key.upper()])
+		return out
 
-		# filtered_data = map(self.__extractor,query_data)
-		return {"results": filtered_data, "time": query_time, "total": query_size}
+	def send_query(self, query, timeout=180):
+		self.__parser(query)
+		if self.query == -1:
+			raise ValueError("You must enter at least one search parameter")
+		else:
 
-	def range(self, limits, param):
+			a = pprint.PrettyPrinter()
+			#a.pprint(self.query)
+			data = self.__connection.search(index=self.__primary_index, doc_type=self.__primary_mapping, body=self.query, size=self.__max_result_size, request_timeout=timeout)
+			#a.pprint(data)
+
+			query_size = data["hits"]["total"]
+			query_time = data["took"]
+			query_data = data["hits"]["hits"]
+			#a.pprint(query_data)
+
+			metadata = self.__metadata_extractor(query_data) if len(query_data) > 0 else []
+
+			pool = Pool(cpu_count())
+			filtered_data = pool.map(self.__extractor, query_data)
+			pool.close()
+			pool.join()
+			data.clear()
+			del query_data[:]
+
+
+
+			# filtered_data = map(self.__extractor,query_data)
+			return {"results": filtered_data, "time": query_time, "total": query_size, "metadata": metadata}
+
+	def __range(self, limits, param):
 		q = {}
 		if limits[0] and limits[1]:
 			q = {"gte": float(limits[0]), "lte": float(limits[1])}
@@ -83,10 +85,10 @@ class ElasticQuery():
 
 		return {"range": {param: q}}
 
-	def equality(self, value, param):
+	def __equality(self, value, param):
 		processed_value = value
 		query_type = "match"
-		if param.upper() in numeric_fields:
+		if param.upper() in self.__numeric_fields:
 			processed_value = float(value)
 			query_type = "term"
 			# This will match EXACTLY the number.
@@ -94,16 +96,16 @@ class ElasticQuery():
 
 		return {query_type: {param: processed_value}}
 
-	def constrain_parser(self, value, param):
+	def __constrain_parser(self, value, param):
 		splited_constrains = value.split(",")
 		processed_constrains = []
 
 		for con_value in splited_constrains:
 			v = con_value.split("/")
 			if len(v) == 2:
-				 processed_constrains.append(self.range(v, param))
+				 processed_constrains.append(self.__range(v, param))
 			elif len(v) == 1:
-				processed_constrains.append(self.equality(v[0], param))
+				processed_constrains.append(self.__equality(v[0], param))
 			else:
 				raise Exception
 
@@ -116,15 +118,17 @@ class ElasticQuery():
 		}
 		return output
 
-	def parser(self, query):
+	def __parser(self, query):
 		processed_conditions = []
 		for key, value in query.items():
-			if key.upper() in white_list_fields:
-				output = self.constrain_parser(value, key)
+			if key.upper() in self.__slap_fields:
+				output = self.__constrain_parser(value, self.__slap_fields[key]["slap_name"])
 				processed_conditions.append(output)
-		output = {"query":{"bool": { "must": processed_conditions } } }
-		return output
-
+		if len(processed_conditions)>0:
+			output = {"query":{"bool": { "must": processed_conditions } } }
+			self.query = output
+		else:
+			self.query = -1
 
 
 

@@ -28,10 +28,12 @@ from flask import Blueprint, request, render_template, flash, g, session, redire
 # Import needed classes
 from models import ElasticQuery
 from elasticsearch.exceptions import ConnectionError, ConnectionTimeout
+from flask import abort
 import sys
 
-import urllib
-import re
+
+from config import SLAP
+
 #Creating objects
 
 # Define the blueprint: 'slap'
@@ -45,24 +47,21 @@ support_mapping = "support"
 #Index Page
 @slap.route('/slap/')
 def index():
-    try:
-        Query = ElasticQuery(primary_host, primary_index, primary_mapping, support_mapping)
-    except ConnectionError as e:
-        return render_template("404.html") # TODO Replace with error template
-    clean_input = {}
-    input_keys = request.args.keys()
-    for key in input_keys:
-        clean_input[key.upper()] = request.args[key]
 
-    if clean_input.has_key("WAVELENGHT"):
-        a = clean_input["WAVELENGHT"].split("/")
-        if len(a) == 2:
-            min_freq = a[0]
-            max_freq = a[1]
-            Query.add_frequency_to_query(min_freq,max_freq)
-            return jsonify(Query.send_query())
-        if len(a)== 1:
-            Query.add_frequency_to_query(a[0])
-            return jsonify(Query.send_query())
 
-    return render_template("index.html")
+	clean_input = {}
+	input_keys = request.args.keys()
+	for key in input_keys:
+		clean_input[key.upper()] = request.args[key]
+
+	try:
+		Query = ElasticQuery(primary_host, primary_index, primary_mapping, SLAP["PARAMETERS"], SLAP["NUMERIC_FIELDS"])
+	except ConnectionError as e:
+		return render_template("404.html") # TODO Replace with error template
+
+	try:
+		out = Query.send_query(clean_input)
+		return jsonify(out)
+	except ValueError as e:
+		#Should return a 422 error (Unprocessable Entity), TODO Create custom 422 error, for now using default
+		abort(422)
