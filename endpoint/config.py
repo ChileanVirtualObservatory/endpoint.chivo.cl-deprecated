@@ -81,5 +81,5 @@ for key in config.sections():
 
 	if "datatype" in SLAP["PARAMETERS"][key.upper()]:
 		if SLAP["PARAMETERS"][key.upper()]["datatype"].upper() == "INT" or SLAP["PARAMETERS"][key.upper()]["datatype"].upper() == "DOUBLE":
-			SLAP["NUMERIC_FIELDS"].append()
+			SLAP["NUMERIC_FIELDS"].append(key)
 

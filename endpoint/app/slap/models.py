@@ -1,22 +1,20 @@
-primary_host = "http://otto.csrg.inf.utfsm.cl:9200/"
-primary_index = "SL-Repository"
-primary_mapping = "Spectral-Lines"
-support_mapping = "support"
-
 import elasticsearch
 from multiprocessing import cpu_count
 from multiprocess import Pool  # Allows for efficient parallel Map, To install use pip install multiprocess
 import pprint
 
-
+primary_host = "http://otto.csrg.inf.utfsm.cl:9200/"
+primary_index = "SL-Repository"
+primary_mapping = "Spectral-Lines"
+support_mapping = "support"
 
 
 class ElasticQuery():
-	'''
+	"""
 	Class designed to retrieve easily SLAP data from Elasticsearch
-	'''
+	"""
 
-	def __init__(self, host, primary_index, primary_mapping,slap_fields, numeric_fields):
+	def __init__(self, host, primary_index, primary_mapping, slap_fields, numeric_fields):
 		self.__host = host
 		self.__primary_index = primary_index.lower()
 		self.__primary_mapping = primary_mapping
@@ -49,14 +47,15 @@ class ElasticQuery():
 		else:
 
 			a = pprint.PrettyPrinter()
-			#a.pprint(self.query)
-			data = self.__connection.search(index=self.__primary_index, doc_type=self.__primary_mapping, body=self.query, size=self.__max_result_size, request_timeout=timeout)
-			#a.pprint(data)
+			# a.pprint(self.query)
+			data = self.__connection.search(index=self.__primary_index, doc_type=self.__primary_mapping,
+											body=self.query, size=self.__max_result_size, request_timeout=timeout)
+			# a.pprint(data)
 
 			query_size = data["hits"]["total"]
 			query_time = data["took"]
 			query_data = data["hits"]["hits"]
-			#a.pprint(query_data)
+			# a.pprint(query_data)
 
 			metadata = self.__metadata_extractor(query_data) if len(query_data) > 0 else []
 
@@ -66,8 +65,6 @@ class ElasticQuery():
 			pool.join()
 			data.clear()
 			del query_data[:]
-
-
 
 			# filtered_data = map(self.__extractor,query_data)
 			return {"results": filtered_data, "time": query_time, "total": query_size, "metadata": metadata}
@@ -91,8 +88,8 @@ class ElasticQuery():
 		if param.upper() in self.__numeric_fields:
 			processed_value = float(value)
 			query_type = "term"
-			# This will match EXACTLY the number.
-			# I.E. if value is 16.3, will only match 16.30, 16.3000, 16.3000000 and so on, but not 16.30000001
+		# This will match EXACTLY the number.
+		# I.E. if value is 16.3, will only match 16.30, 16.3000, 16.3000000 and so on, but not 16.30000001
 
 		return {query_type: {param: processed_value}}
 
@@ -103,7 +100,7 @@ class ElasticQuery():
 		for con_value in splited_constrains:
 			v = con_value.split("/")
 			if len(v) == 2:
-				 processed_constrains.append(self.__range(v, param))
+				processed_constrains.append(self.__range(v, param))
 			elif len(v) == 1:
 				processed_constrains.append(self.__equality(v[0], param))
 			else:
@@ -124,16 +121,8 @@ class ElasticQuery():
 			if key.upper() in self.__slap_fields:
 				output = self.__constrain_parser(value, self.__slap_fields[key]["slap_name"])
 				processed_conditions.append(output)
-		if len(processed_conditions)>0:
-			output = {"query":{"bool": { "must": processed_conditions } } }
+		if len(processed_conditions) > 0:
+			output = {"query": {"bool": {"must": processed_conditions}}}
 			self.query = output
 		else:
 			self.query = -1
-
-
-
-
-
-
-
-
