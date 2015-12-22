@@ -80,6 +80,6 @@ for key in config.sections():
 		SLAP["PARAMETERS"][key.upper()][option] = config.get(key,option)
 
 	if "datatype" in SLAP["PARAMETERS"][key.upper()]:
-		if SLAP["PARAMETERS"][key.upper()]["datatype"].upper() == "INT" or SLAP["PARAMETERS"][key.upper()]["datatype"].upper() == "double":
+		if SLAP["PARAMETERS"][key.upper()]["datatype"].upper() == "INT" or SLAP["PARAMETERS"][key.upper()]["datatype"].upper() == "DOUBLE":
 			SLAP["NUMERIC_FIELDS"].append()
 
