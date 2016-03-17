@@ -32,7 +32,7 @@ from flask import abort
 import sys
 
 
-from config import SLAP
+from endpoint.app.config import SLAP
 
 #Creating objects
 
@@ -51,8 +51,10 @@ def index():
 
 	clean_input = {}
 	input_keys = request.args.keys()
+
 	for key in input_keys:
 		clean_input[key.upper()] = request.args[key]
+
 
 	try:
 		Query = ElasticQuery(primary_host, primary_index, primary_mapping, SLAP["PARAMETERS"], SLAP["NUMERIC_FIELDS"])

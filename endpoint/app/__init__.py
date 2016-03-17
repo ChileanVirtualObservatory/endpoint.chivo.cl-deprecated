@@ -35,7 +35,7 @@ from flask import Flask, render_template, request, redirect
 app = Flask(__name__)
 
 # Configurations
-app.config.from_object('config')
+app.config.from_pyfile("config.py")
 
 
 ## Sample HTTP error handling
@@ -54,7 +54,7 @@ app.config.from_object('config')
 #from app.services.controllers import services as services_module
 #from app.external.controllers import external as external_module
 #from app.registry.controllers import registry as registry_module
-from app.slap.controllers import slap as slap_module
+from endpoint.app.slap.controllers import slap as slap_module
 
 # Register blueprint(s)
 #app.register_blueprint(services_module)

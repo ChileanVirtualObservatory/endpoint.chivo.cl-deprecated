@@ -1,12 +1,17 @@
 from unittest import TestCase
 from endpoint.app.slap.models import ElasticQuery
-from ...config import SLAP
+from endpoint.app.config import SLAP
 
 
 
 class TestElasticQuery(TestCase):
 	def setUp(self):
-		self.query = ElasticQuery("http://otto.csrg.cl:9200", "sl-repository", SLAP["PARAMETERS"], SLAP["NUMERIC_FIELDS"])
+		self.query = ElasticQuery("http://otto.csrg.cl:9200",
+								  "sl-repository",
+								  "Spectral-Lines",
+								  SLAP["PARAMETERS"],
+								  SLAP["NUMERIC_FIELDS"]
+								  )
 		self.maxDiff = None
 
 	def test_range_upper_and_lower(self):
@@ -15,6 +20,7 @@ class TestElasticQuery(TestCase):
 		params = ["1", "1.2"]
 		output = self.query._ElasticQuery__range(params, term)
 		self.assertEquals(expected_output, output)
+
 
 	def test_range_upper(self):
 		expected_output = {"range": {"Freq": {"lte": 1.2}}}
@@ -539,5 +545,4 @@ class TestElasticQuery(TestCase):
 			}
 		}
 		self.query._ElasticQuery__parser(input)
-
 		self.assertEqual(self.query.query,expected_output)

@@ -69,9 +69,12 @@ TAP_REG = "http://endpoint.chivo.cl/cycle0fits/q/siap-cycle0-fits"
 # Slap Configuration File
 
 config = ConfigParser.ConfigParser()
-config.read(os.path.join(BASE_DIR,"app/configuration/slap/parameters.ini"))
+path = os.path.join(BASE_DIR,"configuration/slap/parameters.ini")
+config.read(path)
+
 
 SLAP = dict(PARAMETERS={}, NUMERIC_FIELDS=[])
+
 
 for key in config.sections():
 	SLAP["PARAMETERS"][key.upper()] = {"slap_name":key}
@@ -81,5 +84,8 @@ for key in config.sections():
 
 	if "datatype" in SLAP["PARAMETERS"][key.upper()]:
 		if SLAP["PARAMETERS"][key.upper()]["datatype"].upper() == "INT" or SLAP["PARAMETERS"][key.upper()]["datatype"].upper() == "DOUBLE":
-			SLAP["NUMERIC_FIELDS"].append(key)
+			SLAP["NUMERIC_FIELDS"].append(key.upper())
+
+
+
 
