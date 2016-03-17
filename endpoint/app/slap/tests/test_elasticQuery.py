@@ -1,10 +1,12 @@
 from unittest import TestCase
-from models import ElasticQuery
+from endpoint.app.slap.models import ElasticQuery
+from ...config import SLAP
+
 
 
 class TestElasticQuery(TestCase):
 	def setUp(self):
-		self.query = ElasticQuery("http://otto.csrg.cl:9200", "sl-repository", "line", "support")
+		self.query = ElasticQuery("http://otto.csrg.cl:9200", "sl-repository", SLAP["PARAMETERS"], SLAP["NUMERIC_FIELDS"])
 		self.maxDiff = None
 
 	def test_range_upper_and_lower(self):

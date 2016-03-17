@@ -44,10 +44,10 @@ app.config.from_object('config')
 #    return render_template('404.html'), 404
 
 #Remove trailing slash in POST requests
-@app.before_request
-def remove_trailing_slash():
-	if request.path != '/' and request.path.endswith('/'):
-		return redirect(request.path[:-1], code=307)
+#@app.before_request
+#def remove_trailing_slash():
+#	if request.path != '/' and request.path.endswith('/'):
+#		return redirect(request.path[:-1], code=307)
 
 
 # Import a module / component using its blueprint handler variable (mod_auth)
