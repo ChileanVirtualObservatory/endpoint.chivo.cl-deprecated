@@ -40,6 +40,7 @@ class ElasticQuery():
 		self.__numeric_fields = SLAP["NUMERIC_FIELDS"]
 		self.__slap_fields = SLAP["PARAMETERS"]
 		self.__queryable_fields = SLAP["QUERYABLE_FIELDS"]
+		self.__default_response_fields = SLAP["DEFAULT_RESPONSE_FIELDS"]
 		self.__scroll_time = "1m"
 
 		self.__output_api="1.0"
@@ -70,7 +71,7 @@ class ElasticQuery():
 		else:
 			data = self.__connection.search(index=self.__primary_index, doc_type=self.__primary_mapping,
 											body=json.dumps(self.query), size=self.__max_result_size,
-											request_timeout=timeout, scroll=self.__scroll_time, fields=self.__queryable_fields)
+											request_timeout=timeout, scroll=self.__scroll_time, fields=self.__default_response_fields)
 
 			query_size = data["hits"]["total"]
 			query_time = data["took"]
