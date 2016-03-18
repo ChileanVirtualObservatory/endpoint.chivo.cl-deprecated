@@ -73,11 +73,12 @@ path = os.path.join(BASE_DIR,"configuration/slap/parameters.ini")
 config.read(path)
 
 
-SLAP = dict(PARAMETERS={}, NUMERIC_FIELDS=[])
+SLAP = dict(PARAMETERS={}, NUMERIC_FIELDS=[],QUERYABLE_FIELDS=[])
 
 
 for key in config.sections():
 	SLAP["PARAMETERS"][key.upper()] = {"slap_name":key}
+
 
 	for option in config.options(key):
 		SLAP["PARAMETERS"][key.upper()][option] = config.get(key,option)
@@ -86,6 +87,10 @@ for key in config.sections():
 		if SLAP["PARAMETERS"][key.upper()]["datatype"].upper() == "INT" or SLAP["PARAMETERS"][key.upper()]["datatype"].upper() == "DOUBLE":
 			SLAP["NUMERIC_FIELDS"].append(key.upper())
 
+	if "queryable" in SLAP["PARAMETERS"][key.upper()]:
+		SLAP["QUERYABLE_FIELDS"].append(SLAP["PARAMETERS"][key.upper()]["slap_name"])
 
+
+print SLAP["QUERYABLE_FIELDS"]
 
 

@@ -23,7 +23,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 # Import flask dependencies
-from flask import Blueprint, request, render_template, flash, g, session, redirect, url_for, Response, jsonify
+from flask import Blueprint, request, render_template, flash, g, session, redirect, url_for, Response
 
 # Import needed classes
 from models import ElasticQuery
@@ -57,13 +57,13 @@ def index():
 
 
 	try:
-		Query = ElasticQuery(primary_host, primary_index, primary_mapping, SLAP["PARAMETERS"], SLAP["NUMERIC_FIELDS"])
+		Query = ElasticQuery(primary_host, primary_index, primary_mapping, SLAP)
 	except ConnectionError as e:
 		return render_template("404.html") # TODO Replace with error template
 
 	try:
 		out = Query.send_query(clean_input)
-		return jsonify(out)
+		return out
 	except ValueError as e:
 		#Should return a 422 error (Unprocessable Entity), TODO Create custom 422 error, for now using default
 		abort(422)

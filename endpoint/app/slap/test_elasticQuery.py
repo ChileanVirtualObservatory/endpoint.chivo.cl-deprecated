@@ -9,8 +9,7 @@ class TestElasticQuery(TestCase):
 		self.query = ElasticQuery("http://otto.csrg.cl:9200",
 								  "sl-repository",
 								  "Spectral-Lines",
-								  SLAP["PARAMETERS"],
-								  SLAP["NUMERIC_FIELDS"]
+								  SLAP
 								  )
 		self.maxDiff = None
 

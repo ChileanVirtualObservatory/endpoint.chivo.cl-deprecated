@@ -44,3 +44,4 @@ def getResponseType(content):
 		return content["content-type"].split(";")[0]
 	else:
 		return 'text/xml'
+
