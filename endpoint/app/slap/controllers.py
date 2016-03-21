@@ -25,6 +25,7 @@
 # Import flask dependencies
 from flask import Blueprint, request, render_template, flash, g, session, redirect, url_for, Response
 
+
 # Import needed classes
 from models import ElasticQuery
 from elasticsearch.exceptions import ConnectionError, ConnectionTimeout
@@ -63,7 +64,10 @@ def index():
 
 	try:
 		out = Query.send_query(clean_input)
-		return out
+		if out == 501:
+			abort(501)
+		else:
+			return out
 	except ValueError as e:
 		#Should return a 422 error (Unprocessable Entity), TODO Create custom 422 error, for now using default
 		abort(422)

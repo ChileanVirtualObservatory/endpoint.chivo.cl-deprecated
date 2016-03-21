@@ -3,6 +3,10 @@ from multiprocessing import cpu_count
 from multiprocess import Pool  # Allows for efficient parallel Map, To install use pip install multiprocess
 import pprint #TODO REMOVE THIS IMPORT!
 import json
+from astropy.io.votable.tree import VOTableFile, Resource, Table, Field, Info
+import StringIO
+
+
 
 
 primary_host = "http://otto.csrg.inf.utfsm.cl:9200/"
@@ -46,6 +50,7 @@ class ElasticQuery():
 		self.__output_api="1.0"
 		self.__error_list= []
 		self.__supported_slap_versions = [1.0, 2.0]
+		self.__response_fields = set("wavelenght")
 
 	def __extractor(self, element):
 		keys = element["fields"].keys()
@@ -56,46 +61,114 @@ class ElasticQuery():
 			output.append(element["fields"][key][0])
 		return output
 
-	def __metadata_extractor(self, sample):
-		med = sample[0]["fields"].keys()
-		med.sort()
+	def __metadata_extractor(self):
 		out = []
-		for key in med:
+		for key in self.__response_fields:
 			out.append(self.__slap_fields[key.upper()])
 		return out
 
-	def send_query(self, query, timeout=180):
-		self.__parser(query)
-		if self.query == -1:
-			raise ValueError("You must enter at least one search parameter")
-		else:
-			data = self.__connection.search(index=self.__primary_index, doc_type=self.__primary_mapping,
-											body=json.dumps(self.query), size=self.__max_result_size,
-											request_timeout=timeout, scroll=self.__scroll_time, fields=self.__default_response_fields)
+	def send_query(self, query, fields=None,timeout=180):
+		request = query["REQUEST"] if "REQUEST" in query.keys() else "queryData"
 
-			query_size = data["hits"]["total"]
-			query_time = data["took"]
-			query_data = data["hits"]["hits"]
+		if request == "queryData":
 
-			metadata = self.__metadata_extractor(query_data) if len(query_data) > 0 else []
+			self.__search_query_parser(query)
 
-			pool = Pool(cpu_count())
-			filtered_data = pool.map(self.__extractor, query_data)
-			pool.close()
-			pool.join()
-			data.clear()
-			del query_data[:]
+			self.__response_fields = self.__response_fields.union(fields) if fields \
+				else self.__response_fields.union(self.__default_response_fields)
 
 
-			if self.__output_api == 1.0:
-				return self.convert_to_XML(filtered_data,metadata,query_size,query_time)
-			elif self.__output_api == 2.0:
-				return self.convert_to_JSON(filtered_data,metadata,query_size,query_time)
+			if self.query == -1:
+				raise ValueError("You must enter at least one search parameter")
 			else:
-				return self.convert_to_XML(filtered_data,metadata,query_size,query_time)
+				data = self.__connection.search(index=self.__primary_index, doc_type=self.__primary_mapping,
+												body=json.dumps(self.query), size=self.__max_result_size,
+												request_timeout=timeout, scroll=self.__scroll_time,
+												fields=list(self.__response_fields))
+
+				query_size = data["hits"]["total"]
+				query_time = data["took"]
+				query_data = data["hits"]["hits"]
+
+				metadata = self.__metadata_extractor()
+
+				pool = Pool(cpu_count())
+				filtered_data = pool.map(self.__extractor, query_data)
+				pool.close()
+				pool.join()
+				data.clear()
+				del query_data[:]
+
+
+				if self.__output_api == 1.0:
+					return self.convert_to_XML(filtered_data,metadata,query_size,query_time)
+				elif self.__output_api == 2.0:
+					return self.convert_to_JSON(filtered_data,metadata,query_size,query_time)
+				else:
+					return self.convert_to_XML(filtered_data,metadata,query_size,query_time)
+		else:
+			return 501
 
 	def convert_to_XML(self,data, metadata, size, time):
-		return self.convert_to_JSON(data,metadata,size,time)
+		# Create a new VOTable file...
+		votable = VOTableFile()
+
+		# ...with one resource...
+		resource = Resource()
+		info  = Info(name="QUERY_STATUS",value="ok")
+		info2 = Info(name="TableRows", value=str(size))
+		info3 = Info(name="VERB")
+		resource.infos.append(info)
+		resource.description= "Chilean Virtual Observatory - Simple Line Access Protocol (SLAP)"
+
+		votable.resources.append(resource)
+
+		# ... with one table
+		table = Table(votable)
+		resource.tables.append(table)
+
+		set_fields = []
+		for meta in metadata:
+			name = meta["name"]
+			name = name.upper()
+			name = name.replace(" ","_")
+			name = name.replace("(","")
+			name = name.replace(")","")
+
+			datatype = meta["datatype"]
+			arraysize = ""
+			if datatype == "char":
+				arraysize = "*"
+			if datatype == "double" or datatype == "int":
+				arraysize = "1"
+			set_fields.append(Field(votable, name=name, datatype=datatype, arraysize=arraysize, ucd=meta["ucd"],
+									unit=meta["unit"],utype=meta["utype"]))
+
+		# Define some fields
+
+		table.fields.extend(set_fields)
+
+		# Now, use those field definitions to create the numpy record arrays, with
+		# the given number of rows
+		table.create_arrays(len(data))
+
+
+		# Now table.array can be filled with data
+		i = 0
+		for d in data:
+			table.array[i] = tuple(d)
+			i = i + 1
+
+		# Now write the whole thing to a file.
+		# Note, we have to use the top-level votable file object
+
+		# Now write the whole thing to a file.
+		# Note, we have to use the top-level votable file object
+		a = StringIO.StringIO()
+		votable.to_xml(a)
+
+		return a.getvalue()
+
 
 	def convert_to_JSON(self,data, metadata, size, time):
 		return json.dumps({"results": data, "time": time, "total": size, "metadata": metadata})
@@ -146,10 +219,11 @@ class ElasticQuery():
 		}
 		return output
 
-	def __parser(self, query):
+	def __search_query_parser(self, query):
 		processed_conditions = []
 		for key, value in query.items():
 			if key.upper() in self.__slap_fields:
+				self.__response_fields.add(key)
 				output = self.__constrain_parser(value, self.__slap_fields[key.upper()]["slap_name"])
 				processed_conditions.append(output)
 			elif key.upper() == "VERSION":
