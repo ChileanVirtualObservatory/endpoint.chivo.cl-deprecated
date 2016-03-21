@@ -50,7 +50,9 @@ class ElasticQuery():
 		self.__output_api="1.0"
 		self.__error_list= []
 		self.__supported_slap_versions = [1.0, 2.0]
-		self.__response_fields = set("wavelenght")
+		self.__response_fields = set()
+		self.__response_fields.add("Wavelenght")
+
 
 	def __extractor(self, element):
 		keys = element["fields"].keys()
@@ -63,7 +65,10 @@ class ElasticQuery():
 
 	def __metadata_extractor(self):
 		out = []
-		for key in self.__response_fields:
+		sorted_meta = self.__response_fields
+		sorted_meta = list(sorted_meta)
+		sorted_meta.sort()
+		for key in sorted_meta:
 			out.append(self.__slap_fields[key.upper()])
 		return out
 
@@ -119,6 +124,8 @@ class ElasticQuery():
 		info2 = Info(name="TableRows", value=str(size))
 		info3 = Info(name="VERB")
 		resource.infos.append(info)
+		resource.infos.append(info2)
+		resource.infos.append(info3)
 		resource.description= "Chilean Virtual Observatory - Simple Line Access Protocol (SLAP)"
 
 		votable.resources.append(resource)
@@ -159,11 +166,6 @@ class ElasticQuery():
 			table.array[i] = tuple(d)
 			i = i + 1
 
-		# Now write the whole thing to a file.
-		# Note, we have to use the top-level votable file object
-
-		# Now write the whole thing to a file.
-		# Note, we have to use the top-level votable file object
 		a = StringIO.StringIO()
 		votable.to_xml(a)
 
@@ -223,7 +225,7 @@ class ElasticQuery():
 		processed_conditions = []
 		for key, value in query.items():
 			if key.upper() in self.__slap_fields:
-				self.__response_fields.add(key)
+				self.__response_fields.add(self.__slap_fields[key.upper()]["slap_name"])
 				output = self.__constrain_parser(value, self.__slap_fields[key.upper()]["slap_name"])
 				processed_conditions.append(output)
 			elif key.upper() == "VERSION":
